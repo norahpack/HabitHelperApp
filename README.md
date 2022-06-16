@@ -108,7 +108,7 @@ The Habit Helper app allows individuals to track their mood as well as pick cert
 ## Wireframes
 [will be done in unit 3]
 [Add picture of your hand sketched wireframes in this section]
-<img src="A67E4FAE-5DD5-48DF-89CB-A08EB1F01F13.jpeg" width=600>
+<img src="wireframe.jpeg" width=600>
 
 ### [BONUS] Digital Wireframes & Mockups
 
