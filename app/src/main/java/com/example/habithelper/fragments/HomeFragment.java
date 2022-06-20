@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.habithelper.LoginActivity;
 import com.example.habithelper.MainActivity;
@@ -20,6 +21,7 @@ import com.parse.ParseUser;
 public class HomeFragment extends Fragment {
 
     Button btnLogout;
+    TextView tvHello;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -42,6 +44,11 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
         btnLogout=view.findViewById(R.id.btnLogout);
+        tvHello=view.findViewById(R.id.tvHello);
+
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        String name = currentUser.getString("name");
+        tvHello.setText("(Nice to see you again, "+name+")");
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -9,9 +9,16 @@
 
 
     <TextView
+        android:id="@+id/tvHello"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:fontFamily="@font/honey_florist"
+        android:text="(Hello Blank Fragment)"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/sienna"
+        android:textAlignment="center"
+        android:textSize="65sp"
+        android:typeface="normal" />
 
     <Button
         android:id="@+id/btnLogout"
