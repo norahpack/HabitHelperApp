@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/sienna"
+    tools:context=".SetupAccount">
+
+
+
+    <ImageView
+        android:id="@+id/ivSetup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/setup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvZip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="ZIP CODE"
+        android:textAlignment="center"
+
+
+        android:textColor="@color/cream"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivSetup" />
+
+    <EditText
+        android:id="@+id/etZip"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/slight_rounded_corners"
+        android:backgroundTint="@color/cream"
+        android:ems="10"
+        android:hint="Enter Zip Code Here (e.g. 12345)"
+        android:inputType="textPersonName"
+        android:paddingLeft="4dp"
+        android:textAlignment="textStart"
+        android:textColor="@color/sienna"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvZip" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="NAME"
+        android:textAlignment="center"
+
+
+        android:textColor="@color/cream"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etZip" />
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/slight_rounded_corners"
+        android:backgroundTint="@color/cream"
+        android:ems="10"
+        android:hint="Enter Name Here"
+        android:inputType="textPersonName"
+        android:paddingLeft="4dp"
+        android:textAlignment="textStart"
+        android:textColor="@color/sienna"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+    <TextView
+        android:id="@+id/tvHabits"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="CHOOSE WHICH HABITS TO TRACK"
+        android:textAlignment="center"
+        android:textColor="@color/cream"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etName" />
+
+    <CheckBox
+        android:id="@+id/checkBoxWater"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/slight_rounded_corners"
+        android:backgroundTint="@color/cream"
+        android:buttonTint="@color/sienna"
+        android:drawableEnd="@drawable/watersmall"
+        android:text="Drink 8 cups of water"
+        app:layout_constraintBottom_toTopOf="@+id/checkBox2"
+        app:layout_constraintEnd_toStartOf="@+id/checkBox5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHabits" />
+
+    <CheckBox
+        android:id="@+id/checkBox2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/slight_rounded_corners"
+        android:backgroundTint="@color/cream"
+        android:buttonTint="@color/sienna"
+        android:drawableEnd="@drawable/watersmall"
+        android:text="Drink 8 cups of water"
+        app:layout_constraintBottom_toTopOf="@+id/checkBox2"
+        app:layout_constraintEnd_toStartOf="@+id/checkBox5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHabits" />
+
+    <CheckBox
+        android:id="@+id/checkBox2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/slight_rounded_corners"
+        android:backgroundTint="@color/cream"
+        android:buttonTint="@color/sienna"
+        android:drawableEnd="@drawable/watersmall"
+        android:text="Drink 8 cups of water"
+        app:layout_constraintBottom_toTopOf="@+id/checkBox2"
+        app:layout_constraintEnd_toStartOf="@+id/checkBox5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHabits" />
+
+    <CheckBox
+        android:id="@+id/checkBox2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/slight_rounded_corners"
+        android:backgroundTint="@color/cream"
+        android:buttonTint="@color/sienna"
+        android:drawableEnd="@drawable/watersmall"
+        android:text="Drink 8 cups of water"
+        app:layout_constraintBottom_toTopOf="@+id/checkBox2"
+        app:layout_constraintEnd_toStartOf="@+id/checkBox5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHabits" />
+
+    <CheckBox
+        android:id="@+id/checkBox2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/slight_rounded_corners"
+        android:backgroundTint="@color/cream"
+        android:buttonTint="@color/sienna"
+        android:drawableEnd="@drawable/watersmall"
+        android:text="Drink 8 cups of water"
+        app:layout_constraintBottom_toTopOf="@+id/checkBox2"
+        app:layout_constraintEnd_toStartOf="@+id/checkBox5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHabits" />
+
+    <CheckBox
+        android:id="@+id/checkBox2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/slight_rounded_corners"
+        android:backgroundTint="@color/cream"
+        android:buttonTint="@color/sienna"
+        android:drawableEnd="@drawable/watersmall"
+        android:text="Drink 8 cups of water"
+        app:layout_constraintBottom_toTopOf="@+id/checkBox2"
+        app:layout_constraintEnd_toStartOf="@+id/checkBox5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHabits" />
+
+    <CheckBox
+        android:id="@+id/checkBox2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/slight_rounded_corners"
+        android:backgroundTint="@color/cream"
+        android:buttonTint="@color/sienna"
+        android:drawableEnd="@drawable/watersmall"
+        android:text="Drink 8 cups of water"
+        app:layout_constraintBottom_toTopOf="@+id/checkBox2"
+        app:layout_constraintEnd_toStartOf="@+id/checkBox5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHabits" />
+
+    <CheckBox
+        android:id="@+id/checkBox2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/slight_rounded_corners"
+        android:backgroundTint="@color/cream"
+        android:buttonTint="@color/sienna"
+        android:drawableEnd="@drawable/watersmall"
+        android:text="Drink 8 cups of water"
+        app:layout_constraintBottom_toTopOf="@+id/checkBox2"
+        app:layout_constraintEnd_toStartOf="@+id/checkBox5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHabits" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
