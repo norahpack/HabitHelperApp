@@ -34,6 +34,11 @@ public class LoginActivity extends AppCompatActivity {
         etUsername=findViewById(R.id.etUsername);
         etPassword=findViewById(R.id.etPassword);
 
+        // remembers the past logged in user
+        if(ParseUser.getCurrentUser()!=null){
+            goMainActivity();
+        }
+
         btnSignup.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
