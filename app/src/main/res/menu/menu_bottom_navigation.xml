@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/itemProfile"
+        android:icon="@drawable/person"
+        android:title="Profile"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/itemTrack"
+        android:icon="@drawable/check"
+        android:title="Track"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/itemHome"
+        android:icon="@drawable/home"
+        app:showAsAction="always"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/itemMood"
+        android:icon="@drawable/mood5"
+        app:showAsAction="always"
+        android:title="Mood" />
+
+    <item
+        android:id="@+id/itemList"
+        android:icon="@drawable/list"
+        app:showAsAction="always"
+        android:title="Habits" />
+</menu>
