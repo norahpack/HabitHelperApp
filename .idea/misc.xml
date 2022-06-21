@@ -6,6 +6,7 @@
         <entry key="app/src/main/res/drawable/login_gradient.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/slight_rounded_corners.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/splash_background.xml" value="0.1" />
+        <entry key="app/src/main/res/font/brittany_signature_resource.xml" value="0.12291666666666666" />
         <entry key="app/src/main/res/font/charlotte_resource.xml" value="0.15185185185185185" />
         <entry key="app/src/main/res/font/honey_florist_resource.xml" value="0.16944444444444445" />
         <entry key="app/src/main/res/font/southmore_resource.xml" value="0.1" />
@@ -13,7 +14,10 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.43854166666666666" />
         <entry key="app/src/main/res/layout/activity_setup_account.xml" value="0.40200653076171877" />
         <entry key="app/src/main/res/layout/activity_signup.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.5089752197265626" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_list.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_mood.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.1" />
         <entry key="app/src/main/res/menu/menu_bottom_navigation.xml" value="0.4375" />
       </map>
     </option>

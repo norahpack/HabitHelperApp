@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment {
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         String name = currentUser.getString("name");
-        tvHello.setText("(Nice to see you again, "+name+")");
+        tvHello.setText("Nice to see you again, "+name);
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
