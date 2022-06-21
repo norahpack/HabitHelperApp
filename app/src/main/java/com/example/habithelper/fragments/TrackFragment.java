@@ -195,18 +195,7 @@ public class TrackFragment extends Fragment {
             trackDay.setDateNumber(dateInt);
             ParseUser currentUser = ParseUser.getCurrentUser();
             JSONArray trackDateArray = currentUser.getJSONArray("trackDateArray");
-            if(trackDateArray !=null){
-                for(int i = 0; i < trackDateArray.length(); i++){
-                    try {
-                        int dateVal = trackDateArray.getInt(i);
-                        if(dateVal == dateInt){
-                            removeDuplicates(currentUser, dateInt);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
+            removeDuplicates(currentUser, dateInt);
             ParseUser.getCurrentUser().add("trackDateArray", dateInt);
 
         }
