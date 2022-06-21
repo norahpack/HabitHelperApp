@@ -65,7 +65,7 @@ public class TrackFragment extends Fragment {
 
 
     public List<Object> habitsList;
-    public List<Double> todayHabits = new ArrayList<>();
+    public List<Integer> todayHabits = new ArrayList<>();
     public String[] dateParts;
 
 
@@ -138,6 +138,7 @@ public class TrackFragment extends Fragment {
                     String month = getMonth(dateParts[1]);
                     String day = getDay(dateParts[2]);
                     String year = dateParts[0];
+                    setOldHabits();
                     tvDate.setText("Today is "+month+" "+day+", "+year+" in "+locationName);
                 } catch (JSONException e){
                     Log.e(TAG, "hit json exception", e);
@@ -170,6 +171,8 @@ public class TrackFragment extends Fragment {
             }
         });
 
+
+
         btnTrack.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -183,8 +186,89 @@ public class TrackFragment extends Fragment {
         });
     }
 
+    private void setOldHabits() {
+        String dateStringInt = dateParts[0]+dateParts[1]+dateParts[2];
+        try{
+            int dateInt = Integer.parseInt(dateStringInt);
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            ParseQuery<TrackDay> query = ParseQuery.getQuery(TrackDay.class);
+            query.include(TrackDay.KEY_PARENT_USER);
+            query.include(TrackDay.KEY_DATE_NUMBER);
+            query.orderByDescending(TrackDay.KEY_DATE_NUMBER);
+            query.whereEqualTo(TrackDay.KEY_PARENT_USER, currentUser);
+            query.whereEqualTo(TrackDay.KEY_DATE_NUMBER, dateInt);
+            query.findInBackground(new FindCallback<TrackDay>() {
+                @Override
+                public void done(List<TrackDay> daysTracked, ParseException e) {
+                    if (e != null) {
+                        return;
+                    }
+                    if(daysTracked.size()>=1){
+                        TrackDay firstTracked=daysTracked.get(0);
+                        int moodFirstDay = firstTracked.getMood();
+                        List<Integer> firstHabitsTracked = firstTracked.getTrackArray();
+                        RadioButton rbToCheck = rbThree;
+                        if(moodFirstDay == 1){
+                            rbToCheck = rbOne;
+                        } else if (moodFirstDay ==2){
+                            rbToCheck = rbTwo;
+                        } else if (moodFirstDay == 3){
+                            rbToCheck = rbThree;
+                        } else if (moodFirstDay ==4){
+                            rbToCheck = rbFour;
+                        } else {
+                            rbToCheck = rbFive;
+                        }
+                        rbThree.setChecked(false);
+                        rbToCheck.setChecked(true);
+
+                        for(int i = 0; i<firstHabitsTracked.size(); i++){
+                            if(firstHabitsTracked.get(i)==1){
+                                setChecked(i);
+                            }
+                        }
+                    }
+                }
+            });
+
+        }
+        catch (NumberFormatException ex){
+            ex.printStackTrace();
+        }
+
+
+    }
+
+    private void setChecked(int i) {
+        CheckBox cbGoTo;
+        //figures out which checkBox object we should be populating
+        if(i==0){
+            cbGoTo=cbOne;
+        } else if (i==1){
+            cbGoTo=cbTwo;
+        } else if (i==2){
+            cbGoTo=cbThree;
+        } else if (i==3){
+            cbGoTo=cbFour;
+        } else if (i==4){
+            cbGoTo=cbFive;
+        } else if (i==5){
+            cbGoTo=cbSix;
+        } else if (i==6){
+            cbGoTo=cbSeven;
+        } else if (i==7){
+            cbGoTo=cbEight;
+        } else if (i==8){
+            cbGoTo=cbNine;
+        } else {
+            cbGoTo=cbTen;
+        }
+        cbGoTo.setChecked(true);
+
+    }
+
     //saving the information the user entered to the parse database
-    private void saveTrack(int todayMood, List<Double> todayHabits) {
+    private void saveTrack(int todayMood, List<Integer> todayHabits) {
         TrackDay trackDay = new TrackDay();
         trackDay.setMood(todayMood);
         trackDay.setTrackArray(todayHabits);
@@ -194,9 +278,7 @@ public class TrackFragment extends Fragment {
             int dateInt = Integer.parseInt(dateStringInt);
             trackDay.setDateNumber(dateInt);
             ParseUser currentUser = ParseUser.getCurrentUser();
-            JSONArray trackDateArray = currentUser.getJSONArray("trackDateArray");
             removeDuplicates(currentUser, dateInt);
-            ParseUser.getCurrentUser().add("trackDateArray", dateInt);
 
         }
         catch (NumberFormatException ex){
@@ -222,7 +304,6 @@ public class TrackFragment extends Fragment {
     private void removeDuplicates(ParseUser parentTracker, int dateInt) {
 
         ParseQuery<TrackDay> query = ParseQuery.getQuery(TrackDay.class);
-        query.include(TrackDay.KEY_PARENT_USER);
         query.include(TrackDay.KEY_PARENT_USER);
         query.include(TrackDay.KEY_DATE_NUMBER);
         query.whereEqualTo(TrackDay.KEY_PARENT_USER, parentTracker);
@@ -267,9 +348,9 @@ public class TrackFragment extends Fragment {
                 cbGoTo=cbTen;
             }
             if(cbGoTo.isChecked()){
-                todayHabits.add(1.0);
+                todayHabits.add(1);
             } else {
-                todayHabits.add(0.0);
+                todayHabits.add(0);
             }
         }
     }

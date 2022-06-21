@@ -16,9 +16,9 @@ public class TrackDay extends ParseObject {
     public static final String KEY_MOOD="mood";
     public static final String KEY_DATE_NUMBER="dateNumber";
 
-    public double getMood(){return getDouble(KEY_MOOD);}
+    public int getMood(){return getInt(KEY_MOOD);}
 
-    public void setMood(double mood){put(KEY_MOOD, mood);}
+    public void setMood(Integer mood){put(KEY_MOOD, mood);}
 
     public int getDateNumber(){return getInt(KEY_DATE_NUMBER);}
 
@@ -28,9 +28,9 @@ public class TrackDay extends ParseObject {
 
     public void setParentUser(ParseUser parent){put(KEY_PARENT_USER, parent);}
 
-    public List<Double> getTrackArray(){return getList(KEY_TRACK_ARRAY);}
+    public List<Integer> getTrackArray(){return getList(KEY_TRACK_ARRAY);}
 
-    public void setTrackArray(List<Double> array){put(KEY_TRACK_ARRAY, array);}
+    public void setTrackArray(List<Integer> array){put(KEY_TRACK_ARRAY, array);}
 
 
 }
