@@ -69,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
 
         // sets the default fragment to be the home fragment
         bottomNavigation.setSelectedItemId(R.id.itemHome);
-
+    }
+    public void setTab(Fragment fragment, int selectedItem){
+        fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+        bottomNavigation.setSelectedItemId(selectedItem);
     }
 }
