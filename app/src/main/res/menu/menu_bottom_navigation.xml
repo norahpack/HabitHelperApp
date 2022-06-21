@@ -20,7 +20,7 @@
 
     <item
         android:id="@+id/itemMood"
-        android:icon="@drawable/mood5"
+        android:icon="@drawable/mood4"
         app:showAsAction="always"
         android:title="Mood" />
 

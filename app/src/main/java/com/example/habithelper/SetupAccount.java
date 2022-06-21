@@ -88,7 +88,6 @@ public class SetupAccount extends AppCompatActivity {
                 // checking whether or not the zipcode inputted is valid
                 AsyncHttpClient client = new AsyncHttpClient();
                 String api_request=GET_WEATHER_URL+zipString;
-                System.out.println(api_request);
                 client.get(api_request, new JsonHttpResponseHandler() {
 
                     @Override

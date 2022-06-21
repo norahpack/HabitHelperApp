@@ -3,6 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="peach">#FFBAA7</color>
+    <color name="peach_dark">#D09080</color>
     <color name="sienna">#A44F30</color>
     <color name="sienna_light">#B75F39</color>
     <color name="sienna_dark">#893515</color>

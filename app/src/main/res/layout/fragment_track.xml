@@ -1,14 +1,316 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/peach_dark"
+    android:orientation="horizontal"
     tools:context=".fragments.TrackFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/tvTrack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/honey_florist"
+        android:text="(Track Habits)"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/cream"
+        android:textColorHighlight="#B51010"
+        android:textSize="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/brittany_signature"
+        android:textAlignment="center"
+        android:textColor="@color/sienna"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTrack"
+        tools:text="It is January 14, 2004 in Cincinnati" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="-10dp"
+        android:checkedButton="@id/rbThree"
+        android:contextClickable="true"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDate">
+
+        <RadioButton
+            android:id="@+id/rbOne"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:buttonTint="@color/cream"
+            android:drawableStart="@drawable/mood1"
+            android:drawableTint="@color/cream"
+            android:tag="1" />
+
+        <RadioButton
+            android:id="@+id/rbTwo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:buttonTint="@color/cream"
+            android:drawableStart="@drawable/mood2"
+            android:drawableTint="@color/cream"
+            android:tag="2" />
+
+        <RadioButton
+            android:id="@+id/rbThree"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:buttonTint="@color/cream"
+            android:drawableStart="@drawable/mood3"
+            android:drawableTint="@color/cream"
+            android:scaleType="centerInside"
+            android:tag="3" />
+
+        <RadioButton
+            android:id="@+id/rbFour"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:buttonTint="@color/cream"
+            android:drawableStart="@drawable/mood4"
+            android:drawableTint="@color/cream"
+            android:tag="4" />
+
+        <RadioButton
+            android:id="@+id/rbFive"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:buttonTint="@color/cream"
+            android:drawableStart="@drawable/mood5"
+            android:drawableTint="@color/cream"
+            android:tag="5" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/tvMood"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-10dp"
+        android:fontFamily="@font/brittany_signature"
+        android:textAlignment="center"
+        android:textColor="@color/sienna"
+        android:textSize="19dp"
+        android:textStyle="bold"
+        android:text="Today's mood"
+        app:layout_constraintBottom_toTopOf="@+id/radioGroup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvHabitCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/brittany_signature"
+        android:text="Today, I completed these habits"
+        android:textAlignment="center"
+        android:textColor="@color/sienna"
+        android:textSize="19dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+    <CheckBox
+        android:id="@+id/cbOne"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:buttonTint="@color/cream"
+        android:checked="false"
+        android:textColor="@color/cream"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHabitCheck"
+        tools:ignore="UnknownId"
+        tools:text="habit" />
+
+    <CheckBox
+        android:id="@+id/cbTwo"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:buttonTint="@color/cream"
+        android:checked="false"
+        android:textColor="@color/cream"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cbOne"
+        tools:ignore="UnknownId"
+        tools:text="habit" />
+
+    <CheckBox
+        android:id="@+id/cbThree"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:buttonTint="@color/cream"
+        android:checked="false"
+        android:textColor="@color/cream"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cbTwo"
+        tools:ignore="UnknownId"
+        tools:text="Drink 8 cups of water" />
+
+    <CheckBox
+        android:id="@+id/cbFour"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:buttonTint="@color/cream"
+        android:checked="false"
+        android:textColor="@color/cream"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cbThree"
+        tools:ignore="UnknownId"
+        tools:text="habit" />
+
+    <CheckBox
+        android:id="@+id/cbFive"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:buttonTint="@color/cream"
+        android:checked="false"
+        android:textColor="@color/cream"
+        android:visibility="gone"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cbFour"
+        tools:ignore="UnknownId"
+        tools:text="habit" />
+
+    <CheckBox
+        android:id="@+id/cbSix"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:buttonTint="@color/cream"
+        android:checked="false"
+        android:textColor="@color/cream"
+        android:visibility="gone"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cbFive"
+        tools:ignore="UnknownId"
+        tools:text="habit" />
+
+    <CheckBox
+        android:id="@+id/cbSeven"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:buttonTint="@color/cream"
+        android:checked="false"
+        android:textColor="@color/cream"
+        android:visibility="gone"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cbSix"
+        tools:ignore="UnknownId"
+        tools:text="habit" />
+
+    <CheckBox
+        android:id="@+id/cbEight"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:buttonTint="@color/cream"
+        android:checked="false"
+        android:textColor="@color/cream"
+        android:visibility="gone"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cbSeven"
+        tools:ignore="UnknownId"
+        tools:text="habit" />
+
+    <CheckBox
+        android:id="@+id/cbNine"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:buttonTint="@color/cream"
+        android:checked="false"
+        android:textColor="@color/cream"
+        android:visibility="gone"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cbEight"
+        tools:ignore="UnknownId"
+        tools:text="habit" />
+
+    <CheckBox
+        android:id="@+id/cbTen"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:buttonTint="@color/cream"
+        android:checked="false"
+        android:textColor="@color/cream"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
+
+        app:layout_constraintTop_toBottomOf="@+id/cbNine"
+        tools:ignore="UnknownId"
+        tools:text="habit" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Track my habits!"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cbTen" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="3dp"
+        android:background="@drawable/flower"
+        android:backgroundTint="@color/cream"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHabitCheck" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
