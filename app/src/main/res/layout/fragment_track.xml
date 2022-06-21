@@ -35,7 +35,7 @@
         android:fontFamily="@font/brittany_signature"
         android:textAlignment="center"
         android:textColor="@color/sienna"
-        android:textSize="24dp"
+        android:textSize="22dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
