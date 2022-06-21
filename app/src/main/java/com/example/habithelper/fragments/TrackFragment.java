@@ -22,7 +22,9 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.habithelper.MainActivity;
 import com.example.habithelper.R;
 import com.example.habithelper.TrackDay;
+import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -137,9 +139,6 @@ public class TrackFragment extends Fragment {
                     String day = getDay(dateParts[2]);
                     String year = dateParts[0];
                     tvDate.setText("Today is "+month+" "+day+", "+year+" in "+locationName);
-                    System.out.println(locationTime);
-                    System.out.println(locationDate);
-                    System.out.println(locationName);
                 } catch (JSONException e){
                     Log.e(TAG, "hit json exception", e);
                     e.printStackTrace();
@@ -179,15 +178,12 @@ public class TrackFragment extends Fragment {
                 int todayMood=(int)(finalChoice.getTag());
 
                 populateTodayHabits(numHabits);
-                System.out.println(todayHabits);
-                System.out.println(todayMood);
                 saveTrack(todayMood, todayHabits);
             }
-
         });
-
     }
 
+    //saving the information the user entered to the parse database
     private void saveTrack(int todayMood, List<Double> todayHabits) {
         TrackDay trackDay = new TrackDay();
         trackDay.setMood(todayMood);
@@ -197,6 +193,22 @@ public class TrackFragment extends Fragment {
         try{
             int dateInt = Integer.parseInt(dateStringInt);
             trackDay.setDateNumber(dateInt);
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            JSONArray trackDateArray = currentUser.getJSONArray("trackDateArray");
+            if(trackDateArray !=null){
+                for(int i = 0; i < trackDateArray.length(); i++){
+                    try {
+                        int dateVal = trackDateArray.getInt(i);
+                        if(dateVal == dateInt){
+                            removeDuplicates(currentUser, dateInt);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            ParseUser.getCurrentUser().add("trackDateArray", dateInt);
+
         }
         catch (NumberFormatException ex){
             ex.printStackTrace();
@@ -211,10 +223,33 @@ public class TrackFragment extends Fragment {
                 }
 
                 //allows us to navigate in between fragments
+
                 MainActivity.self.setTab(new HomeFragment(), R.id.itemHome);
             }
         });
+    }
 
+    //will clear the habit data the user tracked earlier in the day, if they have done so yet.
+    private void removeDuplicates(ParseUser parentTracker, int dateInt) {
+
+        ParseQuery<TrackDay> query = ParseQuery.getQuery(TrackDay.class);
+        query.include(TrackDay.KEY_PARENT_USER);
+        query.include(TrackDay.KEY_PARENT_USER);
+        query.include(TrackDay.KEY_DATE_NUMBER);
+        query.whereEqualTo(TrackDay.KEY_PARENT_USER, parentTracker);
+        query.whereEqualTo(TrackDay.KEY_DATE_NUMBER, dateInt);
+        query.findInBackground(new FindCallback<TrackDay>() {
+            @Override
+            public void done(List<TrackDay> daysTracked, ParseException e) {
+                if (e != null) {
+                    return;
+                }
+                for (int i = 0; i<daysTracked.size(); i++){
+                    TrackDay toRemove = daysTracked.get(i);
+                    toRemove.deleteInBackground();
+                }
+            }
+        });
     }
 
     private void populateTodayHabits(int numHabits){
@@ -248,7 +283,6 @@ public class TrackFragment extends Fragment {
                 todayHabits.add(0.0);
             }
         }
-
     }
 
     private void populateCheckboxes(int numHabits) {
