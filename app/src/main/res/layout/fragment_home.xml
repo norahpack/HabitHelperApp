@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/cream"
     tools:context=".fragments.HomeFragment">
 
@@ -12,11 +12,11 @@
         android:id="@+id/tvHello"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="15dp"
         android:fontFamily="@font/honey_florist"
         android:text="(Hello Blank Fragment)"
-        android:layout_marginTop="15dp"
-        android:textColor="@color/sienna"
         android:textAlignment="center"
+        android:textColor="@color/sienna"
         android:textSize="65sp"
         android:typeface="normal" />
 
@@ -24,8 +24,8 @@
         android:id="@+id/btnLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Log Out"
         android:layout_gravity="center"
+        android:text="Log Out"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
