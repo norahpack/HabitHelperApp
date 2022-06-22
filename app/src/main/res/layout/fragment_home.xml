@@ -17,7 +17,7 @@
         android:text="Hello Blank Fragment"
         android:textAlignment="center"
         android:textColor="@color/sienna"
-        android:textSize="65sp"
+        android:textSize="55sp"
         android:typeface="normal" />
 
     <Button
