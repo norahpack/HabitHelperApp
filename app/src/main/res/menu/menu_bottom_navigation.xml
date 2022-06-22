@@ -6,27 +6,33 @@
         android:id="@+id/itemProfile"
         android:icon="@drawable/person"
         android:title="Profile"
+        android:fontFamily="@font/bright"
         app:showAsAction="always"/>
     <item
         android:id="@+id/itemTrack"
         android:icon="@drawable/check"
         android:title="Track"
+        android:fontFamily="@font/bright"
         app:showAsAction="always" />
     <item
         android:id="@+id/itemHome"
         android:icon="@drawable/home"
         app:showAsAction="always"
+        android:fontFamily="@font/bright"
         android:title="Home" />
 
     <item
         android:id="@+id/itemMood"
         android:icon="@drawable/mood4"
         app:showAsAction="always"
+        android:fontFamily="@font/bright"
+
         android:title="Mood" />
 
     <item
         android:id="@+id/itemList"
         android:icon="@drawable/list"
         app:showAsAction="always"
+        android:fontFamily="@font/bright"
         android:title="Habits" />
 </menu>

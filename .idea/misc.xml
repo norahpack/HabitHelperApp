@@ -7,19 +7,20 @@
         <entry key="app/src/main/res/drawable/mood5.xml" value="0.2625" />
         <entry key="app/src/main/res/drawable/slight_rounded_corners.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/splash_background.xml" value="0.1" />
+        <entry key="app/src/main/res/font/bright_resource.xml" value="0.15648148148148147" />
         <entry key="app/src/main/res/font/brittany_signature_resource.xml" value="0.12291666666666666" />
         <entry key="app/src/main/res/font/charlotte_resource.xml" value="0.15185185185185185" />
         <entry key="app/src/main/res/font/honey_florist_resource.xml" value="0.16944444444444445" />
         <entry key="app/src/main/res/font/southmore_resource.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.43854166666666666" />
-        <entry key="app/src/main/res/layout/activity_setup_account.xml" value="0.40200653076171877" />
-        <entry key="app/src/main/res/layout/activity_signup.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.36501312255859375" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.36683756510416665" />
+        <entry key="app/src/main/res/layout/activity_setup_account.xml" value="0.33663024902343747" />
+        <entry key="app/src/main/res/layout/activity_signup.xml" value="0.35853424072265627" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.32780151367187504" />
         <entry key="app/src/main/res/layout/fragment_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_mood.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_track.xml" value="0.37135416666666665" />
+        <entry key="app/src/main/res/layout/fragment_track.xml" value="0.38129069010416666" />
         <entry key="app/src/main/res/menu/menu_bottom_navigation.xml" value="0.4375" />
       </map>
     </option>

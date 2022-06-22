@@ -31,6 +31,7 @@
             android:backgroundTint="@color/cream"
             android:ems="10"
             android:hint="Username"
+            android:fontFamily="@font/bright"
             android:inputType="textPersonName"
             android:paddingLeft="4dp"
             android:textAlignment="textStart"
@@ -42,6 +43,8 @@
 
         <EditText
             android:id="@+id/etPassword"
+            android:fontFamily="@font/bright"
+
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginStart="15dp"
@@ -69,6 +72,8 @@
             android:background="@drawable/slight_rounded_corners"
             android:backgroundTint="@color/cream"
             android:text="Create Account"
+            android:fontFamily="@font/bright"
+            android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

@@ -126,7 +126,7 @@ public class SetupAccount extends AppCompatActivity {
             habitsList.add("Meditate");
         }
         if (checkBoxSleep.isChecked()) {
-            habitsList.add("Sleep 7+ hours");
+            habitsList.add("Sleep 7 hours");
         }
         if (checkBoxRead.isChecked()) {
             habitsList.add("Read a book");

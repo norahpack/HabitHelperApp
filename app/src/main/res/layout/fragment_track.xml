@@ -149,7 +149,9 @@
         android:buttonTint="@color/cream"
         android:checked="false"
         android:textColor="@color/cream"
+        android:fontFamily="@font/bright"
         android:visibility="gone"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvHabitCheck"
         tools:ignore="UnknownId"
@@ -157,6 +159,8 @@
 
     <CheckBox
         android:id="@+id/cbTwo"
+        android:fontFamily="@font/bright"
+
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginStart="10dp"
@@ -173,6 +177,8 @@
 
     <CheckBox
         android:id="@+id/cbThree"
+        android:fontFamily="@font/bright"
+
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginStart="10dp"
@@ -189,6 +195,8 @@
 
     <CheckBox
         android:id="@+id/cbFour"
+        android:fontFamily="@font/bright"
+
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginStart="10dp"
@@ -205,6 +213,8 @@
 
     <CheckBox
         android:id="@+id/cbFive"
+        android:fontFamily="@font/bright"
+
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginStart="10dp"
@@ -221,6 +231,8 @@
 
     <CheckBox
         android:id="@+id/cbSix"
+        android:fontFamily="@font/bright"
+
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginStart="10dp"
@@ -237,6 +249,8 @@
 
     <CheckBox
         android:id="@+id/cbSeven"
+        android:fontFamily="@font/bright"
+
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginStart="10dp"
@@ -253,6 +267,8 @@
 
     <CheckBox
         android:id="@+id/cbEight"
+        android:fontFamily="@font/bright"
+
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginStart="10dp"
@@ -269,6 +285,8 @@
 
     <CheckBox
         android:id="@+id/cbNine"
+        android:fontFamily="@font/bright"
+
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginStart="10dp"
@@ -285,6 +303,8 @@
 
     <CheckBox
         android:id="@+id/cbTen"
+        android:fontFamily="@font/bright"
+
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginStart="10dp"
@@ -304,6 +324,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:background="@drawable/slight_rounded_corners"
+        android:fontFamily="@font/bright"
         android:text="Track my habits!"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

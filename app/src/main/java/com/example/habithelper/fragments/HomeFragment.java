@@ -33,6 +33,9 @@ public class HomeFragment extends Fragment {
 
     Button btnLogout;
     TextView tvHello;
+    TextView tvThreeOne;
+    TextView tvThreeTwo;
+    TextView tvThreeThree;
     double[] y;
     double[][] x;
     public int dimension_one;
@@ -60,6 +63,9 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         btnLogout=view.findViewById(R.id.btnLogout);
         tvHello=view.findViewById(R.id.tvHello);
+        tvThreeOne=view.findViewById(R.id.tvThreeOne);
+        tvThreeTwo=view.findViewById(R.id.tvThreeTwo);
+        tvThreeThree=view.findViewById(R.id.tvThreeThree);
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         String name = currentUser.getString("name");
@@ -107,17 +113,23 @@ public class HomeFragment extends Fragment {
 
                     //getting the three most impactful habits on a user's mood
                     try {
-                        System.out.println(currentUser.getJSONArray("habitsList").get(getIndexOfLargest(resultsArray)));
+                        Object firstObject = currentUser.getJSONArray("habitsList").get(getIndexOfLargest(resultsArray));
+                        String firstString = String.valueOf(firstObject);
+                        tvThreeOne.setText("1. "+firstString);
                     } catch (JSONException ex) {
                         ex.printStackTrace();
                     }
                     try {
-                        System.out.println(currentUser.getJSONArray("habitsList").get(getIndexOfSecondLargest(resultsArray)));
+                        Object secondObject = currentUser.getJSONArray("habitsList").get(getIndexOfSecondLargest(resultsArray));
+                        String secondString = String.valueOf(secondObject);
+                        tvThreeTwo.setText("2. "+secondString);
                     } catch (JSONException ex) {
                         ex.printStackTrace();
                     }
                     try {
-                        System.out.println(currentUser.getJSONArray("habitsList").get(getIndexOfThirdLargest(resultsArray)));
+                        Object thirdObject = currentUser.getJSONArray("habitsList").get(getIndexOfThirdLargest(resultsArray));
+                        String thirdString = String.valueOf(thirdObject);
+                        tvThreeThree.setText("3. "+thirdString);
                     } catch (JSONException ex) {
                         ex.printStackTrace();
                     }
