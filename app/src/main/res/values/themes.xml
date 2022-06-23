@@ -17,11 +17,10 @@
     </style>
 
     <style name="SplashTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/splash_background</item>
         <item name="colorPrimary">@color/peach</item>
         <item name="colorPrimaryDark">@color/peach</item>
         <item name="colorAccent">@color/peach</item>
-        <item name="android:statusBarColor">@color/sienna_dark</item>
+        <item name="android:statusBarColor">@color/sienna</item>
     </style>
 
     <style name="Light" parent="Theme.MaterialComponents.Light.NoActionBar">
