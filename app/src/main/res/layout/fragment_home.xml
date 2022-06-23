@@ -34,6 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/clThree" />
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clNotEnoughHabits"
         android:layout_width="match_parent"
@@ -86,24 +87,74 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clThree"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="15dp"
-        android:visibility="gone"
-        android:background="@drawable/slight_rounded_corners"
-        android:backgroundTint="@color/cream"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/tvHello">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clBack"
+            android:background="@drawable/slight_rounded_corners"
+            android:backgroundTint="@color/peach_dark"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvCompletedPortion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/bright"
+                android:lineSpacingExtra="-20dp"
+                android:minLines="2"
+                android:text=""
+                android:textAlignment="center"
+                android:textColor='@color/cream'
+                android:textSize="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/pbCompletedPortion"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/slight_rounded_corners"
+                android:backgroundTint="@color/sienna"
+                android:indeterminate="false"
+                android:progressTint="@color/cream"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvCompletedPortion" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clFront"
+            android:background="@drawable/slight_rounded_corners"
+            android:backgroundTint="@color/cream"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/tvThreeMain"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="30dp"
@@ -160,10 +211,12 @@
             android:fontFamily="@font/bright"
             android:text="TextView"
             android:textColor="@color/peach_dark"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvThreeTwo" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,8 @@
 package com.example.habithelper.fragments;
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -8,12 +11,18 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.codepath.asynchttpclient.AsyncHttpClient;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.habithelper.LoginActivity;
 import com.example.habithelper.MainActivity;
 import com.example.habithelper.OLSMultipleLinearRegression;
@@ -26,24 +35,40 @@ import com.parse.ParseUser;
 
 import org.apache.commons.math3.linear.RealVector;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.List;
 
+import okhttp3.Headers;
+
 public class HomeFragment extends Fragment {
+
+    public static final String GET_WEATHER_URL="https://api.weatherapi.com/v1/current.json?key=e8d92dcba9404609b24175200221606&q=";
 
     Button btnLogout;
     TextView tvHello;
     TextView tvThreeOne;
     TextView tvThreeTwo;
     TextView tvThreeThree;
+    ConstraintLayout clThree;
+    ConstraintLayout clNotEnoughHabits;
+    TextView tvNumDaysTracked;
+    ConstraintLayout clFront;
+    ConstraintLayout clBack;
+    TextView tvCompletedPortion;
+    ProgressBar pbCompletedPortion;
+
     double[] y;
     double[][] x;
     public int dimension_one;
     public int dimension_two;
-    ConstraintLayout clThree;
-    ConstraintLayout clNotEnoughHabits;
-    TextView tvNumDaysTracked;
+    public List<Object> habitsList;
+    private int numChecked=0;
+    private int numHabits;
+    private AnimatorSet mSetRightOut;
+    private AnimatorSet mSetLeftIn;
+    private boolean mIsBackVisible = false;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -62,9 +87,11 @@ public class HomeFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
+
         btnLogout=view.findViewById(R.id.btnLogout);
         tvHello=view.findViewById(R.id.tvHello);
         tvThreeOne=view.findViewById(R.id.tvThreeOne);
@@ -73,10 +100,25 @@ public class HomeFragment extends Fragment {
         clThree=view.findViewById(R.id.clThree);
         clNotEnoughHabits=view.findViewById(R.id.clNotEnoughHabits);
         tvNumDaysTracked=view.findViewById(R.id.tvNumDaysTracked);
+        clBack = view.findViewById(R.id.clBack);
+        clFront = view.findViewById(R.id.clFront);
+        tvCompletedPortion = view.findViewById(R.id.tvCompletedPortion);
+        pbCompletedPortion = view.findViewById(R.id.pbCompletedPortion);
+
+        mSetLeftIn = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.cardflip_exit_animation);
+        mSetRightOut = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.cardflip_animation);
+
+        float scale = getContext().getResources().getDisplayMetrics().density;
+        view.setCameraDistance(8000 * scale);
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         String name = currentUser.getString("name");
         tvHello.setText("Nice to see you again, "+name);
+
+        habitsList = currentUser.getList("habitsList");
+        numHabits=habitsList.size();
+
+        countNumCompleted();
 
 
         ParseQuery<TrackDay> query = ParseQuery.getQuery(TrackDay.class);
@@ -163,6 +205,22 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        // implementing the double click to flip the card gesture
+        clThree.setOnTouchListener(new View.OnTouchListener() {
+            private GestureDetector gestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener(){
+                @SuppressLint("ClickableViewAccessibility")
+                @Override
+                public boolean onDoubleTap(MotionEvent e) {
+                    flipCard();
+                    return false;
+                }
+            });
+            @Override
+            public boolean onTouch(View v, @SuppressLint("ClickableViewAccessibility") MotionEvent event) {
+                gestureDetector.onTouchEvent(event);
+                return true;
+            }
+        });
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,6 +229,65 @@ public class HomeFragment extends Fragment {
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 Intent i = new Intent (getContext(), LoginActivity.class);
                 startActivity(i);
+            }
+        });
+    }
+
+    // counts the number of habits the user has done so far today
+    private void countNumCompleted() {
+        AsyncHttpClient client = new AsyncHttpClient();
+        String api_request=GET_WEATHER_URL+ParseUser.getCurrentUser().getString("zipCode");
+        client.get(api_request, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                JSONObject jsonObject = json.jsonObject;
+                try{
+                    JSONObject location = jsonObject.getJSONObject("location");
+                    String locationTime = location.getString("localtime");
+                    String locationDate=locationTime.split(" ")[0];
+                    String locationName = location.getString("name");
+                    String[] dateParts = locationDate.split("-", 3);
+                    String dateStringInt = dateParts[0]+dateParts[1]+dateParts[2];
+                    try{
+                        int dateInt = Integer.parseInt(dateStringInt);
+                        ParseUser currentUser = ParseUser.getCurrentUser();
+                        ParseQuery<TrackDay> query = ParseQuery.getQuery(TrackDay.class);
+                        query.include(TrackDay.KEY_PARENT_USER);
+                        query.include(TrackDay.KEY_DATE_NUMBER);
+                        query.orderByDescending(TrackDay.KEY_DATE_NUMBER);
+                        query.whereEqualTo(TrackDay.KEY_PARENT_USER, currentUser);
+                        query.whereEqualTo(TrackDay.KEY_DATE_NUMBER, dateInt);
+                        query.findInBackground(new FindCallback<TrackDay>() {
+                            @Override
+                            public void done(List<TrackDay> daysTracked, ParseException e) {
+                                if (e != null) {
+                                    return;
+                                }
+
+                                // the user has tracked some habits today
+                                if(daysTracked.size()>=1){
+                                    TrackDay firstTracked=daysTracked.get(0);
+                                    List<Integer> firstHabitsTracked = firstTracked.getTrackArray();
+                                    for(int i = 0; i<firstHabitsTracked.size(); i++){
+                                        numChecked+=firstHabitsTracked.get(i);
+                                    }
+                                }
+                                tvCompletedPortion.setText("Today, you have completed "+String.valueOf(numChecked)+" of "+numHabits+" habits");
+                                pbCompletedPortion.setProgress((int) Math.round(100*((double) numChecked/numHabits)));
+                            }
+                        });
+                    }
+                    catch (NumberFormatException ex){
+                        ex.printStackTrace();
+                    }
+                } catch (JSONException e){
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                return;
             }
         });
     }
@@ -233,4 +350,19 @@ public class HomeFragment extends Fragment {
         return largest; // position of the first largest found
     }
 
+    public void flipCard() {
+        if (!mIsBackVisible) {
+            mSetRightOut.setTarget(clFront);
+            mSetLeftIn.setTarget(clBack);
+            mSetRightOut.start();
+            mSetLeftIn.start();
+            mIsBackVisible = true;
+        } else {
+            mSetRightOut.setTarget(clBack);
+            mSetLeftIn.setTarget(clFront);
+            mSetRightOut.start();
+            mSetLeftIn.start();
+            mIsBackVisible = false;
+        }
+    }
 }
