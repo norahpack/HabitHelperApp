@@ -18,7 +18,6 @@ import java.sql.SQLOutput;
 
 public class LoginActivity extends AppCompatActivity {
 
-    public static final String TAG = "LoginActivity";
     private Button btnSignup;
     private Button btnLogin;
     private EditText etUsername;
@@ -42,7 +41,6 @@ public class LoginActivity extends AppCompatActivity {
         btnSignup.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "onClick signup button");
                 Intent i = new Intent(LoginActivity.this, SignupActivity.class);
                 startActivity(i);
                 finish();
@@ -52,7 +50,6 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "onClick login button");
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
                 loginUser(username, password);

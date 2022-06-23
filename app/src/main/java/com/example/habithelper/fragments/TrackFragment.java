@@ -42,7 +42,6 @@ import okhttp3.Headers;
 public class TrackFragment extends Fragment {
 
     public static final String GET_WEATHER_URL="https://api.weatherapi.com/v1/current.json?key=e8d92dcba9404609b24175200221606&q=";
-    public static final String TAG = "TrackFragment";
 
     public TextView tvDate;
     public CheckBox cbOne;
@@ -141,7 +140,6 @@ public class TrackFragment extends Fragment {
                     setOldHabits();
                     tvDate.setText("Today is "+month+" "+day+", "+year+" in "+locationName);
                 } catch (JSONException e){
-                    Log.e(TAG, "hit json exception", e);
                     e.printStackTrace();
                 }
             }

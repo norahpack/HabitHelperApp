@@ -37,11 +37,17 @@ public class SetupAccount extends AppCompatActivity {
     CheckBox checkBoxWorkout;
     CheckBox checkBoxSkincare;
     CheckBox checkBoxTalk;
+    CheckBox checkBoxCustomOne;
+    CheckBox checkBoxCustomTwo;
+    EditText etCustomOne;
+    EditText etCustomTwo;
     ImageButton ibUpdate;
     ArrayList<String> habitsList = new ArrayList<String>();
     Boolean validZip;
     String name;
     String zipString;
+    String customHabitOne;
+    String customHabitTwo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +66,34 @@ public class SetupAccount extends AppCompatActivity {
         checkBoxWorkout = findViewById(R.id.checkBoxWorkout);
         checkBoxSkincare = findViewById(R.id.checkBoxSkincare);
         checkBoxTalk = findViewById(R.id.checkBoxTalk);
+        checkBoxCustomOne = findViewById(R.id.checkBoxCustomOne);
+        checkBoxCustomTwo = findViewById(R.id.checkBoxCustomTwo);
         ibUpdate = findViewById(R.id.ibUpdate);
+        etCustomOne = findViewById(R.id.etCustomOne);
+        etCustomTwo = findViewById(R.id.etCustomTwo);
 
         ibUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 name = etName.getText().toString();
                 zipString = etZip.getText().toString();
+                customHabitOne=etCustomOne.getText().toString();
+                customHabitTwo=etCustomTwo.getText().toString();
+
+                if(checkBoxCustomOne.isChecked()){
+                    if (customHabitOne.isEmpty()) {
+                        Toast.makeText(SetupAccount.this, "habit cannot be empty", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+
+                if(checkBoxCustomTwo.isChecked()){
+                    if (customHabitTwo.isEmpty()) {
+                        Toast.makeText(SetupAccount.this, "habit cannot be empty", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+
                 if (name.isEmpty()) {
                     Toast.makeText(SetupAccount.this, "name cannot be empty", Toast.LENGTH_SHORT).show();
                     return;
@@ -80,6 +107,12 @@ public class SetupAccount extends AppCompatActivity {
                 initializeHabitList();
                 if (habitsList.size()<4) {
                     Toast.makeText(SetupAccount.this, "Add more habits", Toast.LENGTH_SHORT).show();
+                    habitsList.clear();
+                    return;
+                }
+
+                if (habitsList.size()>10) {
+                    Toast.makeText(SetupAccount.this, "Select fewer habits", Toast.LENGTH_SHORT).show();
                     habitsList.clear();
                     return;
                 }
@@ -142,6 +175,12 @@ public class SetupAccount extends AppCompatActivity {
         }
         if (checkBoxTalk.isChecked()) {
             habitsList.add("Talk with loved ones");
+        }
+        if (checkBoxCustomOne.isChecked()){
+            habitsList.add(customHabitOne);
+        }
+        if (checkBoxCustomTwo.isChecked()){
+            habitsList.add(customHabitTwo);
         }
     }
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -40,6 +41,7 @@ public class HomeFragment extends Fragment {
     double[][] x;
     public int dimension_one;
     public int dimension_two;
+    ConstraintLayout clThree;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -66,6 +68,7 @@ public class HomeFragment extends Fragment {
         tvThreeOne=view.findViewById(R.id.tvThreeOne);
         tvThreeTwo=view.findViewById(R.id.tvThreeTwo);
         tvThreeThree=view.findViewById(R.id.tvThreeThree);
+        clThree=view.findViewById(R.id.clThree);
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         String name = currentUser.getString("name");
@@ -87,6 +90,7 @@ public class HomeFragment extends Fragment {
                 }
                 dimension_one=daysTracked.size();
                 if(dimension_one>=5){
+                    clThree.setVisibility(view.VISIBLE);
                     dimension_two=daysTracked.get(0).getTrackArray().size();
                     y = new double[dimension_one];
                     x = new double[dimension_one][dimension_two]; //first is data, second is predictors
@@ -134,6 +138,8 @@ public class HomeFragment extends Fragment {
                         ex.printStackTrace();
                     }
 
+                } else {
+                    clThree.setVisibility(view.GONE);
                 }
             }
         });

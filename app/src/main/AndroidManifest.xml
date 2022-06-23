@@ -20,21 +20,21 @@
         <activity
             android:name=".SetupAccount"
             android:exported="false"
-            android:theme="@style/Light"></activity>
+            android:theme="@style/Light" />
         <activity
             android:name=".SignupActivity"
             android:exported="false"
-            android:theme="@style/Light"></activity>
+            android:theme="@style/Light" />
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".SplashScreenActivity"
-            android:theme="@style/SplashTheme"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
