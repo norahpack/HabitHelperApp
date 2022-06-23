@@ -11,7 +11,6 @@
 
     <TextView
         android:id="@+id/tvTrack"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
@@ -20,8 +19,9 @@
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/cream"
-        android:textColorHighlight="#B51010"
         android:textSize="60dp"
+        android:layout_width="match_parent"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:fontFamily="@font/brittany_signature"
         android:textAlignment="center"
         android:textColor="@color/sienna"
@@ -47,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="35dp"
         android:layout_marginEnd="-10dp"
         android:checkedButton="@id/rbThree"
         android:contextClickable="true"
@@ -128,7 +128,7 @@
         android:id="@+id/tvHabitCheck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/brittany_signature"
         android:text="Today, I completed these habits"
         android:textAlignment="center"
@@ -145,7 +145,7 @@
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:buttonTint="@color/cream"
         android:checked="false"
         android:textColor="@color/cream"
@@ -323,13 +323,14 @@
         android:id="@+id/btnTrack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
         android:background="@drawable/slight_rounded_corners"
         android:fontFamily="@font/bright"
         android:text="Track my habits!"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cbTen" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <ImageView
         android:id="@+id/imageView3"
