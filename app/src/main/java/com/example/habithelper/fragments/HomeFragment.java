@@ -42,6 +42,8 @@ public class HomeFragment extends Fragment {
     public int dimension_one;
     public int dimension_two;
     ConstraintLayout clThree;
+    ConstraintLayout clNotEnoughHabits;
+    TextView tvNumDaysTracked;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -69,6 +71,8 @@ public class HomeFragment extends Fragment {
         tvThreeTwo=view.findViewById(R.id.tvThreeTwo);
         tvThreeThree=view.findViewById(R.id.tvThreeThree);
         clThree=view.findViewById(R.id.clThree);
+        clNotEnoughHabits=view.findViewById(R.id.clNotEnoughHabits);
+        tvNumDaysTracked=view.findViewById(R.id.tvNumDaysTracked);
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         String name = currentUser.getString("name");
@@ -92,54 +96,72 @@ public class HomeFragment extends Fragment {
                 if(dimension_one>=5){
                     clThree.setVisibility(view.VISIBLE);
                     dimension_two=daysTracked.get(0).getTrackArray().size();
-                    y = new double[dimension_one];
-                    x = new double[dimension_one][dimension_two]; //first is data, second is predictors
-                    for (int i = 0; i<daysTracked.size(); i++){
-                        List<Integer> trackDayArray = daysTracked.get(i).getTrackArray();
-                        y[i]=daysTracked.get(i).getMood();
-                        double[] myList = new double[trackDayArray.size()];
-                        for (int k=0; k<trackDayArray.size(); k++) {
-                            myList[k] = (double) trackDayArray.get(k);
+                    if(dimension_one>dimension_two){
+                        y = new double[dimension_one];
+                        x = new double[dimension_one][dimension_two]; //first is data, second is predictors
+                        for (int i = 0; i<daysTracked.size(); i++){
+                            List<Integer> trackDayArray = daysTracked.get(i).getTrackArray();
+                            y[i]=daysTracked.get(i).getMood();
+                            double[] myList = new double[trackDayArray.size()];
+                            for (int k=0; k<trackDayArray.size(); k++) {
+                                myList[k] = (double) trackDayArray.get(k);
+                            }
+                            x[i]=myList;
                         }
-                        x[i]=myList;
-                    }
-                    OLSMultipleLinearRegression myMLR = new OLSMultipleLinearRegression();
-                    myMLR.newSampleData(y,x);
-                    RealVector resultsVector = myMLR.calculateBeta();
-                    double[] tempArray = resultsVector.toArray();
-                    double[] resultsArray = new double[tempArray.length-1];
-                    for (int i=1; i<tempArray.length; i++){
-                        resultsArray[i-1]=tempArray[i];
-                    }
+                        OLSMultipleLinearRegression myMLR = new OLSMultipleLinearRegression();
+                        myMLR.newSampleData(y,x);
+                        RealVector resultsVector = myMLR.calculateBeta();
+                        double[] tempArray = resultsVector.toArray();
+                        double[] resultsArray = new double[tempArray.length-1];
+                        for (int i=1; i<tempArray.length; i++){
+                            resultsArray[i-1]=tempArray[i];
+                        }
 
-                    System.out.println(currentUser.getJSONArray("habitsList"));
-                    System.out.println(Arrays.toString(resultsArray));
+                        System.out.println(currentUser.getJSONArray("habitsList"));
+                        System.out.println(Arrays.toString(resultsArray));
 
-                    //getting the three most impactful habits on a user's mood
-                    try {
-                        Object firstObject = currentUser.getJSONArray("habitsList").get(getIndexOfLargest(resultsArray));
-                        String firstString = String.valueOf(firstObject);
-                        tvThreeOne.setText("1. "+firstString);
-                    } catch (JSONException ex) {
-                        ex.printStackTrace();
-                    }
-                    try {
-                        Object secondObject = currentUser.getJSONArray("habitsList").get(getIndexOfSecondLargest(resultsArray));
-                        String secondString = String.valueOf(secondObject);
-                        tvThreeTwo.setText("2. "+secondString);
-                    } catch (JSONException ex) {
-                        ex.printStackTrace();
-                    }
-                    try {
-                        Object thirdObject = currentUser.getJSONArray("habitsList").get(getIndexOfThirdLargest(resultsArray));
-                        String thirdString = String.valueOf(thirdObject);
-                        tvThreeThree.setText("3. "+thirdString);
-                    } catch (JSONException ex) {
-                        ex.printStackTrace();
-                    }
+                        //getting the three most impactful habits on a user's mood
+                        try {
+                            Object firstObject = currentUser.getJSONArray("habitsList").get(getIndexOfLargest(resultsArray));
+                            String firstString = String.valueOf(firstObject);
+                            tvThreeOne.setText("1. "+firstString);
+                        } catch (JSONException ex) {
+                            ex.printStackTrace();
+                        }
+                        try {
+                            Object secondObject = currentUser.getJSONArray("habitsList").get(getIndexOfSecondLargest(resultsArray));
+                            String secondString = String.valueOf(secondObject);
+                            tvThreeTwo.setText("2. "+secondString);
+                        } catch (JSONException ex) {
+                            ex.printStackTrace();
+                        }
+                        try {
+                            Object thirdObject = currentUser.getJSONArray("habitsList").get(getIndexOfThirdLargest(resultsArray));
+                            String thirdString = String.valueOf(thirdObject);
+                            tvThreeThree.setText("3. "+thirdString);
+                        } catch (JSONException ex) {
+                            ex.printStackTrace();
+                        }
 
-                } else {
-                    clThree.setVisibility(view.GONE);
+                    } else {
+                        clThree.setVisibility(view.GONE);
+                        if(dimension_one!=1){
+                            tvNumDaysTracked.setText("So far, you've been tracking for "+String.valueOf(dimension_one)+" days!");
+
+                        } else {
+                            tvNumDaysTracked.setText("So far, you've been tracking for 1 day!");
+                        }
+                        clNotEnoughHabits.setVisibility(view.VISIBLE);
+                    }
+                        } else {
+                            clThree.setVisibility(view.GONE);
+                            if(dimension_one!=1){
+                            tvNumDaysTracked.setText("So far, you've been tracking for "+String.valueOf(dimension_one)+" days!");
+
+                    } else {
+                        tvNumDaysTracked.setText("So far, you've been tracking for 1 day!");
+                    }
+                    clNotEnoughHabits.setVisibility(view.VISIBLE);
                 }
             }
         });
