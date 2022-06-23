@@ -21,6 +21,8 @@ import com.example.habithelper.MainActivity;
 import com.example.habithelper.R;
 import com.example.habithelper.TrackDay;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.Viewport;
+import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.parse.FindCallback;
@@ -104,17 +106,37 @@ public class MoodFragment extends Fragment {
                     DataPoint[] moodDataPoints = new DataPoint[daysTracked.size()];
                     for (int i = 0; i<daysTracked.size(); i++) {
                         int dayMood = daysTracked.get(i).getMood();
-                        moodDataPoints[i] = new DataPoint(i, dayMood);
-                        System.out.println(moodDataPoints[i]);
+                        moodDataPoints[i] = new DataPoint(i+1, dayMood);
                     }
                     LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(moodDataPoints);
                     series.setColor(Color.parseColor("#A44F30"));
                     gvMood.addSeries(series);
+                    System.out.println(daysTracked.size());
+
 
                     // makes sure the bounds of the graphs are accurate
+                    //gvMood.getViewport().setScalable(true);
+                    gvMood.getViewport().setScrollable(true);
+                    gvMood.getViewport().isScrollable();
+                    gvMood.getViewport().scrollToEnd();
                     gvMood.getViewport().setMinY(1.0);
                     gvMood.getViewport().setMaxY(5.0);
+                    gvMood.getViewport().setMinX(1);
+                    gvMood.getViewport().setMaxX(daysTracked.size());
+                    if(daysTracked.size()>=20){
+                        gvMood.getViewport().setMinX(daysTracked.size()-19);
+                    }
                     gvMood.getViewport().setYAxisBoundsManual(true);
+                    gvMood.getViewport().setXAxisBoundsManual(true);
+                    gvMood.getGridLabelRenderer().setPadding(29);
+                    gvMood.getGridLabelRenderer().setHorizontalLabelsAngle(30);
+
+                    gvMood.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                        @Override
+                        public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                        }
+                    });
+
                 } else {
                     clMoodBarGraph.setVisibility(view.GONE);
                     clNotEnoughDays.setVisibility(view.VISIBLE);

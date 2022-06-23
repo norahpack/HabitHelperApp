@@ -112,7 +112,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clMoodBarGraph"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -156,7 +156,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
             android:fontFamily="@font/bright"
-            android:text="day"
+            android:text="day # of tracking"
             android:textAlignment="center"
             android:textColor="@color/peach_dark"
             app:layout_constraintEnd_toEndOf="parent"

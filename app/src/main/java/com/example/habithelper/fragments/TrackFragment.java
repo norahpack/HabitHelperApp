@@ -287,7 +287,6 @@ public class TrackFragment extends Fragment {
             @Override
             public void done(ParseException e) {
                 if (e != null){
-                    System.out.println(e);
                     Toast.makeText(getContext(), "Error while saving", Toast.LENGTH_SHORT).show();
                 }
 

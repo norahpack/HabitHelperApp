@@ -117,9 +117,6 @@ public class HomeFragment extends Fragment {
                             resultsArray[i-1]=tempArray[i];
                         }
 
-                        System.out.println(currentUser.getJSONArray("habitsList"));
-                        System.out.println(Arrays.toString(resultsArray));
-
                         //getting the three most impactful habits on a user's mood
                         try {
                             Object firstObject = currentUser.getJSONArray("habitsList").get(getIndexOfLargest(resultsArray));
