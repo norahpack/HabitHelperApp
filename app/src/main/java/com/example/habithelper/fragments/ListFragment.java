@@ -14,7 +14,7 @@ import com.example.habithelper.R;
 public class ListFragment extends Fragment {
 
     public ListFragment() {
-        // Required empty public constructor
+        // Required empty public constructor to be able to initialize a fragment from MainActivity
     }
 
     @Override

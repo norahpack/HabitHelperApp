@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/sienna"
     android:orientation="vertical"
-    tools:context=".SignupActivity">
+    tools:context=".activities.SignupActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clFlowers"

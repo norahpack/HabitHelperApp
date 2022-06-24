@@ -1,20 +1,18 @@
-package com.example.habithelper;
+package com.example.habithelper.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.habithelper.R;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
-
-import java.sql.SQLOutput;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -28,17 +26,17 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        btnSignup=findViewById(R.id.btnSignup);
-        btnLogin=findViewById(R.id.btnLogin);
-        etUsername=findViewById(R.id.etUsername);
-        etPassword=findViewById(R.id.etPassword);
+        btnSignup = findViewById(R.id.btnSignup);
+        btnLogin = findViewById(R.id.btnLogin);
+        etUsername = findViewById(R.id.etUsername);
+        etPassword = findViewById(R.id.etPassword);
 
         // remembers the past logged in user
-        if(ParseUser.getCurrentUser()!=null){
+        if (ParseUser.getCurrentUser() != null) {
             goMainActivity();
         }
 
-        btnSignup.setOnClickListener(new View.OnClickListener(){
+        btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(LoginActivity.this, SignupActivity.class);
@@ -47,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        btnLogin.setOnClickListener(new View.OnClickListener(){
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String username = etUsername.getText().toString();
@@ -55,15 +53,13 @@ public class LoginActivity extends AppCompatActivity {
                 loginUser(username, password);
             }
         });
-
-
     }
 
-    private void loginUser(String username, String password){
+    private void loginUser(String username, String password) {
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
-                if (e != null){
+                if (e != null) {
                     Toast.makeText(LoginActivity.this, "Issue with login!", Toast.LENGTH_SHORT);
                     return;
                 }
@@ -73,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void goMainActivity(){
+    private void goMainActivity() {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         finish();

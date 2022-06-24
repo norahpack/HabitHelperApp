@@ -1,4 +1,4 @@
-package com.example.habithelper;
+package com.example.habithelper.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;

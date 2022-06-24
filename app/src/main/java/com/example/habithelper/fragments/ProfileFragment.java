@@ -14,7 +14,7 @@ import com.example.habithelper.R;
 public class ProfileFragment extends Fragment {
 
     public ProfileFragment() {
-        // Required empty public constructor
+        // Required empty public constructor to initialize a fragment in MainActivity
     }
 
     @Override

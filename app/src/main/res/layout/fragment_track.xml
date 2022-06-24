@@ -21,6 +21,7 @@
         android:textColor="@color/cream"
         android:textSize="60dp"
         android:layout_width="match_parent"
+        android:textStyle="bold"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
