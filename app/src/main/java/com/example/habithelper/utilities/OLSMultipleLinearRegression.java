@@ -1,4 +1,4 @@
-package com.example.habithelper;
+package com.example.habithelper.utilities;
 
 /*
 002 * Licensed to the Apache Software Foundation (ASF) under one or more
