@@ -33,6 +33,12 @@ import java.util.List;
 public class MoodFragment extends Fragment {
 
     private static final DecimalFormat dfZero = new DecimalFormat("0.00");
+    public static final int MIN_Y = 1;
+    public static final int MAX_Y = 5;
+    public static final int MIN_DAY = 1;
+    public static final int MAX_DAYS_ONE_SCREEN = 20;
+    public static final int LABEL_PADDING = 29;
+    public static final int LABEL_ANGLE = 30;
 
     public TextView tvAverageMood;
     public ImageView ivAverageMood;
@@ -65,7 +71,7 @@ public class MoodFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // links the MoodFragment instance variables with the ContentView elements
-        findView(view);
+        initViews(view);
         currentUser = ParseUser.getCurrentUser();
 
         // attempts to determine the user's average mood and display a graph of the user's mood over time
@@ -146,17 +152,17 @@ public class MoodFragment extends Fragment {
         gvMood.getViewport().setScrollable(true);
         gvMood.getViewport().isScrollable();
         gvMood.getViewport().scrollToEnd();
-        gvMood.getViewport().setMinY(1.0);
-        gvMood.getViewport().setMaxY(5.0);
-        gvMood.getViewport().setMinX(1);
+        gvMood.getViewport().setMinY(MIN_Y);
+        gvMood.getViewport().setMaxY(MAX_Y);
+        gvMood.getViewport().setMinX(MIN_DAY);
         gvMood.getViewport().setMaxX(daysTracked.size());
-        if (daysTracked.size() >= 20) {
-            gvMood.getViewport().setMinX(daysTracked.size() - 19);
+        if (daysTracked.size() >= MAX_DAYS_ONE_SCREEN) {
+            gvMood.getViewport().setMinX(daysTracked.size() - MAX_DAYS_ONE_SCREEN + 1);
         }
         gvMood.getViewport().setYAxisBoundsManual(true);
         gvMood.getViewport().setXAxisBoundsManual(true);
-        gvMood.getGridLabelRenderer().setPadding(29);
-        gvMood.getGridLabelRenderer().setHorizontalLabelsAngle(30);
+        gvMood.getGridLabelRenderer().setPadding(LABEL_PADDING);
+        gvMood.getGridLabelRenderer().setHorizontalLabelsAngle(LABEL_ANGLE);
         gvMood.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -185,7 +191,7 @@ public class MoodFragment extends Fragment {
      *
      * @param view the current view
      */
-    private void findView(View view) {
+    private void initViews(View view) {
         tvAverageMood = view.findViewById(R.id.tvAverageMood);
         ivAverageMood = view.findViewById(R.id.ivAverageMood);
         clNotEnoughDays = view.findViewById(R.id.clNotEnoughDays);

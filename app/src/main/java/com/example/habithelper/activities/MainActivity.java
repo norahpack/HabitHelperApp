@@ -61,8 +61,19 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        // sets the default fragment to be the home fragment
-        bottomNavigation.setSelectedItemId(R.id.itemHome);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras!=null) {
+            String tabGoTo = (extras.getString("tab"));
+            if(tabGoTo.equals("habits")){
+                bottomNavigation.setSelectedItemId(R.id.itemList);
+            } else {
+                bottomNavigation.setSelectedItemId(R.id.itemHome);
+            }
+        } else {
+            // sets the default fragment to be the home fragment
+            bottomNavigation.setSelectedItemId(R.id.itemHome);
+        }
     }
 
     /**

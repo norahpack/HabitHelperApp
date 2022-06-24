@@ -32,5 +32,4 @@ public class TrackDay extends ParseObject {
 
     public void setTrackArray(List<Integer> array){put(KEY_TRACK_ARRAY, array);}
 
-
 }

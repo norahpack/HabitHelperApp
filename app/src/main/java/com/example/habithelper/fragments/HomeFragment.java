@@ -91,7 +91,7 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // links the HomeFragment instance variables with the ContentView elements
-        findView(view);
+        initViews(view);
 
         // loads the cardFlip animations and adjusts the view camera
         loadAnimations(view);
@@ -127,9 +127,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ParseUser.logOut();
-                ParseUser currentUser = ParseUser.getCurrentUser();
-                Intent i = new Intent(getContext(), LoginActivity.class);
-                startActivity(i);
+                currentUser = ParseUser.getCurrentUser();
+                startActivity(new Intent(getContext(), LoginActivity.class));
             }
         });
     }
@@ -275,7 +274,7 @@ public class HomeFragment extends Fragment {
     /**
      * links the HomeFragment instance variables with the ContentView elements
      */
-    private void findView(View view) {
+    private void initViews(View view) {
         btnLogout = view.findViewById(R.id.btnLogout);
         tvHello = view.findViewById(R.id.tvHello);
         tvThreeOne = view.findViewById(R.id.tvThreeOne);
