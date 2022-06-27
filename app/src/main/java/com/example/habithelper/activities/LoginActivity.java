@@ -39,8 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(LoginActivity.this, SignupActivity.class);
-                startActivity(i);
+                startActivity(new Intent(LoginActivity.this, SignupActivity.class));
                 finish();
             }
         });
@@ -50,6 +49,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
+                if(username.isEmpty()){
+                    Toast.makeText(LoginActivity.this, "Username cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (password.isEmpty()){
+                    Toast.makeText(LoginActivity.this, "Password cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 loginUser(username, password);
             }
         });
@@ -70,8 +77,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void goMainActivity() {
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
+        startActivity(new Intent(this, MainActivity.class));
         finish();
     }
 }

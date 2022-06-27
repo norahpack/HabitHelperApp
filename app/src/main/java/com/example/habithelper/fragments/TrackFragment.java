@@ -88,7 +88,7 @@ public class TrackFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // links the TrackFragment instance variables with the ContentView elements
-        findView(view);
+        initViews(view);
         initializeUserVariables(view);
         populateCheckboxes(numHabits);
         AsyncHttpClient client = new AsyncHttpClient();
@@ -194,7 +194,7 @@ public class TrackFragment extends Fragment {
      *
      * @param view the current view
      */
-    private void findView(View view) {
+    private void initViews(View view) {
         tvDate = view.findViewById(R.id.tvDate);
         cbOne = view.findViewById(R.id.cbOne);
         cbTwo = view.findViewById(R.id.cbTwo);

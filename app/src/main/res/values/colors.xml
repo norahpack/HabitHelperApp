@@ -2,10 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="peach">#FFBAA7</color>
+    <color name="peach">#F9B3A1</color>
     <color name="peach_dark">#D09080</color>
     <color name="sienna">#A44F30</color>
     <color name="sienna_light">#C8825F</color>
     <color name="sienna_dark">#502515</color>
-    <color name="cream">#F3E5Dc</color>
+    <color name="cream">#EBE2D9</color>
 </resources>

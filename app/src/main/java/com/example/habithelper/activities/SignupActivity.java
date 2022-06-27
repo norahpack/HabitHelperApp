@@ -60,8 +60,7 @@ public class SignupActivity extends AppCompatActivity {
                     Toast.makeText(SignupActivity.this, "Issue with login!", Toast.LENGTH_SHORT);
                     return;
                 }
-                Intent i = new Intent(SignupActivity.this, AccountCreationActivity.class);
-                startActivity(i);
+                startActivity( new Intent(SignupActivity.this, AccountCreationActivity.class));
                 finish();
             }
         });

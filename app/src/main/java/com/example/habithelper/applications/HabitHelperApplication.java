@@ -3,6 +3,7 @@ package com.example.habithelper.applications;
 
 import android.app.Application;
 
+import com.example.habithelper.models.Habit;
 import com.example.habithelper.models.TrackDay;
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -17,6 +18,7 @@ public class HabitHelperApplication extends Application {
         super.onCreate();
 
         ParseObject.registerSubclass(TrackDay.class);
+        ParseObject.registerSubclass(Habit.class);
 
         // Use for monitoring Parse OkHttp traffic
         OkHttpClient.Builder builder = new OkHttpClient.Builder();

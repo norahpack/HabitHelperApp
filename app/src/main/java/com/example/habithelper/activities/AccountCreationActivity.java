@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.habithelper.R;
+import com.example.habithelper.models.Habit;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -24,6 +25,8 @@ import okhttp3.Headers;
 public class AccountCreationActivity extends AppCompatActivity {
 
     public static final String GET_WEATHER_URL = "https://api.weatherapi.com/v1/current.json?key=e8d92dcba9404609b24175200221606&q=";
+    public static final int MIN_REQUIRED_HABITS_NUM = 4;
+    public static final int MAX_ALLOWED_HABITS_NUM = 10;
 
     CheckBox checkBoxWater;
     CheckBox checkBoxHealthy;
@@ -47,8 +50,10 @@ public class AccountCreationActivity extends AppCompatActivity {
     String zipString;
     String customHabitOne;
     String customHabitTwo;
-    Boolean validZip = false;
     ArrayList<String> habitsList = new ArrayList<String>();
+    Boolean existsCustomOne = false;
+    Boolean existsCustomTwo = false;
+    ParseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,14 +61,13 @@ public class AccountCreationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setup_account);
 
         // links the AccountCreationActivity instance variables with the ContentView elements
-        findView();
+        initViews();
 
         ibUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // takes in the user input and ensures it meets requirements (e.g. num habits selected)
                 checkUserInput();
-
                 // checking whether or not the zipcode inputted is valid
                 checkZipCode();
             }
@@ -81,14 +85,12 @@ public class AccountCreationActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
-                validZip = true;
-                tryToInitialize(validZip);
+                tryToInitialize();
             }
 
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                validZip = false;
-                tryToInitialize(validZip);
+                Toast.makeText(AccountCreationActivity.this, "Not a valid zipcode!", Toast.LENGTH_SHORT).show();
                 return;
             }
         });
@@ -129,13 +131,13 @@ public class AccountCreationActivity extends AppCompatActivity {
         // initializing the list of habits the user wishes to track
         initializeHabitList();
 
-        if (habitsList.size() < 4) {
+        if (habitsList.size() < MIN_REQUIRED_HABITS_NUM) {
             Toast.makeText(AccountCreationActivity.this, "Add more habits", Toast.LENGTH_SHORT).show();
             habitsList.clear();
             return;
         }
 
-        if (habitsList.size() > 10) {
+        if (habitsList.size() > MAX_ALLOWED_HABITS_NUM) {
             Toast.makeText(AccountCreationActivity.this, "Select fewer habits", Toast.LENGTH_SHORT).show();
             habitsList.clear();
             return;
@@ -145,7 +147,7 @@ public class AccountCreationActivity extends AppCompatActivity {
     /**
      * links the AccountCreationActivity instance variables with the ContentView elements
      */
-    private void findView() {
+    private void initViews() {
         checkBoxWater = findViewById(R.id.checkBoxWater);
         checkBoxHealthy = findViewById(R.id.checkBoxHealthy);
         checkBoxScreens = findViewById(R.id.checkBoxScreens);
@@ -201,37 +203,57 @@ public class AccountCreationActivity extends AppCompatActivity {
         }
         if (checkBoxCustomOne.isChecked()) {
             habitsList.add(customHabitOne);
+            existsCustomOne = true;
         }
         if (checkBoxCustomTwo.isChecked()) {
             habitsList.add(customHabitTwo);
+            existsCustomTwo = true;
         }
     }
 
     /**
      * Attempts to save the user-inputted data to the ParseUser object representing the user
      *
-     * @param zipValid whether or not the user entered a valid zipcode corresponding to a real location
      */
-    public void tryToInitialize(boolean zipValid) {
-        if (zipValid == true) {
-            ParseUser currentUser = ParseUser.getCurrentUser();
-            currentUser.put("zipCode", zipString);
-            currentUser.put("name", name);
-            currentUser.put("habitsList", habitsList);
-            currentUser.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if (e != null) {
-                        return;
-                    }
-                    //goes back to the MainActivity class with the user logged in
-                    Intent i = new Intent(AccountCreationActivity.this, MainActivity.class);
-                    startActivity(i);
-                    finish();
+    public void tryToInitialize() {
+        currentUser = ParseUser.getCurrentUser();
+        currentUser.put("zipCode", zipString);
+        currentUser.put("name", name);
+        currentUser.put("habitsList", habitsList);
+        currentUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    return;
                 }
-            });
-        } else {
-            Toast.makeText(AccountCreationActivity.this, "Not a valid zipcode!", Toast.LENGTH_SHORT).show();
-        }
+                if (existsCustomOne){
+                    initializeParseHabits(customHabitOne);
+                }
+                if (existsCustomTwo){
+                    initializeParseHabits(customHabitTwo);
+                }
+                //goes back to the MainActivity class with the user logged in
+                startActivity(new Intent(AccountCreationActivity.this, MainActivity.class));
+                finish();
+            }
+        });
+    }
+
+    /**
+     * Attempts to save the user-inputted habits (if they exist) to a new Parse Habit object
+     */
+    private void initializeParseHabits(String habitName) {
+        Habit customHabit = new Habit();
+        customHabit.setHabitName(habitName);
+        customHabit.setCreator(currentUser);
+        customHabit.setHabitImageKey(R.drawable.starslarge);
+        customHabit.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null){
+                    Toast.makeText(AccountCreationActivity.this, "Error while saving", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

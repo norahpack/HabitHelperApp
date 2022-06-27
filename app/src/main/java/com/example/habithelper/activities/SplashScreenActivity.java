@@ -11,6 +11,8 @@ import com.bumptech.glide.Glide;
 import com.example.habithelper.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
+
+    public static final int MILLIS_TO_DELAY = 5000;
     Handler handler;
     ImageView imageView;
 
@@ -30,6 +32,6 @@ public class SplashScreenActivity extends AppCompatActivity {
                 startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
                 finish();
             }
-        }, 5000);
+        }, MILLIS_TO_DELAY);
     }
 }
