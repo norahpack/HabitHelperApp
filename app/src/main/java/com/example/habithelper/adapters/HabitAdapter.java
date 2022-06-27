@@ -3,24 +3,22 @@ package com.example.habithelper.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.habithelper.R;
 import com.example.habithelper.activities.HabitDetailsActivity;
 import com.example.habithelper.models.Habit;
-
-import java.sql.SQLOutput;
 import java.util.List;
+
 import org.parceler.Parcels;
 
 public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> {
@@ -29,7 +27,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
     private Context context;
     private List<Habit> habitList;
 
-    public HabitAdapter(Activity mActivity, Context context, List<Habit> habitList){
+    public HabitAdapter(Activity mActivity, Context context, List<Habit> habitList) {
         this.mActivity = mActivity;
         this.context = context;
         this.habitList = habitList;
@@ -53,7 +51,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         return habitList.size();
     }
 
-    public void addAll(List<Habit> list){
+    public void addAll(List<Habit> list) {
         habitList.addAll(list);
         notifyDataSetChanged();
     }
@@ -71,8 +69,10 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
 
         public void bind(Habit habit) {
             tvHabit.setText(habit.getHabitName());
-            if(habit.get("habitImage") != null){
-                ivHabit.setBackground(AppCompatResources.getDrawable(context, (Integer) habit.getHabitImageKey()));
+            if (habit.get("habitImageName") != null) {
+                Resources resources = context.getResources();
+                int resId = resources.getIdentifier(habit.getHabitImageKey(), "drawable", "com.example.habithelper");
+                ivHabit.setBackground(AppCompatResources.getDrawable(context, resId));
             } else {
                 ivHabit.setBackground(AppCompatResources.getDrawable(context, R.drawable.starslarge));
             }
@@ -81,12 +81,12 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-            if (position != RecyclerView.NO_POSITION){
+            if (position != RecyclerView.NO_POSITION) {
                 Habit habit = habitList.get(position);
                 Intent intent = new Intent(context, HabitDetailsActivity.class);
 
-                Pair<View, String> p1 = Pair.create((View)ivHabit, "habitImage");
-                Pair<View, String> p2 = Pair.create((View)tvHabit, "habitName");
+                Pair<View, String> p1 = Pair.create((View) ivHabit, "habitImage");
+                Pair<View, String> p2 = Pair.create((View) tvHabit, "habitName");
 
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(mActivity, p1, p2);
                 intent.putExtra(Habit.class.getSimpleName(), Parcels.wrap(habit));

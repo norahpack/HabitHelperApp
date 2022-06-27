@@ -4,14 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Button;
-
 import com.example.habithelper.R;
 import com.example.habithelper.fragments.HomeFragment;
-import com.example.habithelper.fragments.ListFragment;
+import com.example.habithelper.fragments.HabitListFragment;
 import com.example.habithelper.fragments.MoodFragment;
 import com.example.habithelper.fragments.ProfileFragment;
 import com.example.habithelper.fragments.TrackFragment;
@@ -51,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new MoodFragment();
                         break;
                     case R.id.itemList:
-                        fragment = new ListFragment();
+                        fragment = new HabitListFragment();
                         break;
                     default:
                         fragment = new HomeFragment();
@@ -63,9 +60,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Bundle extras = getIntent().getExtras();
-        if (extras!=null) {
+        if (extras != null) {
             String tabGoTo = (extras.getString("tab"));
-            if(tabGoTo.equals("habits")){
+            if (tabGoTo.equals("habits")) {
                 bottomNavigation.setSelectedItemId(R.id.itemList);
             } else {
                 bottomNavigation.setSelectedItemId(R.id.itemHome);
@@ -78,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Navigates to a new fragment
+     *
      * @param fragment     the fragment to navigate to
      * @param selectedItem the item in the toolbar to select (and change color of)
      */

@@ -66,9 +66,7 @@ public class AccountCreationActivity extends AppCompatActivity {
         ibUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // takes in the user input and ensures it meets requirements (e.g. num habits selected)
                 checkUserInput();
-                // checking whether or not the zipcode inputted is valid
                 checkZipCode();
             }
         });
@@ -76,7 +74,7 @@ public class AccountCreationActivity extends AppCompatActivity {
 
     /**
      * Checks whether or not the zipcode the user inputted is a valid zipcode
-     * If it is not valid, tryToInitialize will be called with validZip = false and will not execute.
+     * If it is not valid, tryToInitialize will not be called
      */
     private void checkZipCode() {
         AsyncHttpClient client = new AsyncHttpClient();
@@ -226,10 +224,10 @@ public class AccountCreationActivity extends AppCompatActivity {
                 if (e != null) {
                     return;
                 }
-                if (existsCustomOne){
+                if (existsCustomOne) {
                     initializeParseHabits(customHabitOne);
                 }
-                if (existsCustomTwo){
+                if (existsCustomTwo) {
                     initializeParseHabits(customHabitTwo);
                 }
                 //goes back to the MainActivity class with the user logged in
@@ -246,7 +244,7 @@ public class AccountCreationActivity extends AppCompatActivity {
         Habit customHabit = new Habit();
         customHabit.setHabitName(habitName);
         customHabit.setCreator(currentUser);
-        customHabit.setHabitImageKey(R.drawable.starslarge);
+        customHabit.setHabitImageKey("starslarge");
         customHabit.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {

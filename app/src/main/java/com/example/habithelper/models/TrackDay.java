@@ -3,10 +3,6 @@ package com.example.habithelper.models;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
-
-import org.json.JSONArray;
-
-import java.util.Date;
 import java.util.List;
 
 @ParseClassName("TrackDay")

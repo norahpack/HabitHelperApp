@@ -1,17 +1,14 @@
 package com.example.habithelper.fragments;
 
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.habithelper.R;
 import com.example.habithelper.activities.MainActivity;
 import com.example.habithelper.adapters.HabitAdapter;
@@ -20,12 +17,11 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ListFragment extends Fragment {
+public class HabitListFragment extends Fragment {
 
     RecyclerView rvHabits;
     ParseUser currentUser;
@@ -33,7 +29,7 @@ public class ListFragment extends Fragment {
     List<String> habitsNameList;
     HabitAdapter adapter;
 
-    public ListFragment() {
+    public HabitListFragment() {
         // Required empty public constructor to be able to initialize a fragment from MainActivity
     }
 
@@ -72,7 +68,7 @@ public class ListFragment extends Fragment {
         query.include(Habit.KEY_HABIT_NAME);
         query.whereContainedIn("habitName", habitsNameList);
 
-        // start an asynchronous call for posts
+        // start an asynchronous call for habits
         query.findInBackground(new FindCallback<Habit>() {
             @Override
             public void done(List<Habit> list, ParseException e) {

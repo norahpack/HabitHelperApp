@@ -37,4 +37,14 @@
         <!-- Customize your theme here. -->
     </style>
 
+
+    <style name="CustomDialog" parent="@style/Theme.Material3.Dark.Dialog">
+        <item name="android:windowNoTitle">false</item>
+        <item name="android:background">@drawable/slight_rounded_corners</item>
+        <item name="android:backgroundTint">@color/sienna</item>
+        <item name="colorPrimary">@color/cream</item>
+        <item name="colorPrimaryVariant">@color/sienna</item>
+        <item name="colorOnPrimary">@color/sienna</item>
+    </style>
+
 </resources>

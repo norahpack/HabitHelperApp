@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/peach_dark"
+    android:background="@color/dusty_rose"
     android:orientation="horizontal"
     tools:context=".fragments.TrackFragment">
 
@@ -15,7 +15,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/honey_florist"
-        android:text="(Track Habits)"
+        android:text="(track habits)"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/cream"

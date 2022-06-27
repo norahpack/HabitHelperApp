@@ -3,19 +3,16 @@ package com.example.habithelper.fragments;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.habithelper.R;
 import com.example.habithelper.models.TrackDay;
 import com.jjoe64.graphview.GraphView;
@@ -25,7 +22,6 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -70,7 +66,6 @@ public class MoodFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // links the MoodFragment instance variables with the ContentView elements
         initViews(view);
         currentUser = ParseUser.getCurrentUser();
 
@@ -93,7 +88,6 @@ public class MoodFragment extends Fragment {
                 if (e != null) {
                     return;
                 }
-                // tells the user their average mood
                 setAverageMood(daysTracked);
 
                 // sets the graph of moods for the user
