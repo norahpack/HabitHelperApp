@@ -35,6 +35,7 @@ public class ProfileFragment extends Fragment {
     TextView tvLocation;
     Button btnChangeZip;
     TextView tvDaysTracked;
+    TextView tvLevel;
 
     private ParseUser currentUser;
     private int numDaysTracked = 0;
@@ -54,12 +55,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        cText = view.findViewById(R.id.cText);
-        clMain = view.findViewById(R.id.clMain);
-        tvLocation = view.findViewById(R.id.tvLocation);
-        btnChangeZip = view.findViewById(R.id.btnChangeZip);
-        tvDaysTracked = view.findViewById(R.id.tvDaysTracked);
+        initViews(view);
 
         currentUser = ParseUser.getCurrentUser();
         AsyncHttpClient client = new AsyncHttpClient();
@@ -91,6 +87,20 @@ public class ProfileFragment extends Fragment {
     }
 
     /**
+     * links the ProfileFragment instance variables with the ContentView elements
+     *
+     * @param view the current view
+     */
+    private void initViews(View view) {
+        cText = view.findViewById(R.id.cText);
+        clMain = view.findViewById(R.id.clMain);
+        tvLocation = view.findViewById(R.id.tvLocation);
+        btnChangeZip = view.findViewById(R.id.btnChangeZip);
+        tvDaysTracked = view.findViewById(R.id.tvDaysTracked);
+        tvLevel = view.findViewById(R.id.tvLevel);
+    }
+
+    /**
      * Determines the number of days the user has been tracking their habits for
      */
     private void getDaysTracked() {
@@ -108,9 +118,35 @@ public class ProfileFragment extends Fragment {
                 }
                 numDaysTracked = daysTracked.size();
                 tvDaysTracked.setText("You have been tracking for " + numDaysTracked + " days");
+                setLevel();
                 return;
             }
         });
+    }
+
+    /**
+     * Tells the user how many days more they have to track to reach the next level
+     */
+    private void setLevel() {
+        String nextLevel;
+        int daysLeft;
+        if(numDaysTracked > 100){
+            tvLevel.setText("You have reached the maximum level!");
+            return;
+        } else if (numDaysTracked > 50){
+            daysLeft = 100 - numDaysTracked;
+            nextLevel = "5";
+        } else if (numDaysTracked > 25){
+            daysLeft = 50 - numDaysTracked;
+            nextLevel = "4";
+        } else if (numDaysTracked > 10){
+            daysLeft = 25 - numDaysTracked;
+            nextLevel = "3";
+        } else {
+            daysLeft = 10 - numDaysTracked;
+            nextLevel = "2";
+        }
+        tvLevel.setText(String.valueOf(daysLeft)+" more days until you reach level "+nextLevel);
     }
 
     /**

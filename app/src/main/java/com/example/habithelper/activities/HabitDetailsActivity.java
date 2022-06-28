@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -28,14 +29,29 @@ import java.util.List;
 public class HabitDetailsActivity extends AppCompatActivity {
 
     private ImageView ivHabit;
-    private TextView tvHabit;
+    private ImageView ivDayOne;
+    private ImageView ivDayTwo;
+    private ImageView ivDayThree;
+    private ImageView ivDayFour;
+    private ImageView ivDayFive;
+    private ImageView ivDaySix;
+    private ImageView ivDaySeven;
+    private ImageView ivDayEight;
+    private ImageView ivDayNine;
+    private ImageView ivDayTen;
     private Habit habit;
     private Button btnBack;
     private ParseUser currentUser;
+    private ConstraintLayout clLastTen;
     private ConstraintLayout clPercent;
     private ConstraintLayout clPercentNotEnough;
+    private TextView tvLastTen;
+    private TextView tvHabit;
+    private TextView tvFirstDay;
+    private TextView tvLastDay;
     private TextView tvPercent;
     private TextView tvPercentNotEnough;
+    private TextView tvStreak;
 
     public int numDaysTracked;
     private int numHabits;
@@ -46,6 +62,8 @@ public class HabitDetailsActivity extends AppCompatActivity {
     public int percentChange;
     public double averageMood;
     public String increaseOrDecrease;
+    public int habitStreak = 0;
+    public boolean streakLost = false;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +81,8 @@ public class HabitDetailsActivity extends AppCompatActivity {
         getMostImpactfulHabits();
         tvHabit.setText(habit.getHabitName());
         setupIvHabit();
+        calculateStreak();
+        setupLastTenDays();
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +91,106 @@ public class HabitDetailsActivity extends AppCompatActivity {
                 i.putExtra("tab", "habits");
                 startActivity(i);
                 finish();
+            }
+        });
+    }
+
+    /**
+     * Displays the view showing the user's completion of this habit over the last ten days
+     */
+    private void setupLastTenDays() {
+        ParseQuery<TrackDay> query = ParseQuery.getQuery(TrackDay.class);
+        query.include(TrackDay.KEY_PARENT_USER);
+        query.include(TrackDay.KEY_DATE_NUMBER);
+        query.include(TrackDay.KEY_TRACK_ARRAY);
+        query.whereEqualTo(TrackDay.KEY_PARENT_USER, currentUser);
+        query.orderByDescending(TrackDay.KEY_DATE_NUMBER);
+        query.findInBackground(new FindCallback<TrackDay>() {
+            @Override
+            public void done(List<TrackDay> daysTracked, ParseException e) {
+                if(e != null){
+                    return;
+                }
+                if(daysTracked.size()>=10){
+                    int minDay = daysTracked.size()-10;
+                    int maxDay = daysTracked.size()-1;
+                    int habitIndex = findIndexOfHabit();
+                    for(int i = 0; i < 10; i++){
+                        if(daysTracked.get(i+minDay).getTrackArray().get(habitIndex)==1){
+                            // the user completed the habit on the specified day
+                            setCompletedBubble(i);
+                        }
+                        tvLastTen.setVisibility(View.VISIBLE);
+                        clLastTen.setVisibility(View.VISIBLE);
+                        tvFirstDay.setText(String.valueOf(minDay + 1));
+                        tvLastDay.setText(String.valueOf(maxDay + 1));
+                    }
+                } else {
+                    // nothing yet - have the option to add a new view in the future
+                }
+            }
+        });
+    }
+
+    /**
+     * Fills in the specified bubble in the "last ten days" tracker
+     * @param i the index of the bubble to fill in
+     */
+    private void setCompletedBubble(int i) {
+        ImageView ivToFillIn;
+        if(i == 0){
+            ivToFillIn = ivDayOne;
+        } else if (i == 1){
+            ivToFillIn = ivDayTwo;
+        } else if (i == 2){
+            ivToFillIn = ivDayThree;
+        } else if (i == 3){
+            ivToFillIn = ivDayFour;
+        } else if (i == 4){
+            ivToFillIn = ivDayFive;
+        } else if (i == 5){
+            ivToFillIn = ivDaySix;
+        } else if (i == 6){
+            ivToFillIn = ivDaySeven;
+        } else if (i == 7){
+            ivToFillIn = ivDayEight;
+        } else if (i == 8){
+            ivToFillIn = ivDayNine;
+        } else {
+            ivToFillIn = ivDayTen;
+        }
+        ivToFillIn.setBackground(AppCompatResources.getDrawable(HabitDetailsActivity.this, R.drawable.track_sienna));
+    }
+
+    /**
+     * Calculates and displays the number of days in a row the user has completed this habit
+     */
+    private void calculateStreak() {
+        ParseQuery<TrackDay> query = ParseQuery.getQuery(TrackDay.class);
+        query.include(TrackDay.KEY_PARENT_USER);
+        query.include(TrackDay.KEY_DATE_NUMBER);
+        query.include(TrackDay.KEY_TRACK_ARRAY);
+        query.whereEqualTo(TrackDay.KEY_PARENT_USER, currentUser);
+        query.orderByDescending(TrackDay.KEY_DATE_NUMBER);
+        query.findInBackground(new FindCallback<TrackDay>() {
+            @Override
+            public void done(List<TrackDay> daysTracked, ParseException e) {
+                if(e != null){
+                    return;
+                }
+                int habitIndex = findIndexOfHabit();
+
+                for(int i = 0; i < daysTracked.size(); i++){
+                    if (!streakLost){
+                        if(daysTracked.get(i).getTrackArray().get(habitIndex)==1){
+                            // the user completed the habit on the specified day
+                            habitStreak += 1;
+                        } else {
+                            streakLost = true;
+                        }
+                    }
+                }
+                tvStreak.setText("You have a "+habitStreak+"-day streak for this habit");
             }
         });
     }
@@ -100,7 +220,7 @@ public class HabitDetailsActivity extends AppCompatActivity {
         query.include(TrackDay.KEY_TRACK_ARRAY);
         query.include(TrackDay.KEY_MOOD);
         query.whereEqualTo(TrackDay.KEY_PARENT_USER, currentUser);
-        query.addDescendingOrder(TrackDay.KEY_DATE_NUMBER);
+        query.orderByDescending(TrackDay.KEY_DATE_NUMBER);
         query.findInBackground(new FindCallback<TrackDay>() {
             @Override
             public void done(List<TrackDay> daysTracked, ParseException e) {
@@ -121,16 +241,23 @@ public class HabitDetailsActivity extends AppCompatActivity {
                         displayPercentChange(resultsArray, habitIndex);
                     } else {
                         // error has occurred
-                        clPercent.setVisibility(View.GONE);
-                        clPercentNotEnough.setVisibility(View.VISIBLE);
+                        showNoDataView();
                     }
                 } else {
                     // the user has not tracked enough data yet
-                    clPercent.setVisibility(View.GONE);
-                    clPercentNotEnough.setVisibility(View.VISIBLE);
+                    showNoDataView();
                 }
             }
         });
+    }
+
+    /**
+     * Hides the card telling the user data about the specific habit
+     * Shows a card telling the user they have not tracked enough data yet
+     */
+    private void showNoDataView() {
+        clPercent.setVisibility(View.GONE);
+        clPercentNotEnough.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -147,7 +274,7 @@ public class HabitDetailsActivity extends AppCompatActivity {
         } else {
             increaseOrDecrease = "decreases";
         }
-        tvPercent.setText("Completing this habit " + increaseOrDecrease + " your mood  by " + Math.abs(percentChange) + " percent!");
+        tvPercent.setText("Completing this habit " + increaseOrDecrease + " your mood by " + Math.abs(percentChange) + " percent!");
         clPercent.setVisibility(View.VISIBLE);
         clPercentNotEnough.setVisibility(View.GONE);
     }
@@ -190,5 +317,20 @@ public class HabitDetailsActivity extends AppCompatActivity {
         clPercentNotEnough = findViewById(R.id.clPercentNotEnough);
         tvPercent = findViewById(R.id.tvPercent);
         tvPercentNotEnough = findViewById(R.id.tvPercentNotEnough);
+        tvStreak = findViewById(R.id.tvStreak);
+        tvFirstDay = findViewById(R.id.tvFirstDay);
+        tvLastDay = findViewById(R.id.tvLastDay);
+        tvLastTen = findViewById(R.id.tvLastTen);
+        clLastTen = findViewById(R.id.clLastTen);
+        ivDayOne = findViewById(R.id.ivDayOne);
+        ivDayTwo = findViewById(R.id.ivDayTwo);
+        ivDayThree = findViewById(R.id.ivDayThree);
+        ivDayFour = findViewById(R.id.ivDayFour);
+        ivDayFive = findViewById(R.id.ivDayFive);
+        ivDaySix = findViewById(R.id.ivDaySix);
+        ivDaySeven = findViewById(R.id.ivDaySeven);
+        ivDayEight = findViewById(R.id.ivDayEight);
+        ivDayNine = findViewById(R.id.ivDayNine);
+        ivDayTen = findViewById(R.id.ivDayTen);
     }
 }

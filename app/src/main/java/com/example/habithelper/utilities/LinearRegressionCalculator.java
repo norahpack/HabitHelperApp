@@ -10,8 +10,6 @@ public class LinearRegressionCalculator {
     private ParseUser currentUser;
     double[] moodList;
     double[][] habitHistoryList;
-    public int numDaysTracked;
-    private int numHabits;
     public double[] leastSquaresResult;
 
     public LinearRegressionCalculator() {

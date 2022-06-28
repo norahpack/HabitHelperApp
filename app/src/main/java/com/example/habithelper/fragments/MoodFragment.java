@@ -36,13 +36,14 @@ public class MoodFragment extends Fragment {
     public static final int LABEL_PADDING = 29;
     public static final int LABEL_ANGLE = 30;
 
-    public TextView tvAverageMood;
-    public ImageView ivAverageMood;
     public double moodSum = 0;
     public double averageMood = 0;
-    public ConstraintLayout clNotEnoughDays;
+    ImageView ivAverageMood;
     TextView tvNumDaysTracked;
+    TextView tvAverageMood;
+    TextView tvPercentChange;
     GraphView gvMood;
+    ConstraintLayout clNotEnoughDays;
     ConstraintLayout clMoodBarGraph;
     ParseUser currentUser;
 
@@ -89,15 +90,48 @@ public class MoodFragment extends Fragment {
                     return;
                 }
                 setAverageMood(daysTracked);
-
                 // sets the graph of moods for the user
                 if (daysTracked.size() >= 5) {
                     setMoodGraph(daysTracked, view);
                 } else {
                     setNotEnoughDays(daysTracked, view);
                 }
+                if (daysTracked.size() >= 14) {
+                    setPercentChange(daysTracked);
+                } else {
+                    tvPercentChange.setText("You're on your way to a happier and healthier future. Keep up the good work!");
+                }
             }
         });
+    }
+
+    /**
+     * Displays the percent change in the user's mood in the past seven days
+     * @param daysTracked the list of TrackDay objects corresponding to the user, ordered by date (ascending)
+     */
+    private void setPercentChange(List<TrackDay> daysTracked) {
+        double currentSevenAverage = getWeekAverage(daysTracked.size() - 1, daysTracked);
+        double lastSevenAverage = getWeekAverage(daysTracked.size() - 8, daysTracked);
+        double percentChange = 100.0*((currentSevenAverage - lastSevenAverage) / (lastSevenAverage));
+        String upOrDown = "down";
+        if (percentChange >= 0){
+            upOrDown = "up";
+        }
+        tvPercentChange.setText("Your mood this week is " + upOrDown + " "+dfZero.format(Math.abs(percentChange)) + "% from last week");
+    }
+
+    /**
+     * returns the average mood over the seven trackDays in question
+     * @param daysTracked the list of TrackDay objects corresponding to the user, ordered by date (ascending)
+     * @param startIndex the index in daysTracked of the most recent day we are considering
+     * @return the average mood score for the seven days tracked starting from startIndex.
+     */
+    private double getWeekAverage(int startIndex, List<TrackDay> daysTracked) {
+        double totalMood = 0;
+        for (int i = startIndex; i > startIndex - 7; i--){
+            totalMood+=daysTracked.get(i).getMood();
+        }
+        return totalMood/7.0;
     }
 
     /**
@@ -187,9 +221,10 @@ public class MoodFragment extends Fragment {
      */
     private void initViews(View view) {
         tvAverageMood = view.findViewById(R.id.tvAverageMood);
+        tvNumDaysTracked = view.findViewById(R.id.tvNumDaysTracked);
+        tvPercentChange = view.findViewById(R.id.tvPercentChange);
         ivAverageMood = view.findViewById(R.id.ivAverageMood);
         clNotEnoughDays = view.findViewById(R.id.clNotEnoughDays);
-        tvNumDaysTracked = view.findViewById(R.id.tvNumDaysTracked);
         clMoodBarGraph = view.findViewById(R.id.clMoodBarGraph);
         gvMood = view.findViewById(R.id.gvMood);
     }
