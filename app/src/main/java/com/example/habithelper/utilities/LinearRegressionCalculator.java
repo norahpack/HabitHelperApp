@@ -1,15 +1,8 @@
 package com.example.habithelper.utilities;
 
-import android.view.View;
-
 import com.example.habithelper.models.TrackDay;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
 import org.apache.commons.math3.linear.RealVector;
-
 import java.util.List;
 
 public class LinearRegressionCalculator {

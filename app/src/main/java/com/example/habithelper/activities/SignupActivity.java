@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.habithelper.R;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -60,7 +59,7 @@ public class SignupActivity extends AppCompatActivity {
                     Toast.makeText(SignupActivity.this, "Issue with login!", Toast.LENGTH_SHORT);
                     return;
                 }
-                startActivity( new Intent(SignupActivity.this, AccountCreationActivity.class));
+                startActivity(new Intent(SignupActivity.this, AccountCreationActivity.class));
                 finish();
             }
         });

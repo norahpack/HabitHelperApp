@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.habithelper.R;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -49,11 +48,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
-                if(username.isEmpty()){
+                if (username.isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Username cannot be empty", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (password.isEmpty()){
+                if (password.isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Password cannot be empty", Toast.LENGTH_SHORT).show();
                     return;
                 }
