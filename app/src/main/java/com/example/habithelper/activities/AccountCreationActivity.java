@@ -1,7 +1,6 @@
 package com.example.habithelper.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.habithelper.R;
@@ -17,9 +15,7 @@ import com.example.habithelper.models.Habit;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
 import java.util.ArrayList;
-
 import okhttp3.Headers;
 
 public class AccountCreationActivity extends AppCompatActivity {
@@ -60,7 +56,6 @@ public class AccountCreationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup_account);
 
-        // links the AccountCreationActivity instance variables with the ContentView elements
         initViews();
 
         ibUpdate.setOnClickListener(new View.OnClickListener() {
@@ -80,7 +75,6 @@ public class AccountCreationActivity extends AppCompatActivity {
         AsyncHttpClient client = new AsyncHttpClient();
         String api_request = GET_WEATHER_URL + zipString;
         client.get(api_request, new JsonHttpResponseHandler() {
-
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 tryToInitialize();
@@ -126,7 +120,6 @@ public class AccountCreationActivity extends AppCompatActivity {
             return;
         }
 
-        // initializing the list of habits the user wishes to track
         initializeHabitList();
 
         if (habitsList.size() < MIN_REQUIRED_HABITS_NUM) {
@@ -211,7 +204,6 @@ public class AccountCreationActivity extends AppCompatActivity {
 
     /**
      * Attempts to save the user-inputted data to the ParseUser object representing the user
-     *
      */
     public void tryToInitialize() {
         currentUser = ParseUser.getCurrentUser();
@@ -248,7 +240,7 @@ public class AccountCreationActivity extends AppCompatActivity {
         customHabit.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                if (e != null){
+                if (e != null) {
                     Toast.makeText(AccountCreationActivity.this, "Error while saving", Toast.LENGTH_SHORT).show();
                 }
             }

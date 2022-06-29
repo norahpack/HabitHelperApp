@@ -42,7 +42,7 @@ public class MoodFragment extends Fragment {
     TextView tvNumDaysTracked;
     TextView tvAverageMood;
     TextView tvPercentChange;
-    GraphView gvMood;
+    GraphView graphViewMood;
     ConstraintLayout clNotEnoughDays;
     ConstraintLayout clMoodBarGraph;
     ParseUser currentUser;
@@ -166,7 +166,7 @@ public class MoodFragment extends Fragment {
         }
         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(moodDataPoints);
         series.setColor(Color.parseColor("#A44F30"));
-        gvMood.addSeries(series);
+        graphViewMood.addSeries(series);
         instantiateGraphSettings(daysTracked);
     }
 
@@ -177,21 +177,21 @@ public class MoodFragment extends Fragment {
      */
     private void instantiateGraphSettings(List<TrackDay> daysTracked) {
         // makes sure the bounds of the graphs are accurate
-        gvMood.getViewport().setScrollable(true);
-        gvMood.getViewport().isScrollable();
-        gvMood.getViewport().scrollToEnd();
-        gvMood.getViewport().setMinY(MIN_Y);
-        gvMood.getViewport().setMaxY(MAX_Y);
-        gvMood.getViewport().setMinX(MIN_DAY);
-        gvMood.getViewport().setMaxX(daysTracked.size());
+        graphViewMood.getViewport().setScrollable(true);
+        graphViewMood.getViewport().isScrollable();
+        graphViewMood.getViewport().scrollToEnd();
+        graphViewMood.getViewport().setMinY(MIN_Y);
+        graphViewMood.getViewport().setMaxY(MAX_Y);
+        graphViewMood.getViewport().setMinX(MIN_DAY);
+        graphViewMood.getViewport().setMaxX(daysTracked.size());
         if (daysTracked.size() >= MAX_DAYS_ONE_SCREEN) {
-            gvMood.getViewport().setMinX(daysTracked.size() - MAX_DAYS_ONE_SCREEN + 1);
+            graphViewMood.getViewport().setMinX(daysTracked.size() - MAX_DAYS_ONE_SCREEN + 1);
         }
-        gvMood.getViewport().setYAxisBoundsManual(true);
-        gvMood.getViewport().setXAxisBoundsManual(true);
-        gvMood.getGridLabelRenderer().setPadding(LABEL_PADDING);
-        gvMood.getGridLabelRenderer().setHorizontalLabelsAngle(LABEL_ANGLE);
-        gvMood.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+        graphViewMood.getViewport().setYAxisBoundsManual(true);
+        graphViewMood.getViewport().setXAxisBoundsManual(true);
+        graphViewMood.getGridLabelRenderer().setPadding(LABEL_PADDING);
+        graphViewMood.getGridLabelRenderer().setHorizontalLabelsAngle(LABEL_ANGLE);
+        graphViewMood.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
             }
@@ -226,7 +226,7 @@ public class MoodFragment extends Fragment {
         ivAverageMood = view.findViewById(R.id.ivAverageMood);
         clNotEnoughDays = view.findViewById(R.id.clNotEnoughDays);
         clMoodBarGraph = view.findViewById(R.id.clMoodBarGraph);
-        gvMood = view.findViewById(R.id.gvMood);
+        graphViewMood = view.findViewById(R.id.graphViewMood);
     }
 
     /**

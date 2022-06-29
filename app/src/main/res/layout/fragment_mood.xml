@@ -59,7 +59,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clInner"
+        android:id="@+id/clNotEnoughDays"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:visibility="gone"
@@ -71,7 +71,7 @@
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clNotEnoughDays"
+            android:id="@+id/clInner"
             android:layout_width="match_parent"
             android:layout_marginStart="15dp"
             android:layout_marginTop="20dp"
@@ -151,7 +151,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.jjoe64.graphview.GraphView
-            android:id="@+id/gvMood"
+            android:id="@+id/graphViewMood"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="0dp"
             android:layout_marginStart="5dp"
@@ -177,7 +177,7 @@
             android:textColor="@color/dusty_rose"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/gvMood" />
+            app:layout_constraintTop_toBottomOf="@+id/graphViewMood" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

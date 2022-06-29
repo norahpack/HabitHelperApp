@@ -18,11 +18,11 @@ public class CurvedText extends View {
     public String levelString;
     public int nameOffset;
 
-    private static final int CIRCLE_POSITION = 412;
-    private static final int UPPER_CIRCLE_RADIUS = 355;
-    private static final int LOWER_CIRCLE_RADIUS = 385;
-    public static final int UPPER_OFFSET = 1490;
-    public static final int LOWER_OFFSET = 1700;
+    private static final int CIRCLE_POSITION = 510;
+    private static final int UPPER_CIRCLE_RADIUS = 432;
+    private static final int LOWER_CIRCLE_RADIUS = 505;
+    public static final int UPPER_OFFSET = 1670;
+    public static final int LOWER_OFFSET = 2300;
     public static final int VERTICAL_OFFSET = 0;
 
 

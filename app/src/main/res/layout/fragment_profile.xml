@@ -26,7 +26,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.example.habithelper.views.CurvedText
-        android:id="@+id/cText"
+        android:id="@+id/curvedTextBadge"
         android:layout_height="300dp"
         android:layout_width="300dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +43,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cText">
+        app:layout_constraintTop_toBottomOf="@+id/curvedTextBadge">
 
         <TextView
             android:id="@+id/tvLocation"

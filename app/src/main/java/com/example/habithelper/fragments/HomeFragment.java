@@ -5,38 +5,33 @@ import android.animation.AnimatorSet;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
-import com.example.habithelper.activities.LoginActivity;
-import com.example.habithelper.activities.MainActivity;
-import com.example.habithelper.utilities.LinearRegressionCalculator;
 import com.example.habithelper.R;
+import com.example.habithelper.activities.LoginActivity;
 import com.example.habithelper.models.TrackDay;
+import com.example.habithelper.utilities.LinearRegressionCalculator;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.List;
-
 import okhttp3.Headers;
 
 public class HomeFragment extends Fragment {
@@ -123,7 +118,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ParseUser.logOut();
-                currentUser = ParseUser.getCurrentUser();
                 startActivity(new Intent(getContext(), LoginActivity.class));
             }
         });
@@ -139,7 +133,7 @@ public class HomeFragment extends Fragment {
                 try {
                     JSONObject quoteArrayJSONObject = (quoteArray.getJSONObject(0));
                     tvQuote.setText("\"" + quoteArrayJSONObject.getString("q") + "\"");
-                    tvQuoteAuthor.setText("-"+quoteArrayJSONObject.getString("a"));
+                    tvQuoteAuthor.setText("-" + quoteArrayJSONObject.getString("a"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -190,7 +184,7 @@ public class HomeFragment extends Fragment {
                 if (numDaysTracked > numHabits) {
                     lrc = new LinearRegressionCalculator();
                     // calculates the array of correlation coefficients of each habit on the user's mood
-                    lrc.performLeastSquares(daysTracked,numDaysTracked, numHabits);
+                    lrc.performLeastSquares(daysTracked, numDaysTracked, numHabits);
                     double[] resultsArray = lrc.leastSquaresResult;
                     clNotEnoughHabits.setVisibility(view.GONE);
                     clThree.setVisibility(view.VISIBLE);
@@ -231,7 +225,6 @@ public class HomeFragment extends Fragment {
             ex.printStackTrace();
         }
     }
-
 
 
     /**

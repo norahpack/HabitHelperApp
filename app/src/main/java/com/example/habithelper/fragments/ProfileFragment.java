@@ -30,7 +30,7 @@ import okhttp3.Headers;
 
 public class ProfileFragment extends Fragment {
 
-    CurvedText cText;
+    CurvedText curvedTextBadge;
     ConstraintLayout clMain;
     TextView tvLocation;
     Button btnChangeZip;
@@ -92,7 +92,7 @@ public class ProfileFragment extends Fragment {
      * @param view the current view
      */
     private void initViews(View view) {
-        cText = view.findViewById(R.id.cText);
+        curvedTextBadge = view.findViewById(R.id.curvedTextBadge);
         clMain = view.findViewById(R.id.clMain);
         tvLocation = view.findViewById(R.id.tvLocation);
         btnChangeZip = view.findViewById(R.id.btnChangeZip);

@@ -3,16 +3,13 @@ package com.example.habithelper.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.habithelper.R;
 import com.example.habithelper.models.Habit;
 import com.example.habithelper.models.TrackDay;
@@ -21,9 +18,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
 import org.parceler.Parcels;
-
 import java.util.List;
 
 public class HabitDetailsActivity extends AppCompatActivity {
@@ -69,11 +64,9 @@ public class HabitDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_details);
         initViews();
-
         if (getIntent().getParcelableExtra(Habit.class.getSimpleName()) != null) {
             habit = (Habit) Parcels.unwrap(getIntent().getParcelableExtra(Habit.class.getSimpleName()));
         }
-
         currentUser = ParseUser.getCurrentUser();
         habitsList = currentUser.getList("habitsList");
         numHabits = habitsList.size();
@@ -104,19 +97,19 @@ public class HabitDetailsActivity extends AppCompatActivity {
         query.include(TrackDay.KEY_DATE_NUMBER);
         query.include(TrackDay.KEY_TRACK_ARRAY);
         query.whereEqualTo(TrackDay.KEY_PARENT_USER, currentUser);
-        query.orderByDescending(TrackDay.KEY_DATE_NUMBER);
+        query.orderByAscending(TrackDay.KEY_DATE_NUMBER);
         query.findInBackground(new FindCallback<TrackDay>() {
             @Override
             public void done(List<TrackDay> daysTracked, ParseException e) {
-                if(e != null){
+                if (e != null) {
                     return;
                 }
-                if(daysTracked.size()>=10){
-                    int minDay = daysTracked.size()-10;
-                    int maxDay = daysTracked.size()-1;
+                if (daysTracked.size() >= 10) {
+                    int minDay = daysTracked.size() - 10;
+                    int maxDay = daysTracked.size() - 1;
                     int habitIndex = findIndexOfHabit();
-                    for(int i = 0; i < 10; i++){
-                        if(daysTracked.get(i+minDay).getTrackArray().get(habitIndex)==1){
+                    for (int i = 0; i < 10; i++) {
+                        if (daysTracked.get(i + minDay).getTrackArray().get(habitIndex) == 1) {
                             // the user completed the habit on the specified day
                             setCompletedBubble(i);
                         }
@@ -134,27 +127,28 @@ public class HabitDetailsActivity extends AppCompatActivity {
 
     /**
      * Fills in the specified bubble in the "last ten days" tracker
+     *
      * @param i the index of the bubble to fill in
      */
     private void setCompletedBubble(int i) {
         ImageView ivToFillIn;
-        if(i == 0){
+        if (i == 0) {
             ivToFillIn = ivDayOne;
-        } else if (i == 1){
+        } else if (i == 1) {
             ivToFillIn = ivDayTwo;
-        } else if (i == 2){
+        } else if (i == 2) {
             ivToFillIn = ivDayThree;
-        } else if (i == 3){
+        } else if (i == 3) {
             ivToFillIn = ivDayFour;
-        } else if (i == 4){
+        } else if (i == 4) {
             ivToFillIn = ivDayFive;
-        } else if (i == 5){
+        } else if (i == 5) {
             ivToFillIn = ivDaySix;
-        } else if (i == 6){
+        } else if (i == 6) {
             ivToFillIn = ivDaySeven;
-        } else if (i == 7){
+        } else if (i == 7) {
             ivToFillIn = ivDayEight;
-        } else if (i == 8){
+        } else if (i == 8) {
             ivToFillIn = ivDayNine;
         } else {
             ivToFillIn = ivDayTen;
@@ -175,14 +169,13 @@ public class HabitDetailsActivity extends AppCompatActivity {
         query.findInBackground(new FindCallback<TrackDay>() {
             @Override
             public void done(List<TrackDay> daysTracked, ParseException e) {
-                if(e != null){
+                if (e != null) {
                     return;
                 }
                 int habitIndex = findIndexOfHabit();
-
-                for(int i = 0; i < daysTracked.size(); i++){
-                    if (!streakLost){
-                        if(daysTracked.get(i).getTrackArray().get(habitIndex)==1){
+                for (int i = 0; i < daysTracked.size(); i++) {
+                    if (!streakLost) {
+                        if (daysTracked.get(i).getTrackArray().get(habitIndex) == 1) {
                             // the user completed the habit on the specified day
                             habitStreak += 1;
                         } else {
@@ -190,7 +183,7 @@ public class HabitDetailsActivity extends AppCompatActivity {
                         }
                     }
                 }
-                tvStreak.setText("You have a "+habitStreak+"-day streak for this habit");
+                tvStreak.setText("You have a " + habitStreak + "-day streak for this habit");
             }
         });
     }

@@ -1,13 +1,12 @@
 package com.example.habithelper.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
 import com.example.habithelper.R;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -87,6 +86,7 @@ public class SignupActivity extends AppCompatActivity {
 
     /**
      * Attempts to create a new ParseUser object with the user-inputted fields
+     *
      * @throws ParseException
      */
     private void newUser() throws ParseException {

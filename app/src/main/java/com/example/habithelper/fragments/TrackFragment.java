@@ -89,7 +89,6 @@ public class TrackFragment extends Fragment {
         AsyncHttpClient client = new AsyncHttpClient();
         String api_request = GET_WEATHER_URL + currentUser.getString("zipCode");
         client.get(api_request, new JsonHttpResponseHandler() {
-
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 JSONObject jsonObject = json.jsonObject;
@@ -109,7 +108,6 @@ public class TrackFragment extends Fragment {
                 int idChecked = radioGroup.getCheckedRadioButtonId();
                 RadioButton finalChoice = view.findViewById(idChecked);
                 int todayMood = (int) (finalChoice.getTag());
-
                 populateTodayHabits(numHabits);
                 saveTrack(todayMood, todayHabits);
             }
