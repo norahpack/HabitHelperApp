@@ -67,7 +67,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ivAverageMood"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tvPercentChange"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -103,6 +103,7 @@
                 android:fontFamily="@font/bright"
                 android:lineSpacingExtra="-20dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
                 app:layout_constraintTop_toBottomOf="@+id/tvNotEnoughDays"
                 android:minLines="2"
                 android:text=""
@@ -130,7 +131,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivAverageMood"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tvPercentChange"
         >
 
         <TextView
@@ -138,7 +139,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="0dp"
             android:layout_marginEnd="10dp"
             android:fontFamily="@font/bright"
             android:text="mood over time"
@@ -150,7 +151,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.jjoe64.graphview.GraphView
-            android:id="@+id/gvMood"
+            android:id="@+id/graphViewMood"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="0dp"
             android:layout_marginStart="5dp"
@@ -176,8 +177,24 @@
             android:textColor="@color/dusty_rose"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/gvMood" />
+            app:layout_constraintTop_toBottomOf="@+id/graphViewMood" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tvPercentChange"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:lineSpacingExtra="-20dp"
+        android:textAlignment="center"
+        android:textColor="@color/sienna"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="your mood this week is up 0.00% from last week" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

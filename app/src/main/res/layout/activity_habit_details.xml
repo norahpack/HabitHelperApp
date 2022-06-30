@@ -14,25 +14,24 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="15dp"
-        android:lineSpacingExtra="-30dp"
-        android:text="TextView"
+        android:lineSpacingExtra="-50dp"
         android:textAlignment="center"
-        android:transitionName="habitName"
         android:textColor="@color/sienna"
-        android:textSize="30dp"
+        android:textSize="40dp"
+        android:transitionName="habitName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Text view that creates two lines" />
 
     <ImageView
         android:id="@+id/ivHabit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="26dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="15dp"
         android:backgroundTint="@color/dusty_rose"
         android:transitionName="habitImage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvHabit"
         tools:srcCompat="@tools:sample/avatars" />
@@ -42,25 +41,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:text="GO BACK"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:background="@drawable/slight_rounded_corners"
         android:backgroundTint="@color/sienna"
+        android:text="GO BACK"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:visibility="gone"
         android:id="@+id/clPercent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="50dp"
         android:background="@drawable/slight_rounded_corners"
         android:backgroundTint="@color/dusty_rose"
-        app:layout_constraintBottom_toTopOf="@+id/btnBack"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivHabit">
@@ -88,16 +85,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clPercentNotEnough"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="50dp"
         android:background="@drawable/slight_rounded_corners"
         android:backgroundTint="@color/dusty_rose"
-        app:layout_constraintBottom_toTopOf="@+id/btnBack"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivHabit">
@@ -120,6 +115,201 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tvStreak"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="40dp"
+        android:lineSpacingExtra="-35dp"
+        android:textAlignment="center"
+        android:textColor="@color/dusty_rose"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="you have a 0-day streak for this habit" />
+
+    <TextView
+        android:id="@+id/tvLastTen"
+        android:visibility="gone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:lineSpacingExtra="-20dp"
+        android:text="Here's how you've done with this habit for the last ten days"
+        android:textAlignment="center"
+        android:textColor="@color/sienna"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clPercent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clLastTen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:visibility="gone"
+        android:background="@drawable/slight_rounded_corners"
+        android:backgroundTint="@color/peach"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLastTen">
+
+        <ImageView
+            android:id="@+id/ivDayOne"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/track_cream"
+            app:layout_constraintEnd_toStartOf="@+id/ivDayTwo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivDayTwo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/track_cream"
+            app:layout_constraintEnd_toStartOf="@+id/ivDayThree"
+            app:layout_constraintStart_toEndOf="@+id/ivDayOne"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivDayThree"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/track_cream"
+            app:layout_constraintEnd_toStartOf="@+id/ivDayFour"
+            app:layout_constraintStart_toEndOf="@+id/ivDayTwo"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivDayFour"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/track_cream"
+            app:layout_constraintEnd_toStartOf="@+id/ivDayFive"
+            app:layout_constraintStart_toEndOf="@+id/ivDayThree"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivDayFive"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/track_cream"
+            app:layout_constraintEnd_toStartOf="@+id/ivDaySix"
+            app:layout_constraintStart_toEndOf="@+id/ivDayFour"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivDaySix"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/track_cream"
+            app:layout_constraintEnd_toStartOf="@+id/ivDaySeven"
+            app:layout_constraintStart_toEndOf="@+id/ivDayFive"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivDaySeven"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/track_cream"
+            app:layout_constraintEnd_toStartOf="@+id/ivDayEight"
+            app:layout_constraintStart_toEndOf="@+id/ivDaySix"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivDayEight"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/track_cream"
+            app:layout_constraintEnd_toStartOf="@+id/ivDayNine"
+            app:layout_constraintStart_toEndOf="@+id/ivDaySeven"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivDayNine"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/track_cream"
+            app:layout_constraintEnd_toStartOf="@+id/ivDayTen"
+            app:layout_constraintStart_toEndOf="@+id/ivDayEight"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivDayTen"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/track_cream"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivDayNine"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvFirstDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="5dp"
+            android:text="1"
+            android:textColor="@color/sienna"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivDayOne" />
+
+        <TextView
+            android:id="@+id/tvLastDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="18dp"
+            android:text="10"
+            android:textColor="@color/sienna"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivDayOne" />
+
+        <TextView
+            android:id="@+id/tvDayNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Day number of tracking"
+            android:textColor="@color/sienna"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivDayOne" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

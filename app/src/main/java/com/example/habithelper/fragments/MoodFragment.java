@@ -36,13 +36,14 @@ public class MoodFragment extends Fragment {
     public static final int LABEL_PADDING = 29;
     public static final int LABEL_ANGLE = 30;
 
-    public TextView tvAverageMood;
-    public ImageView ivAverageMood;
     public double moodSum = 0;
     public double averageMood = 0;
-    public ConstraintLayout clNotEnoughDays;
+    ImageView ivAverageMood;
     TextView tvNumDaysTracked;
-    GraphView gvMood;
+    TextView tvAverageMood;
+    TextView tvPercentChange;
+    GraphView graphViewMood;
+    ConstraintLayout clNotEnoughDays;
     ConstraintLayout clMoodBarGraph;
     ParseUser currentUser;
 
@@ -89,15 +90,48 @@ public class MoodFragment extends Fragment {
                     return;
                 }
                 setAverageMood(daysTracked);
-
                 // sets the graph of moods for the user
                 if (daysTracked.size() >= 5) {
                     setMoodGraph(daysTracked, view);
                 } else {
                     setNotEnoughDays(daysTracked, view);
                 }
+                if (daysTracked.size() >= 14) {
+                    setPercentChange(daysTracked);
+                } else {
+                    tvPercentChange.setText("You're on your way to a happier and healthier future. Keep up the good work!");
+                }
             }
         });
+    }
+
+    /**
+     * Displays the percent change in the user's mood in the past seven days
+     * @param daysTracked the list of TrackDay objects corresponding to the user, ordered by date (ascending)
+     */
+    private void setPercentChange(List<TrackDay> daysTracked) {
+        double currentSevenAverage = getWeekAverage(daysTracked.size() - 1, daysTracked);
+        double lastSevenAverage = getWeekAverage(daysTracked.size() - 8, daysTracked);
+        double percentChange = 100.0*((currentSevenAverage - lastSevenAverage) / (lastSevenAverage));
+        String upOrDown = "down";
+        if (percentChange >= 0){
+            upOrDown = "up";
+        }
+        tvPercentChange.setText("Your mood this week is " + upOrDown + " "+dfZero.format(Math.abs(percentChange)) + "% from last week");
+    }
+
+    /**
+     * returns the average mood over the seven trackDays in question
+     * @param daysTracked the list of TrackDay objects corresponding to the user, ordered by date (ascending)
+     * @param startIndex the index in daysTracked of the most recent day we are considering
+     * @return the average mood score for the seven days tracked starting from startIndex.
+     */
+    private double getWeekAverage(int startIndex, List<TrackDay> daysTracked) {
+        double totalMood = 0;
+        for (int i = startIndex; i > startIndex - 7; i--){
+            totalMood+=daysTracked.get(i).getMood();
+        }
+        return totalMood/7.0;
     }
 
     /**
@@ -132,7 +166,7 @@ public class MoodFragment extends Fragment {
         }
         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(moodDataPoints);
         series.setColor(Color.parseColor("#A44F30"));
-        gvMood.addSeries(series);
+        graphViewMood.addSeries(series);
         instantiateGraphSettings(daysTracked);
     }
 
@@ -143,21 +177,21 @@ public class MoodFragment extends Fragment {
      */
     private void instantiateGraphSettings(List<TrackDay> daysTracked) {
         // makes sure the bounds of the graphs are accurate
-        gvMood.getViewport().setScrollable(true);
-        gvMood.getViewport().isScrollable();
-        gvMood.getViewport().scrollToEnd();
-        gvMood.getViewport().setMinY(MIN_Y);
-        gvMood.getViewport().setMaxY(MAX_Y);
-        gvMood.getViewport().setMinX(MIN_DAY);
-        gvMood.getViewport().setMaxX(daysTracked.size());
+        graphViewMood.getViewport().setScrollable(true);
+        graphViewMood.getViewport().isScrollable();
+        graphViewMood.getViewport().scrollToEnd();
+        graphViewMood.getViewport().setMinY(MIN_Y);
+        graphViewMood.getViewport().setMaxY(MAX_Y);
+        graphViewMood.getViewport().setMinX(MIN_DAY);
+        graphViewMood.getViewport().setMaxX(daysTracked.size());
         if (daysTracked.size() >= MAX_DAYS_ONE_SCREEN) {
-            gvMood.getViewport().setMinX(daysTracked.size() - MAX_DAYS_ONE_SCREEN + 1);
+            graphViewMood.getViewport().setMinX(daysTracked.size() - MAX_DAYS_ONE_SCREEN + 1);
         }
-        gvMood.getViewport().setYAxisBoundsManual(true);
-        gvMood.getViewport().setXAxisBoundsManual(true);
-        gvMood.getGridLabelRenderer().setPadding(LABEL_PADDING);
-        gvMood.getGridLabelRenderer().setHorizontalLabelsAngle(LABEL_ANGLE);
-        gvMood.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+        graphViewMood.getViewport().setYAxisBoundsManual(true);
+        graphViewMood.getViewport().setXAxisBoundsManual(true);
+        graphViewMood.getGridLabelRenderer().setPadding(LABEL_PADDING);
+        graphViewMood.getGridLabelRenderer().setHorizontalLabelsAngle(LABEL_ANGLE);
+        graphViewMood.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
             }
@@ -187,11 +221,12 @@ public class MoodFragment extends Fragment {
      */
     private void initViews(View view) {
         tvAverageMood = view.findViewById(R.id.tvAverageMood);
+        tvNumDaysTracked = view.findViewById(R.id.tvNumDaysTracked);
+        tvPercentChange = view.findViewById(R.id.tvPercentChange);
         ivAverageMood = view.findViewById(R.id.ivAverageMood);
         clNotEnoughDays = view.findViewById(R.id.clNotEnoughDays);
-        tvNumDaysTracked = view.findViewById(R.id.tvNumDaysTracked);
         clMoodBarGraph = view.findViewById(R.id.clMoodBarGraph);
-        gvMood = view.findViewById(R.id.gvMood);
+        graphViewMood = view.findViewById(R.id.graphViewMood);
     }
 
     /**

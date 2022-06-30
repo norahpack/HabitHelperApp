@@ -1,6 +1,5 @@
 package com.example.habithelper.applications;
 
-
 import android.app.Application;
 import com.example.habithelper.models.Habit;
 import com.example.habithelper.models.TrackDay;

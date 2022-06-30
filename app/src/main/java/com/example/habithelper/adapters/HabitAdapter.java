@@ -17,9 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.habithelper.R;
 import com.example.habithelper.activities.HabitDetailsActivity;
 import com.example.habithelper.models.Habit;
-import java.util.List;
-
 import org.parceler.Parcels;
+import java.util.List;
 
 public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> {
 

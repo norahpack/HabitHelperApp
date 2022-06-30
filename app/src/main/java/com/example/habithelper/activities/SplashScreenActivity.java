@@ -12,16 +12,16 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     public static final int MILLIS_TO_DELAY = 3600;
     Handler handler;
-    ImageView imageView;
+    ImageView ivSplash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        imageView = findViewById(R.id.imageview);
+        ivSplash = findViewById(R.id.ivSplash);
 
         // Adding the gif here using glide library
-        Glide.with(this).load(R.drawable.main_screen_new).into(imageView);
+        Glide.with(this).load(R.drawable.main_screen_new).into(ivSplash);
 
         handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -30,6 +30,6 @@ public class SplashScreenActivity extends AppCompatActivity {
                 startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
                 finish();
             }
-        },MILLIS_TO_DELAY);
+        } , MILLIS_TO_DELAY);
     }
 }

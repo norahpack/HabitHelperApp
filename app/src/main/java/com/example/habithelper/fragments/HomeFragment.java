@@ -5,10 +5,6 @@ import android.animation.AnimatorSet;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -17,25 +13,30 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
-import com.example.habithelper.activities.LoginActivity;
-import com.example.habithelper.utilities.LinearRegressionCalculator;
 import com.example.habithelper.R;
+import com.example.habithelper.activities.LoginActivity;
 import com.example.habithelper.models.TrackDay;
+import com.example.habithelper.utilities.LinearRegressionCalculator;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.List;
-
 import okhttp3.Headers;
 
 public class HomeFragment extends Fragment {
 
+    public static final String GET_QUOTE_URL = "https://zenquotes.io/api";
     public static final String GET_WEATHER_URL = "https://api.weatherapi.com/v1/current.json?key=e8d92dcba9404609b24175200221606&q=";
     public static final int CAMERA_DISTANCE = 8000;
 
@@ -50,6 +51,8 @@ public class HomeFragment extends Fragment {
     TextView tvThreeTwo;
     TextView tvThreeThree;
     TextView tvCompletedPortion;
+    TextView tvQuote;
+    TextView tvQuoteAuthor;
     ProgressBar pbCompletedPortion;
 
     public int numDaysTracked;
@@ -88,6 +91,7 @@ public class HomeFragment extends Fragment {
         loadAnimations(view);
         initializeUserVariables();
         countNumCompleted();
+        setQuote();
 
         // uses linear regression to determine and display which of the user's habits have the biggest impact on their mood
         getMostImpactfulHabits(view);
@@ -114,8 +118,30 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ParseUser.logOut();
-                currentUser = ParseUser.getCurrentUser();
                 startActivity(new Intent(getContext(), LoginActivity.class));
+            }
+        });
+    }
+
+    private void setQuote() {
+        AsyncHttpClient client = new AsyncHttpClient();
+        String api_request = GET_QUOTE_URL + "/today";
+        client.get(api_request, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                JSONArray quoteArray = json.jsonArray;
+                try {
+                    JSONObject quoteArrayJSONObject = (quoteArray.getJSONObject(0));
+                    tvQuote.setText("\"" + quoteArrayJSONObject.getString("q") + "\"");
+                    tvQuoteAuthor.setText("-" + quoteArrayJSONObject.getString("a"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                return;
             }
         });
     }
@@ -142,13 +168,23 @@ public class HomeFragment extends Fragment {
                     return;
                 }
                 numDaysTracked = daysTracked.size();
+                currentUser.put("numDaysTracked", numDaysTracked);
+                currentUser.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null) {
+                            return;
+                        }
+                        return;
+                    }
+                });
 
                 // ensures the number of days the user has tracked is greater than the number of habits they are tracking
                 // required for LeastSquaresRegression
                 if (numDaysTracked > numHabits) {
                     lrc = new LinearRegressionCalculator();
                     // calculates the array of correlation coefficients of each habit on the user's mood
-                    lrc.performLeastSquares(daysTracked,numDaysTracked, numHabits);
+                    lrc.performLeastSquares(daysTracked, numDaysTracked, numHabits);
                     double[] resultsArray = lrc.leastSquaresResult;
                     clNotEnoughHabits.setVisibility(view.GONE);
                     clThree.setVisibility(view.VISIBLE);
@@ -189,7 +225,6 @@ public class HomeFragment extends Fragment {
             ex.printStackTrace();
         }
     }
-
 
 
     /**
@@ -244,6 +279,8 @@ public class HomeFragment extends Fragment {
         clFront = view.findViewById(R.id.clFront);
         tvCompletedPortion = view.findViewById(R.id.tvCompletedPortion);
         pbCompletedPortion = view.findViewById(R.id.pbCompletedPortion);
+        tvQuote = view.findViewById(R.id.tvQuote);
+        tvQuoteAuthor = view.findViewById(R.id.tvQuoteAuthor);
     }
 
     /**
