@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -60,6 +61,8 @@ public class TrackFragment extends Fragment {
     public ParseUser currentUser;
     public List<Integer> todayHabits = new ArrayList<>();
     public String[] dateParts;
+    public List<CheckBox> checkBoxList;
+
 
     public TrackFragment() {
         // Required empty public constructor to initialize a fragment
@@ -85,6 +88,7 @@ public class TrackFragment extends Fragment {
         // links the TrackFragment instance variables with the ContentView elements
         initViews(view);
         initializeUserVariables(view);
+        checkBoxList = Arrays.asList(cbOne, cbTwo, cbThree, cbFour, cbFive, cbSix, cbSeven, cbEight, cbNine, cbTen);
         populateCheckboxes(numHabits);
         AsyncHttpClient client = new AsyncHttpClient();
         String api_request = GET_WEATHER_URL + currentUser.getString("zipCode");
@@ -277,29 +281,8 @@ public class TrackFragment extends Fragment {
      * @param i the integer index of the checkbox to handle
      */
     private void setChecked(int i) {
-        CheckBox cbGoTo;
         //figures out which checkBox object we should be populating
-        if (i == 0) {
-            cbGoTo = cbOne;
-        } else if (i == 1) {
-            cbGoTo = cbTwo;
-        } else if (i == 2) {
-            cbGoTo = cbThree;
-        } else if (i == 3) {
-            cbGoTo = cbFour;
-        } else if (i == 4) {
-            cbGoTo = cbFive;
-        } else if (i == 5) {
-            cbGoTo = cbSix;
-        } else if (i == 6) {
-            cbGoTo = cbSeven;
-        } else if (i == 7) {
-            cbGoTo = cbEight;
-        } else if (i == 8) {
-            cbGoTo = cbNine;
-        } else {
-            cbGoTo = cbTen;
-        }
+        CheckBox cbGoTo = checkBoxList.get(i);
         cbGoTo.setChecked(true);
     }
 
@@ -367,29 +350,8 @@ public class TrackFragment extends Fragment {
      */
     private void populateTodayHabits(int numHabits) {
         for (int i = 0; i < numHabits; i++) {
-            CheckBox cbGoTo;
             //figures out which checkBox object we should be populating
-            if (i == 0) {
-                cbGoTo = cbOne;
-            } else if (i == 1) {
-                cbGoTo = cbTwo;
-            } else if (i == 2) {
-                cbGoTo = cbThree;
-            } else if (i == 3) {
-                cbGoTo = cbFour;
-            } else if (i == 4) {
-                cbGoTo = cbFive;
-            } else if (i == 5) {
-                cbGoTo = cbSix;
-            } else if (i == 6) {
-                cbGoTo = cbSeven;
-            } else if (i == 7) {
-                cbGoTo = cbEight;
-            } else if (i == 8) {
-                cbGoTo = cbNine;
-            } else {
-                cbGoTo = cbTen;
-            }
+            CheckBox cbGoTo = checkBoxList.get(i);
             if (cbGoTo.isChecked()) {
                 todayHabits.add(1);
             } else {
@@ -405,29 +367,8 @@ public class TrackFragment extends Fragment {
      */
     private void populateCheckboxes(int numHabits) {
         for (int i = 0; i < numHabits; i++) {
-            CheckBox cbGoTo;
             //figures out which checkBox object we should be populating
-            if (i == 0) {
-                cbGoTo = cbOne;
-            } else if (i == 1) {
-                cbGoTo = cbTwo;
-            } else if (i == 2) {
-                cbGoTo = cbThree;
-            } else if (i == 3) {
-                cbGoTo = cbFour;
-            } else if (i == 4) {
-                cbGoTo = cbFive;
-            } else if (i == 5) {
-                cbGoTo = cbSix;
-            } else if (i == 6) {
-                cbGoTo = cbSeven;
-            } else if (i == 7) {
-                cbGoTo = cbEight;
-            } else if (i == 8) {
-                cbGoTo = cbNine;
-            } else {
-                cbGoTo = cbTen;
-            }
+            CheckBox cbGoTo = checkBoxList.get(i);
             cbGoTo.setText(String.valueOf(habitsList.get(i)));
             cbGoTo.setVisibility(View.VISIBLE);
         }

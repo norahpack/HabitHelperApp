@@ -1,8 +1,5 @@
 package com.example.habithelper.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -10,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.habithelper.R;
 import com.example.habithelper.models.Habit;
 import com.example.habithelper.models.TrackDay;
@@ -19,6 +19,7 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import org.parceler.Parcels;
+import java.util.Arrays;
 import java.util.List;
 
 public class HabitDetailsActivity extends AppCompatActivity {
@@ -34,6 +35,7 @@ public class HabitDetailsActivity extends AppCompatActivity {
     private ImageView ivDayEight;
     private ImageView ivDayNine;
     private ImageView ivDayTen;
+    private ImageView ivLastTenHidden;
     private Habit habit;
     private Button btnBack;
     private ParseUser currentUser;
@@ -45,7 +47,6 @@ public class HabitDetailsActivity extends AppCompatActivity {
     private TextView tvFirstDay;
     private TextView tvLastDay;
     private TextView tvPercent;
-    private TextView tvPercentNotEnough;
     private TextView tvStreak;
 
     public int numDaysTracked;
@@ -59,11 +60,14 @@ public class HabitDetailsActivity extends AppCompatActivity {
     public String increaseOrDecrease;
     public int habitStreak = 0;
     public boolean streakLost = false;
+    public List<ImageView> lastTenButtons;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_details);
         initViews();
+        lastTenButtons = Arrays.asList(ivDayOne, ivDayTwo, ivDayThree, ivDayFour, ivDayFive, ivDaySix, ivDaySeven, ivDayEight, ivDayNine, ivDayTen);
+
         if (getIntent().getParcelableExtra(Habit.class.getSimpleName()) != null) {
             habit = (Habit) Parcels.unwrap(getIntent().getParcelableExtra(Habit.class.getSimpleName()));
         }
@@ -115,11 +119,15 @@ public class HabitDetailsActivity extends AppCompatActivity {
                         }
                         tvLastTen.setVisibility(View.VISIBLE);
                         clLastTen.setVisibility(View.VISIBLE);
+                        ivLastTenHidden.setVisibility(View.GONE);
                         tvFirstDay.setText(String.valueOf(minDay + 1));
                         tvLastDay.setText(String.valueOf(maxDay + 1));
                     }
                 } else {
-                    // nothing yet - have the option to add a new view in the future
+                    // the user has tracked for fewer than ten days
+                    tvLastTen.setVisibility(View.GONE);
+                    clLastTen.setVisibility(View.GONE);
+                    ivLastTenHidden.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -131,28 +139,7 @@ public class HabitDetailsActivity extends AppCompatActivity {
      * @param i the index of the bubble to fill in
      */
     private void setCompletedBubble(int i) {
-        ImageView ivToFillIn;
-        if (i == 0) {
-            ivToFillIn = ivDayOne;
-        } else if (i == 1) {
-            ivToFillIn = ivDayTwo;
-        } else if (i == 2) {
-            ivToFillIn = ivDayThree;
-        } else if (i == 3) {
-            ivToFillIn = ivDayFour;
-        } else if (i == 4) {
-            ivToFillIn = ivDayFive;
-        } else if (i == 5) {
-            ivToFillIn = ivDaySix;
-        } else if (i == 6) {
-            ivToFillIn = ivDaySeven;
-        } else if (i == 7) {
-            ivToFillIn = ivDayEight;
-        } else if (i == 8) {
-            ivToFillIn = ivDayNine;
-        } else {
-            ivToFillIn = ivDayTen;
-        }
+        ImageView ivToFillIn = lastTenButtons.get(i);
         ivToFillIn.setBackground(AppCompatResources.getDrawable(HabitDetailsActivity.this, R.drawable.track_sienna));
     }
 
@@ -173,14 +160,12 @@ public class HabitDetailsActivity extends AppCompatActivity {
                     return;
                 }
                 int habitIndex = findIndexOfHabit();
-                for (int i = 0; i < daysTracked.size(); i++) {
-                    if (!streakLost) {
-                        if (daysTracked.get(i).getTrackArray().get(habitIndex) == 1) {
-                            // the user completed the habit on the specified day
-                            habitStreak += 1;
-                        } else {
-                            streakLost = true;
-                        }
+                for (int i = 0; i < daysTracked.size() && !streakLost; i++) {
+                    if (daysTracked.get(i).getTrackArray().get(habitIndex) == 1) {
+                        // the user completed the habit on the specified day
+                        habitStreak += 1;
+                    } else {
+                        streakLost = true;
                     }
                 }
                 tvStreak.setText("You have a " + habitStreak + "-day streak for this habit");
@@ -309,7 +294,6 @@ public class HabitDetailsActivity extends AppCompatActivity {
         clPercent = findViewById(R.id.clPercent);
         clPercentNotEnough = findViewById(R.id.clPercentNotEnough);
         tvPercent = findViewById(R.id.tvPercent);
-        tvPercentNotEnough = findViewById(R.id.tvPercentNotEnough);
         tvStreak = findViewById(R.id.tvStreak);
         tvFirstDay = findViewById(R.id.tvFirstDay);
         tvLastDay = findViewById(R.id.tvLastDay);
@@ -325,5 +309,6 @@ public class HabitDetailsActivity extends AppCompatActivity {
         ivDayEight = findViewById(R.id.ivDayEight);
         ivDayNine = findViewById(R.id.ivDayNine);
         ivDayTen = findViewById(R.id.ivDayTen);
+        ivLastTenHidden = findViewById(R.id.ivLastTenHidden);
     }
 }
