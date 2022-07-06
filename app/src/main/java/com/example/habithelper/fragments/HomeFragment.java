@@ -133,7 +133,7 @@ public class HomeFragment extends Fragment {
                 try {
                     JSONObject quoteArrayJSONObject = (quoteArray.getJSONObject(0));
                     tvQuote.setText("\"" + quoteArrayJSONObject.getString("q") + "\"");
-                    tvQuoteAuthor.setText("-" + quoteArrayJSONObject.getString("a"));
+                    tvQuoteAuthor.setText("-" + quoteArrayJSONObject.getString("a")+" ");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -141,6 +141,8 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                tvQuote.setText("\"For there is always light, if only we're brave enough to see it. If only we're brave enough to be it.\"");
+                tvQuoteAuthor.setText("-Amanda Gorman");
                 return;
             }
         });
@@ -172,10 +174,6 @@ public class HomeFragment extends Fragment {
                 currentUser.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        if (e != null) {
-                            return;
-                        }
-                        return;
                     }
                 });
 

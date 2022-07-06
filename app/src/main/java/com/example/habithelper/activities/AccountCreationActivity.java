@@ -209,6 +209,7 @@ public class AccountCreationActivity extends AppCompatActivity {
         currentUser = ParseUser.getCurrentUser();
         currentUser.put("zipCode", zipString);
         currentUser.put("name", name);
+        currentUser.add("badgesEarned", "badge_warmest_welcomes");
         currentUser.put("habitsList", habitsList);
         currentUser.saveInBackground(new SaveCallback() {
             @Override

@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/tvHabit"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginTop="25dp"
@@ -17,7 +17,7 @@
         android:lineSpacingExtra="-50dp"
         android:textAlignment="center"
         android:textColor="@color/sienna"
-        android:textSize="40dp"
+        android:textSize="35dp"
         android:transitionName="habitName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -132,6 +132,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="you have a 0-day streak for this habit" />
+
+    <ImageView
+        android:id="@+id/ivLastTenHidden"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/tvStreak"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/name_logo_pink_flowers_large" />
 
     <TextView
         android:id="@+id/tvLastTen"

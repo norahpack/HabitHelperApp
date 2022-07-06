@@ -1,5 +1,6 @@
 package com.example.habithelper.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.habithelper.R;
+import com.example.habithelper.activities.BadgesActivity;
+import com.example.habithelper.activities.LoginActivity;
 import com.example.habithelper.activities.MainActivity;
 import com.example.habithelper.models.TrackDay;
 import com.example.habithelper.views.CurvedText;
@@ -30,10 +33,11 @@ import okhttp3.Headers;
 
 public class ProfileFragment extends Fragment {
 
+    Button btnChangeZip;
+    Button btnViewBadges;
     CurvedText curvedTextBadge;
     ConstraintLayout clMain;
     TextView tvLocation;
-    Button btnChangeZip;
     TextView tvDaysTracked;
     TextView tvLevel;
 
@@ -84,6 +88,13 @@ public class ProfileFragment extends Fragment {
                 zipcodeDialogFragment.show(fm, "fragment_dialog_zipcode");
             }
         });
+
+        btnViewBadges.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), BadgesActivity.class));
+            }
+        });
     }
 
     /**
@@ -92,10 +103,11 @@ public class ProfileFragment extends Fragment {
      * @param view the current view
      */
     private void initViews(View view) {
+        btnChangeZip = view.findViewById(R.id.btnChangeZip);
+        btnViewBadges = view.findViewById(R.id.btnViewBadges);
         curvedTextBadge = view.findViewById(R.id.curvedTextBadge);
         clMain = view.findViewById(R.id.clMain);
         tvLocation = view.findViewById(R.id.tvLocation);
-        btnChangeZip = view.findViewById(R.id.btnChangeZip);
         tvDaysTracked = view.findViewById(R.id.tvDaysTracked);
         tvLevel = view.findViewById(R.id.tvLevel);
     }

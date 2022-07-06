@@ -129,7 +129,9 @@ public class MoodFragment extends Fragment {
     private double getWeekAverage(int startIndex, List<TrackDay> daysTracked) {
         double totalMood = 0;
         for (int i = startIndex; i > startIndex - 7; i--){
-            totalMood+=daysTracked.get(i).getMood();
+            if(i >= 0 && i < daysTracked.size()){
+                totalMood+=daysTracked.get(i).getMood();
+            }
         }
         return totalMood/7.0;
     }

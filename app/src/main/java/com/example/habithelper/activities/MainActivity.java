@@ -12,19 +12,29 @@ import com.example.habithelper.fragments.HabitListFragment;
 import com.example.habithelper.fragments.MoodFragment;
 import com.example.habithelper.fragments.ProfileFragment;
 import com.example.habithelper.fragments.TrackFragment;
+import com.example.habithelper.models.Habit;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     public static MainActivity self;
     final FragmentManager fragmentManager = getSupportFragmentManager();
     protected BottomNavigationView bottomNavigation;
+    public ParseUser currentUser;
+    List<String> badges;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         self = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        currentUser = ParseUser.getCurrentUser();
 
         bottomNavigation = findViewById(R.id.bottomNavigation);
 
@@ -64,12 +74,16 @@ public class MainActivity extends AppCompatActivity {
             String tabGoTo = (extras.getString("tab"));
             if (tabGoTo.equals("habits")) {
                 bottomNavigation.setSelectedItemId(R.id.itemList);
+            } else if (tabGoTo.equals("profile")){
+                bottomNavigation.setSelectedItemId(R.id.itemProfile);
             } else {
                 bottomNavigation.setSelectedItemId(R.id.itemHome);
             }
         } else {
             // sets the default fragment to be the home fragment
-            bottomNavigation.setSelectedItemId(R.id.itemHome);
+            if (bottomNavigation.getSelectedItemId() != R.id.itemHome){
+                bottomNavigation.setSelectedItemId(R.id.itemHome);
+            }
         }
     }
 
@@ -82,5 +96,22 @@ public class MainActivity extends AppCompatActivity {
     public void setTab(Fragment fragment, int selectedItem) {
         fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
         bottomNavigation.setSelectedItemId(selectedItem);
+    }
+
+    /**
+     * Determines whether the user has earned the badge in question already
+     * @param badgeName the badge to search for
+     * @return true if the user has already earned the badge
+     */
+    public boolean checkForBadge(String badgeName){
+        boolean earnedAlready = false;
+        badges = currentUser.getList("badgesEarned");
+        for (String badge : badges){
+            if (badge.equals(badgeName)){
+                earnedAlready = true;
+                break;
+            }
+        }
+        return earnedAlready;
     }
 }
