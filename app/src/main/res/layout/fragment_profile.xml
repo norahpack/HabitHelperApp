@@ -54,7 +54,7 @@
             android:layout_marginEnd="10dp"
             android:fontFamily="@font/bright"
             android:textColor="@color/dusty_rose"
-            android:textSize="20dp"
+            android:textSize="18dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -101,14 +101,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDaysTracked" />
 
+    <Button
+        android:id="@+id/btnViewBadges"
+        android:layout_width="wrap_content"
+        android:layout_height="33dp"
+        android:background="@drawable/slight_rounded_corners"
+        android:text="VIEW MY BADGES!"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLevel" />
+
+
+
     <ImageView
         android:id="@+id/ivName"
-        android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:layout_marginBottom="30dp"
+        android:layout_width="300dp"
+        android:layout_height="110dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/name_logo_pink_flowers_large" />
 

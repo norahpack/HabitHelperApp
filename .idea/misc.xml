@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.20030272452068618" />
+        <entry key="app/src/main/res/drawable/home.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/login_gradient.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/mood5.xml" value="0.2625" />
         <entry key="app/src/main/res/drawable/slight_rounded_corners.xml" value="0.1" />
@@ -13,6 +14,7 @@
         <entry key="app/src/main/res/font/charlotte_resource.xml" value="0.15185185185185185" />
         <entry key="app/src/main/res/font/honey_florist_resource.xml" value="0.16944444444444445" />
         <entry key="app/src/main/res/font/southmore_resource.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_badges.xml" value="0.36119554204660587" />
         <entry key="app/src/main/res/layout/activity_habit_details.xml" value="0.2750642673521851" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.36501312255859375" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.36683756510416665" />
@@ -27,6 +29,7 @@
         <entry key="app/src/main/res/layout/fragment_mood.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.3061797752808989" />
         <entry key="app/src/main/res/layout/fragment_track.xml" value="0.3108974358974359" />
+        <entry key="app/src/main/res/layout/item_badge.xml" value="0.28337874659400547" />
         <entry key="app/src/main/res/layout/item_habit.xml" value="0.5942708333333333" />
         <entry key="app/src/main/res/menu/menu_bottom_navigation.xml" value="0.4375" />
       </map>

@@ -74,6 +74,7 @@ public class ZipcodeDialogFragment extends DialogFragment {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 currentUser.put("zipCode", zipString);
+                currentUser.add("badgesEarned", "badge_world_traveler");
                 currentUser.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
