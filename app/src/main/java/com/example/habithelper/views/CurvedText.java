@@ -18,11 +18,10 @@ public class CurvedText extends View {
     public String levelString;
     public int nameOffset;
 
-    private static final int CIRCLE_POSITION = 510;
-    private static final int UPPER_CIRCLE_RADIUS = 432;
-    private static final int LOWER_CIRCLE_RADIUS = 505;
-    public static final int UPPER_OFFSET = 1670;
-    public static final int LOWER_OFFSET = 2300;
+    private static final int UPPER_CIRCLE_RADIUS = 325;
+    private static final int LOWER_CIRCLE_RADIUS = 415;
+    public static final int UPPER_OFFSET = 1270;
+    public static final int LOWER_OFFSET = 1860;
     public static final int VERTICAL_OFFSET = 0;
 
 
@@ -34,8 +33,8 @@ public class CurvedText extends View {
 
         circle = new Path();
         circle2 = new Path();
-        circle.addCircle(CIRCLE_POSITION, CIRCLE_POSITION, UPPER_CIRCLE_RADIUS, Path.Direction.CW);
-        circle2.addCircle(CIRCLE_POSITION, CIRCLE_POSITION, LOWER_CIRCLE_RADIUS, Path.Direction.CCW);
+        circle.addCircle(400, 380, UPPER_CIRCLE_RADIUS, Path.Direction.CW);
+        circle2.addCircle(400, 380, LOWER_CIRCLE_RADIUS, Path.Direction.CCW);
 
         setBackground(numDaysTracked);
 

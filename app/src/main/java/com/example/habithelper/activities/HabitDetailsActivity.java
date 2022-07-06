@@ -3,10 +3,13 @@ package com.example.habithelper.activities;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -37,7 +40,6 @@ public class HabitDetailsActivity extends AppCompatActivity {
     private ImageView ivDayTen;
     private ImageView ivLastTenHidden;
     private Habit habit;
-    private Button btnBack;
     private ParseUser currentUser;
     private ConstraintLayout clLastTen;
     private ConstraintLayout clPercent;
@@ -81,15 +83,20 @@ public class HabitDetailsActivity extends AppCompatActivity {
         calculateStreak();
         setupLastTenDays();
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(HabitDetailsActivity.this, MainActivity.class);
-                i.putExtra("tab", "habits");
-                startActivity(i);
-                finish();
-            }
-        });
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
+     * OnClick of an item in the navBar, performs the action specified
+     * @param item the item the user clicked
+     */
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Intent i = new Intent(HabitDetailsActivity.this, MainActivity.class);
+        i.putExtra("tab", "habits");
+        startActivity(i);
+        finish();
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -114,7 +121,6 @@ public class HabitDetailsActivity extends AppCompatActivity {
                     int habitIndex = findIndexOfHabit();
                     for (int i = 0; i < 10; i++) {
                         if (daysTracked.get(i + minDay).getTrackArray().get(habitIndex) == 1) {
-                            // the user completed the habit on the specified day
                             setCompletedBubble(i);
                         }
                         tvLastTen.setVisibility(View.VISIBLE);
@@ -162,7 +168,6 @@ public class HabitDetailsActivity extends AppCompatActivity {
                 int habitIndex = findIndexOfHabit();
                 for (int i = 0; i < daysTracked.size() && !streakLost; i++) {
                     if (daysTracked.get(i).getTrackArray().get(habitIndex) == 1) {
-                        // the user completed the habit on the specified day
                         habitStreak += 1;
                     } else {
                         streakLost = true;
@@ -290,7 +295,6 @@ public class HabitDetailsActivity extends AppCompatActivity {
     private void initViews() {
         ivHabit = findViewById(R.id.ivHabit);
         tvHabit = findViewById(R.id.tvHabit);
-        btnBack = findViewById(R.id.btnBack);
         clPercent = findViewById(R.id.clPercent);
         clPercentNotEnough = findViewById(R.id.clPercentNotEnough);
         tvPercent = findViewById(R.id.tvPercent);

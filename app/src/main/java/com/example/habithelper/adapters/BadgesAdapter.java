@@ -53,13 +53,9 @@ public class BadgesAdapter extends RecyclerView.Adapter<BadgesAdapter.ViewHolder
     }
 
     public void addAll(List<String> stringList) {
-        System.out.println(stringList.size());
         for (String s : stringList){
-            System.out.println(s);
             badgeList.add(s);
         }
-        System.out.println(badgeList.size());
-        System.out.println("addedAll");
         notifyDataSetChanged();
     }
 

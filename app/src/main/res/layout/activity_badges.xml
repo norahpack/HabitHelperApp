@@ -12,12 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="1dp"
+        android:layout_marginBottom="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/btnBack"
         app:layout_constraintTop_toBottomOf="@+id/tvBadges" />
 
     <TextView
@@ -36,17 +36,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/slight_rounded_corners"
-        android:backgroundTint="@color/peach"
-        android:text="GO BACK"
-        android:textSize="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

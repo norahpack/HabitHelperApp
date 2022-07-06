@@ -28,7 +28,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="170dp"
         android:layout_marginEnd="15dp"
         android:fontFamily="@font/bright"
         android:lineSpacingExtra="-20dp"
@@ -37,6 +37,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:typeface="normal"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvHello" />
@@ -60,12 +61,12 @@
         android:id="@+id/btnLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/slight_rounded_corners"
         android:text="Log Out"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/tvQuoteAuthor"
-        app:layout_constraintStart_toStartOf="@+id/tvQuoteAuthor"
-        app:layout_constraintTop_toBottomOf="@+id/tvQuoteAuthor" />
+        app:layout_constraintStart_toStartOf="@+id/tvQuoteAuthor" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -73,11 +74,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="15dp"
-        android:visibility="gone"
         android:background="@drawable/slight_rounded_corners"
         android:backgroundTint="@color/cream"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvHello">
@@ -87,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="30dp"
             android:fontFamily="@font/bright"
             android:lineSpacingExtra="-20dp"
@@ -108,12 +109,14 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="30dp"
+            android:layout_marginBottom="10dp"
             android:fontFamily="@font/bright"
             android:lineSpacingExtra="-20dp"
             android:minLines="2"
             android:text=""
             android:textAlignment="center"
             android:textColor="@color/dusty_rose"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvNotEnoughHabitsMain" />
@@ -121,26 +124,25 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clThree"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="15dp"
 
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/tvHello">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clBack"
-            android:background="@drawable/slight_rounded_corners"
-            android:backgroundTint="@color/dusty_rose"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@drawable/slight_rounded_corners"
+            android:backgroundTint="@color/dusty_rose">
 
             <TextView
                 android:id="@+id/tvCompletedPortion"
@@ -179,73 +181,73 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clFront"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@drawable/slight_rounded_corners"
-            android:backgroundTint="@color/cream"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:backgroundTint="@color/cream">
 
-        <TextView
-            android:id="@+id/tvThreeMain"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="30dp"
-            android:fontFamily="@font/bright"
-            android:lineSpacingExtra="-20dp"
-            android:minLines="2"
-            android:text="The three habits that improve your mood the most are: "
-            android:textAlignment="center"
-            android:textColor='@color/sienna'
+            <TextView
+                android:id="@+id/tvThreeMain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/bright"
+                android:lineSpacingExtra="-20dp"
+                android:minLines="2"
+                android:text="The three habits that improve your mood the most are: "
+                android:textAlignment="center"
+                android:textColor='@color/sienna'
 
-            android:textSize="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+                android:textSize="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvThreeOne"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="5dp"
-            android:fontFamily="@font/bright"
-            android:text="TextView"
-            android:textColor="@color/dusty_rose"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvThreeMain" />
+            <TextView
+                android:id="@+id/tvThreeOne"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:fontFamily="@font/bright"
+                android:text="TextView"
+                android:textColor="@color/dusty_rose"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvThreeMain" />
 
-        <TextView
-            android:id="@+id/tvThreeTwo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="5dp"
-            android:fontFamily="@font/bright"
-            android:text="TextView"
-            android:textColor="@color/dusty_rose"
+            <TextView
+                android:id="@+id/tvThreeTwo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:fontFamily="@font/bright"
+                android:text="TextView"
+                android:textColor="@color/dusty_rose"
 
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvThreeOne" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvThreeOne" />
 
-        <TextView
-            android:id="@+id/tvThreeThree"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/bright"
-            android:text="TextView"
-            android:textColor="@color/dusty_rose"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvThreeTwo" />
+            <TextView
+                android:id="@+id/tvThreeThree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/bright"
+                android:text="TextView"
+                android:textColor="@color/dusty_rose"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvThreeTwo" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

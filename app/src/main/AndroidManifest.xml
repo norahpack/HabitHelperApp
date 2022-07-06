@@ -18,9 +18,11 @@
         android:theme="@style/Theme.HabitHelper"
         tools:targetApi="31">
         <activity
+            android:theme="@style/BackButtonTheme"
             android:name=".activities.BadgesActivity"
             android:exported="false" />
         <activity
+            android:theme="@style/BackButtonTheme"
             android:name=".activities.HabitDetailsActivity"
             android:exported="false" />
         <activity

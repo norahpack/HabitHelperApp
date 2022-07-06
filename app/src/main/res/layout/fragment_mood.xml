@@ -28,10 +28,10 @@
         android:id="@+id/tvAverageMoodIntro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
         android:text="Your average mood is:"
         android:textColor="@color/sienna"
         android:textSize="25dp"
-        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvMoodIntro" />
@@ -63,53 +63,52 @@
         android:id="@+id/clNotEnoughDays"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:visibility="gone"
         android:background="@color/cream"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/tvPercentChange"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivAverageMood"
-        app:layout_constraintBottom_toTopOf="@+id/tvPercentChange"
-        >
+        app:layout_constraintTop_toBottomOf="@id/ivAverageMood">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clInner"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="20dp"
+            android:layout_marginEnd="15dp"
             android:background="@drawable/slight_rounded_corners"
             android:backgroundTint="@color/peach"
-            android:layout_marginEnd="15dp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_height="wrap_content">
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/tvNotEnoughDays"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/bright"
                 android:lineSpacingExtra="-20dp"
                 android:minLines="2"
                 android:text="Keep tracking to unlock mood visualization features"
                 android:textAlignment="center"
                 android:textColor='@color/sienna'
+                android:textSize="20dp"
 
-                android:textSize="20dp" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tvNumDaysTracked"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fontFamily="@font/bright"
-                android:lineSpacingExtra="-20dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/tvNotEnoughDays"
+                android:fontFamily="@font/bright"
+                android:lineSpacingExtra="-20dp"
                 android:minLines="2"
                 android:text=""
                 android:textAlignment="center"
-                android:textColor="@color/sienna" />
+                android:textColor="@color/sienna"
+                app:layout_constraintTop_toBottomOf="@+id/tvNotEnoughDays" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
@@ -126,14 +125,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clMoodBarGraph"
-        android:visibility="gone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/tvPercentChange"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivAverageMood"
-        app:layout_constraintBottom_toTopOf="@+id/tvPercentChange"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/ivAverageMood">
 
         <TextView
             android:id="@+id/tvMoodOverTime"
@@ -144,26 +142,26 @@
             android:layout_marginEnd="10dp"
             android:fontFamily="@font/bright"
             android:text="mood over time"
-            android:textSize="25dp"
             android:textAlignment="center"
             android:textColor="@color/dusty_rose"
+            android:textSize="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.jjoe64.graphview.GraphView
             android:id="@+id/graphViewMood"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="0dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            app:layout_constraintTop_toBottomOf="@+id/tvMoodOverTime"
-            app:layout_constraintBottom_toTopOf="@+id/tvXAxis"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_alignParentTop="true" />
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/tvXAxis"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvMoodOverTime" />
 
         <TextView
             android:id="@+id/tvXAxis"

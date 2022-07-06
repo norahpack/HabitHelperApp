@@ -214,6 +214,8 @@ public class MoodFragment extends Fragment {
             tvAverageMood.setText(dfZero.format(averageMood) + "/5.00");
             setIvAverageMood();
         }
+        tvAverageMood.setText("not tracked yet");
+        ivAverageMood.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.mood1));
     }
 
     /**

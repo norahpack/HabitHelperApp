@@ -104,14 +104,7 @@ public class MainActivity extends AppCompatActivity {
      * @return true if the user has already earned the badge
      */
     public boolean checkForBadge(String badgeName){
-        boolean earnedAlready = false;
         badges = currentUser.getList("badgesEarned");
-        for (String badge : badges){
-            if (badge.equals(badgeName)){
-                earnedAlready = true;
-                break;
-            }
-        }
-        return earnedAlready;
+        return badges.contains(badgeName);
     }
 }

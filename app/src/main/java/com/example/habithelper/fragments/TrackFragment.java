@@ -377,7 +377,6 @@ public class TrackFragment extends Fragment {
                 }
             }
         } else {
-            System.out.println("here");
             // the user had a perfect day
             if(!todayHabits.contains(0)){
                 currentUser.add("badgesEarned", "badge_perfect_day");
@@ -581,7 +580,6 @@ public class TrackFragment extends Fragment {
      * @param todayHabits an array of 1's and 0's representing whether the user completed each of their habits that day
      */
     private void saveTrack(int todayMood, List<Integer> todayHabits) {
-        System.out.println("saving");
         trackDay = new TrackDay();
         trackDay.setMood(todayMood);
         trackDay.setTrackArray(todayHabits);
@@ -700,12 +698,10 @@ public class TrackFragment extends Fragment {
                         if (day.getMood() == 1 || day.getMood() == 2){
                             noRed = false;
                         }
-                        System.out.println(day.getMood());
                         moodSum+=day.getMood();
                     }
 
                     int longestStreak = getLongestStreak();
-                    System.out.println(moodSum/7.0);
                     magnificentMoodBadge(moodSum/7.0);
                     sevenDaysOfSmilesBadge(moodSum/7.0);
                     noRedDaysBadge(noRed);
