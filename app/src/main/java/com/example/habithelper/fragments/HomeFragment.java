@@ -54,6 +54,7 @@ public class HomeFragment extends Fragment {
     TextView tvQuote;
     TextView tvQuoteAuthor;
     ProgressBar pbCompletedPortion;
+    ProgressBar pbLoading;
 
     public int numDaysTracked;
     private int numChecked = 0;
@@ -184,10 +185,8 @@ public class HomeFragment extends Fragment {
                     // calculates the array of correlation coefficients of each habit on the user's mood
                     lrc.performLeastSquares(daysTracked, numDaysTracked, numHabits);
                     double[] resultsArray = lrc.leastSquaresResult;
-                    clNotEnoughHabits.setVisibility(view.GONE);
-                    clThree.setVisibility(view.VISIBLE);
                     // getting and displaying the three most impactful habits on a user's mood
-                    setMostImpactfulText(resultsArray, lrc);
+                    setMostImpactfulText(resultsArray, lrc, view);
                 } else {
                     notEnoughDays(view);
                 }
@@ -200,7 +199,7 @@ public class HomeFragment extends Fragment {
      *
      * @param resultsArray an array of coefficients corresponding to the correlation of each habit to the user's mood
      */
-    private void setMostImpactfulText(double[] resultsArray, LinearRegressionCalculator lrc) {
+    private void setMostImpactfulText(double[] resultsArray, LinearRegressionCalculator lrc, View view) {
         try {
             Object firstObject = currentUser.getJSONArray("habitsList").get(lrc.getIndexOfLargest(resultsArray));
             String firstString = String.valueOf(firstObject);
@@ -222,6 +221,10 @@ public class HomeFragment extends Fragment {
         } catch (JSONException ex) {
             ex.printStackTrace();
         }
+        pbLoading.setVisibility(view.GONE);
+        clThree.setVisibility(view.VISIBLE);
+        tvQuote.setVisibility(view.VISIBLE);
+        tvQuoteAuthor.setVisibility(view.VISIBLE);
     }
 
 
@@ -231,13 +234,15 @@ public class HomeFragment extends Fragment {
      * @param view the current view
      */
     private void notEnoughDays(View view) {
-        clThree.setVisibility(view.GONE);
         if (numDaysTracked != 1) {
             tvNumDaysTracked.setText("So far, you've been tracking for " + String.valueOf(numDaysTracked) + " days!");
         } else {
             tvNumDaysTracked.setText("So far, you've been tracking for 1 day!");
         }
+        pbLoading.setVisibility(view.GONE);
         clNotEnoughHabits.setVisibility(view.VISIBLE);
+        tvQuote.setVisibility(view.VISIBLE);
+        tvQuoteAuthor.setVisibility(view.VISIBLE);
     }
 
     /**
@@ -279,6 +284,7 @@ public class HomeFragment extends Fragment {
         pbCompletedPortion = view.findViewById(R.id.pbCompletedPortion);
         tvQuote = view.findViewById(R.id.tvQuote);
         tvQuoteAuthor = view.findViewById(R.id.tvQuoteAuthor);
+        pbLoading = view.findViewById(R.id.pbLoading);
     }
 
     /**
@@ -337,6 +343,7 @@ public class HomeFragment extends Fragment {
                 }
                 tvCompletedPortion.setText("Today, you have completed " + String.valueOf(numChecked) + " of " + numHabits + " habits");
                 pbCompletedPortion.setProgress((int) Math.round(100 * ((double) numChecked / numHabits)));
+                pbCompletedPortion.setVisibility(View.VISIBLE);
             }
         });
     }

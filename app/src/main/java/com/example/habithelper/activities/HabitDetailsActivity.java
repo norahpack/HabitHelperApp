@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -50,6 +51,7 @@ public class HabitDetailsActivity extends AppCompatActivity {
     private TextView tvLastDay;
     private TextView tvPercent;
     private TextView tvStreak;
+    private ProgressBar pbLoadingDetailView;
 
     public int numDaysTracked;
     private int numHabits;
@@ -62,6 +64,7 @@ public class HabitDetailsActivity extends AppCompatActivity {
     public String increaseOrDecrease;
     public int habitStreak = 0;
     public boolean streakLost = false;
+    public boolean showPercentChange;
     public List<ImageView> lastTenButtons;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +84,6 @@ public class HabitDetailsActivity extends AppCompatActivity {
         tvHabit.setText(habit.getHabitName());
         setupIvHabit();
         calculateStreak();
-        setupLastTenDays();
 
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -123,17 +125,21 @@ public class HabitDetailsActivity extends AppCompatActivity {
                         if (daysTracked.get(i + minDay).getTrackArray().get(habitIndex) == 1) {
                             setCompletedBubble(i);
                         }
-                        tvLastTen.setVisibility(View.VISIBLE);
-                        clLastTen.setVisibility(View.VISIBLE);
-                        ivLastTenHidden.setVisibility(View.GONE);
+                        pbLoadingDetailView.setVisibility(View.GONE);
                         tvFirstDay.setText(String.valueOf(minDay + 1));
                         tvLastDay.setText(String.valueOf(maxDay + 1));
+                        tvLastTen.setVisibility(View.VISIBLE);
+                        clLastTen.setVisibility(View.VISIBLE);
                     }
                 } else {
                     // the user has tracked for fewer than ten days
-                    tvLastTen.setVisibility(View.GONE);
-                    clLastTen.setVisibility(View.GONE);
+                    pbLoadingDetailView.setVisibility(View.GONE);
                     ivLastTenHidden.setVisibility(View.VISIBLE);
+                }
+                if (showPercentChange){
+                    clPercent.setVisibility(View.VISIBLE);
+                } else {
+                    clPercentNotEnough.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -239,8 +245,8 @@ public class HabitDetailsActivity extends AppCompatActivity {
      * Shows a card telling the user they have not tracked enough data yet
      */
     private void showNoDataView() {
-        clPercent.setVisibility(View.GONE);
-        clPercentNotEnough.setVisibility(View.VISIBLE);
+        showPercentChange = false;
+        setupLastTenDays();
     }
 
     /**
@@ -258,8 +264,8 @@ public class HabitDetailsActivity extends AppCompatActivity {
             increaseOrDecrease = "decreases";
         }
         tvPercent.setText("Completing this habit " + increaseOrDecrease + " your mood by " + Math.abs(percentChange) + " percent!");
-        clPercent.setVisibility(View.VISIBLE);
-        clPercentNotEnough.setVisibility(View.GONE);
+        showPercentChange = true;
+        setupLastTenDays();
     }
 
     /**
@@ -314,5 +320,6 @@ public class HabitDetailsActivity extends AppCompatActivity {
         ivDayNine = findViewById(R.id.ivDayNine);
         ivDayTen = findViewById(R.id.ivDayTen);
         ivLastTenHidden = findViewById(R.id.ivLastTenHidden);
+        pbLoadingDetailView = findViewById(R.id.pbLoadingDetailView);
     }
 }

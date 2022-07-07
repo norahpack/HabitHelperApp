@@ -196,4 +196,28 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:text="your mood this week is up 0.00% from last week" />
 
+    <ProgressBar
+        android:id="@+id/pbLoadingAverageMood"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="100dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="20dp"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/dusty_rose"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAverageMoodIntro" />
+
+    <ProgressBar
+        android:id="@+id/pbLoadingMoodGraph"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginBottom="40dp"
+        android:progressTint="@color/peach"
+        app:layout_constraintBottom_toTopOf="@+id/tvPercentChange"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivAverageMood" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

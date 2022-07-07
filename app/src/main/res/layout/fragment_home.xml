@@ -37,10 +37,12 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:typeface="normal"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/btnLogout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvHello" />
+        app:layout_constraintTop_toBottomOf="@+id/tvHello"
+        tools:text="&quot;It's very strange that the people you love are often the people you're most cruel to&quot;" />
 
     <TextView
         android:id="@+id/tvQuoteAuthor"
@@ -53,9 +55,11 @@
         android:textSize="15sp"
         android:textStyle="bold"
         android:typeface="normal"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvQuote" />
+        app:layout_constraintTop_toBottomOf="@+id/tvQuote"
+        tools:text="-Kenneth Branagh" />
 
     <Button
         android:id="@+id/btnLogout"
@@ -172,7 +176,7 @@
                 android:backgroundTint="@color/sienna"
                 android:indeterminate="false"
                 android:progressTint="@color/cream"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvCompletedPortion" />
@@ -251,6 +255,18 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/sienna"
+        android:progressDrawable="@drawable/check"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHello" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

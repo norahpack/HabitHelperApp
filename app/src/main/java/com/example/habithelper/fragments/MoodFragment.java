@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.example.habithelper.R;
 import com.example.habithelper.models.TrackDay;
@@ -45,6 +46,8 @@ public class MoodFragment extends Fragment {
     GraphView graphViewMood;
     ConstraintLayout clNotEnoughDays;
     ConstraintLayout clMoodBarGraph;
+    ProgressBar pbLoadingAverageMood;
+    ProgressBar pbLoadingMoodGraph;
     ParseUser currentUser;
 
     public MoodFragment() {
@@ -143,13 +146,13 @@ public class MoodFragment extends Fragment {
      * @param view        the current view
      */
     private void setNotEnoughDays(List<TrackDay> daysTracked, View view) {
-        clMoodBarGraph.setVisibility(view.GONE);
-        clNotEnoughDays.setVisibility(view.VISIBLE);
         if (daysTracked.size() != 1) {
             tvNumDaysTracked.setText("So far, you've been tracking for " + String.valueOf(daysTracked.size()) + " days!");
         } else {
             tvNumDaysTracked.setText("So far, you've been tracking for 1 day!");
         }
+        pbLoadingMoodGraph.setVisibility(View.GONE);
+        clNotEnoughDays.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -159,8 +162,6 @@ public class MoodFragment extends Fragment {
      * @param view        the current view
      */
     private void setMoodGraph(List<TrackDay> daysTracked, View view) {
-        clMoodBarGraph.setVisibility(view.VISIBLE);
-        clNotEnoughDays.setVisibility(view.GONE);
         DataPoint[] moodDataPoints = new DataPoint[daysTracked.size()];
         for (int i = 0; i < daysTracked.size(); i++) {
             int dayMood = daysTracked.get(i).getMood();
@@ -170,6 +171,8 @@ public class MoodFragment extends Fragment {
         series.setColor(Color.parseColor("#A44F30"));
         graphViewMood.addSeries(series);
         instantiateGraphSettings(daysTracked);
+        pbLoadingMoodGraph.setVisibility(View.GONE);
+        clMoodBarGraph.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -211,11 +214,14 @@ public class MoodFragment extends Fragment {
                 moodSum += daysTracked.get(i).getMood();
             }
             averageMood = moodSum / (daysTracked.size());
+            pbLoadingAverageMood.setVisibility(View.GONE);
             tvAverageMood.setText(dfZero.format(averageMood) + "/5.00");
             setIvAverageMood();
+        } else {
+            pbLoadingAverageMood.setVisibility(View.GONE);
+            tvAverageMood.setText("not tracked yet");
+            ivAverageMood.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.mood1));
         }
-        tvAverageMood.setText("not tracked yet");
-        ivAverageMood.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.mood1));
     }
 
     /**
@@ -231,6 +237,8 @@ public class MoodFragment extends Fragment {
         clNotEnoughDays = view.findViewById(R.id.clNotEnoughDays);
         clMoodBarGraph = view.findViewById(R.id.clMoodBarGraph);
         graphViewMood = view.findViewById(R.id.graphViewMood);
+        pbLoadingAverageMood = view.findViewById(R.id.pbLoadingAverageMood);
+        pbLoadingMoodGraph = view.findViewById(R.id.pbLoadingMoodGraph);
     }
 
     /**

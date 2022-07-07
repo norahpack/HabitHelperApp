@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -40,6 +41,8 @@ public class ProfileFragment extends Fragment {
     TextView tvLocation;
     TextView tvDaysTracked;
     TextView tvLevel;
+    ProgressBar pbLoadingNumDays;
+    ProgressBar pbLoadingLocation;
 
     private ParseUser currentUser;
     private int numDaysTracked = 0;
@@ -110,6 +113,8 @@ public class ProfileFragment extends Fragment {
         tvLocation = view.findViewById(R.id.tvLocation);
         tvDaysTracked = view.findViewById(R.id.tvDaysTracked);
         tvLevel = view.findViewById(R.id.tvLevel);
+        pbLoadingLocation = view.findViewById(R.id.pbLoadingLocation);
+        pbLoadingNumDays = view.findViewById(R.id.pbLoadingNumDays);
     }
 
     /**
@@ -129,6 +134,7 @@ public class ProfileFragment extends Fragment {
                     return;
                 }
                 numDaysTracked = daysTracked.size();
+                tvDaysTracked.setVisibility(View.INVISIBLE);
                 tvDaysTracked.setText("You have been tracking for " + numDaysTracked + " days");
                 setLevel();
                 return;
@@ -158,6 +164,8 @@ public class ProfileFragment extends Fragment {
             daysLeft = 10 - numDaysTracked;
             nextLevel = "2";
         }
+        pbLoadingNumDays.setVisibility(View.GONE);
+        tvDaysTracked.setVisibility(View.VISIBLE);
         tvLevel.setText(String.valueOf(daysLeft)+" more days until you reach level "+nextLevel);
     }
 
@@ -170,6 +178,7 @@ public class ProfileFragment extends Fragment {
         try {
             JSONObject location = jsonObject.getJSONObject("location");
             String locationName = location.getString("name");
+            pbLoadingLocation.setVisibility(View.GONE);
             tvLocation.setText("Your current location is " + locationName);
         } catch (JSONException e) {
             e.printStackTrace();
