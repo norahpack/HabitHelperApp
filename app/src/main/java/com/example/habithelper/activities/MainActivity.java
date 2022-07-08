@@ -12,13 +12,8 @@ import com.example.habithelper.fragments.HabitListFragment;
 import com.example.habithelper.fragments.MoodFragment;
 import com.example.habithelper.fragments.ProfileFragment;
 import com.example.habithelper.fragments.TrackFragment;
-import com.example.habithelper.models.Habit;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {

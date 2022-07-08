@@ -1,32 +1,49 @@
 package com.example.habithelper.utilities;
 
 import com.example.habithelper.models.TrackDay;
-import com.parse.ParseUser;
-import org.apache.commons.math3.linear.RealVector;
 import java.util.List;
 
 public class LinearRegressionCalculator {
 
-    private ParseUser currentUser;
     double[] moodList;
     double[][] habitHistoryList;
     public double[] leastSquaresResult;
 
     public LinearRegressionCalculator() {
-        this.currentUser=ParseUser.getCurrentUser();
     }
 
     /**
      * Performs least squares linear regression on the user's list of moods and habits
      *
      * @param daysTracked the list holding every TrackDay Parse object corresponding to the currentUser
+     * @param numDaysTracked the number of days the user has tracked so far
+     * @param numHabits the number of habits the user is tracking
      * @return an array of coefficients corresponding to the correlation of each habit to the user's mood
      */
     public void performLeastSquares(List<TrackDay> daysTracked, int numDaysTracked, int numHabits) {
         moodList = new double[numDaysTracked];
-        habitHistoryList = new double[numDaysTracked][numHabits]; //first is data, second is predictors
+        habitHistoryList = new double[numDaysTracked][numHabits];
 
-        // putting the data from the Parse database into lists that we can perform OLSMultipleLinearRegression on
+        putParseDataIntoLists(daysTracked, numDaysTracked);
+
+        HabitMultipleLinearRegression habitMLR = new HabitMultipleLinearRegression();
+        habitMLR.newSampleData(moodList, habitHistoryList);
+        double[] tempArray = habitMLR.calculateBeta().toArray();
+
+        // removes the y-intercept value from the array of predictor coefficients
+        double[] resultsArray = new double[tempArray.length - 1];
+        for (int i = 1; i < tempArray.length; i++) {
+            resultsArray[i - 1] = tempArray[i];
+        }
+        leastSquaresResult = resultsArray;
+    }
+
+    /**
+     * Obtain the data from the Parse database and put it into lists that we can perform HabitMultipleLinearRegression on
+     * @param daysTracked the list holding every TrackDay Parse object corresponding to the currentUser
+     * @param numDaysTracked the number of days the user has tracked so far
+     */
+    private void putParseDataIntoLists(List<TrackDay> daysTracked, int numDaysTracked) {
         for (int i = 0; i < numDaysTracked; i++) {
             List<Integer> trackDayArray = daysTracked.get(i).getTrackArray();
             moodList[i] = daysTracked.get(i).getMood();
@@ -36,23 +53,10 @@ public class LinearRegressionCalculator {
             }
             habitHistoryList[i] = coefficientList;
         }
-
-        OLSMultipleLinearRegression myMLR = new OLSMultipleLinearRegression();
-        myMLR.newSampleData(moodList, habitHistoryList);
-        RealVector resultsVector = myMLR.calculateBeta();
-        double[] tempArray = resultsVector.toArray();
-
-        // removes the y-intercept value from the array of predictor coefficients
-        double[] resultsArray = new double[tempArray.length - 1];
-        for (int i = 1; i < tempArray.length; i++) {
-            resultsArray[i - 1] = tempArray[i];
-        }
-        leastSquaresResult=resultsArray;
     }
 
     /**
      * returns the index of the largest element in an array
-     *
      * @param array the array to find the largest element in
      * @return the index of the largest element in the array
      */

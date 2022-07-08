@@ -1,9 +1,7 @@
 package com.example.habithelper.fragments;
 
 import static com.example.habithelper.activities.MainActivity.self;
-
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -12,14 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
-import com.example.habithelper.activities.MainActivity;
 import com.example.habithelper.R;
 import com.example.habithelper.models.TrackDay;
 import com.parse.FindCallback;

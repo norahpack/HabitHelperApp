@@ -18,7 +18,6 @@ import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.habithelper.R;
 import com.example.habithelper.activities.BadgesActivity;
-import com.example.habithelper.activities.LoginActivity;
 import com.example.habithelper.activities.MainActivity;
 import com.example.habithelper.models.TrackDay;
 import com.example.habithelper.views.CurvedText;

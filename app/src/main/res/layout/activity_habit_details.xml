@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cream"
+    android:background="@drawable/profile_background"
     tools:context=".activities.HabitDetailsActivity">
 
     <TextView
@@ -25,10 +25,20 @@
         tools:text="Text view that creates two lines" />
 
     <ImageView
+        android:id="@+id/ivIconBackground"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHabit"
+        app:srcCompat="@drawable/track_sienna" />
+
+    <ImageView
         android:id="@+id/ivHabit"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="35dp"
         android:backgroundTint="@color/dusty_rose"
         android:transitionName="habitImage"
         app:layout_constraintEnd_toEndOf="parent"
@@ -109,13 +119,13 @@
         android:id="@+id/tvStreak"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginStart="62dp"
+        android:layout_marginEnd="62dp"
+        android:layout_marginBottom="40dp"
         android:lineSpacingExtra="-35dp"
         android:textAlignment="center"
         android:textColor="@color/dusty_rose"
-        android:textSize="30sp"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -323,6 +333,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivHabit" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
