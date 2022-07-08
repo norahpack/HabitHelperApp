@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.codepath.asynchttpclient.AsyncHttpClient;
@@ -37,6 +39,7 @@ public class ProfileFragment extends Fragment {
     Button btnViewBadges;
     CurvedText curvedTextBadge;
     ConstraintLayout clMain;
+    ImageView ivProfileLevel;
     TextView tvLocation;
     TextView tvDaysTracked;
     TextView tvLevel;
@@ -109,6 +112,7 @@ public class ProfileFragment extends Fragment {
         btnViewBadges = view.findViewById(R.id.btnViewBadges);
         curvedTextBadge = view.findViewById(R.id.curvedTextBadge);
         clMain = view.findViewById(R.id.clMain);
+        ivProfileLevel = view.findViewById(R.id.ivProfileLevel);
         tvLocation = view.findViewById(R.id.tvLocation);
         tvDaysTracked = view.findViewById(R.id.tvDaysTracked);
         tvLevel = view.findViewById(R.id.tvLevel);
@@ -163,6 +167,7 @@ public class ProfileFragment extends Fragment {
             daysLeft = 10 - numDaysTracked;
             nextLevel = "2";
         }
+        setBackground(numDaysTracked);
         pbLoadingNumDays.setVisibility(View.GONE);
         tvDaysTracked.setVisibility(View.VISIBLE);
         tvLevel.setText(String.valueOf(daysLeft)+" more days until you reach level "+nextLevel);
@@ -181,6 +186,24 @@ public class ProfileFragment extends Fragment {
             tvLocation.setText("Your current location is " + locationName);
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Determines the level the user is at and sets the profile badge and level accordingly
+     * @param numDaysTracked the number of days the user has tracked for
+     */
+    private void setBackground(int numDaysTracked) {
+        if(numDaysTracked > 100){
+            ivProfileLevel.setBackground(AppCompatResources.getDrawable(getContext(),R.drawable.level_five));
+        } else if (numDaysTracked > 50){
+            ivProfileLevel.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.level_four));
+        } else if (numDaysTracked > 25){
+            ivProfileLevel.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.level_three));
+        } else if (numDaysTracked > 10){
+            ivProfileLevel.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.level_two));
+        } else {
+            ivProfileLevel.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.level_one));
         }
     }
 }

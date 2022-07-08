@@ -9,7 +9,6 @@
     tools:context=".fragments.ProfileFragment">
 
     <TextView
-
         android:id="@+id/tvProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,9 +27,9 @@
 
     <com.example.habithelper.views.CurvedText
         android:id="@+id/curvedTextBadge"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="600px"
+        android:layout_height="600px"
+        android:layout_marginTop="40px"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvProfile">
@@ -149,6 +148,17 @@
         app:layout_constraintBottom_toTopOf="@+id/btnViewBadges"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivProfileLevel"
+        android:layout_width="400px"
+        android:layout_height="400px"
+        android:layout_margin="100px"
+        android:background="@drawable/level_one"
+        app:layout_constraintBottom_toBottomOf="@+id/curvedTextBadge"
+        app:layout_constraintEnd_toEndOf="@+id/curvedTextBadge"
+        app:layout_constraintStart_toStartOf="@+id/curvedTextBadge"
+        app:layout_constraintTop_toTopOf="@+id/curvedTextBadge" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

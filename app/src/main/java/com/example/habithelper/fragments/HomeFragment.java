@@ -38,6 +38,7 @@ public class HomeFragment extends Fragment {
 
     public static final String GET_QUOTE_URL = "https://zenquotes.io/api";
     public static final String GET_WEATHER_URL = "https://api.weatherapi.com/v1/current.json?key=e8d92dcba9404609b24175200221606&q=";
+    public static final String ERROR_QUOTE = "Too many requests. Obtain an auth key for unlimited access.";
     public static final int CAMERA_DISTANCE = 8000;
 
     Button btnLogout;
@@ -133,8 +134,13 @@ public class HomeFragment extends Fragment {
                 JSONArray quoteArray = json.jsonArray;
                 try {
                     JSONObject quoteArrayJSONObject = (quoteArray.getJSONObject(0));
-                    tvQuote.setText("\"" + quoteArrayJSONObject.getString("q") + "\"");
-                    tvQuoteAuthor.setText("-" + quoteArrayJSONObject.getString("a")+" ");
+                    if(quoteArrayJSONObject.getString("q").equals(ERROR_QUOTE)){
+                        tvQuote.setText("\"For there is always light, if only we're brave enough to see it. If only we're brave enough to be it.\"");
+                        tvQuoteAuthor.setText("-Amanda Gorman");
+                    } else {
+                        tvQuote.setText("\"" + quoteArrayJSONObject.getString("q") + "\"");
+                        tvQuoteAuthor.setText("-" + quoteArrayJSONObject.getString("a")+" ");
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

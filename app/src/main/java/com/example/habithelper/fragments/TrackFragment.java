@@ -540,7 +540,6 @@ public class TrackFragment extends Fragment {
         } else {
             rbToCheck = rbFive;
         }
-        rbThree.setChecked(false);
         rbToCheck.setChecked(true);
 
         perfectDayEarlier = firstTracked.getEarnedPerfectDay();
