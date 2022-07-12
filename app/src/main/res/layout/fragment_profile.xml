@@ -3,12 +3,12 @@
     android:id="@+id/clMain"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/profile_background"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.ProfileFragment">
 
     <TextView
-
         android:id="@+id/tvProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,12 +27,12 @@
 
     <com.example.habithelper.views.CurvedText
         android:id="@+id/curvedTextBadge"
-        android:layout_height="300dp"
-        android:layout_width="300dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="600px"
+        android:layout_height="600px"
+        android:layout_marginTop="40px"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvProfile"
-        >
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvProfile">
 
     </com.example.habithelper.views.CurvedText>
 
@@ -40,6 +40,7 @@
         android:id="@+id/clZipCode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,12 +63,24 @@
         <Button
             android:id="@+id/btnChangeZip"
             android:layout_width="wrap_content"
-            android:layout_height="33dp"
+            android:layout_height="45dp"
             android:background="@drawable/slight_rounded_corners"
             android:text="Change Zipcode"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvLocation" />
+
+        <ProgressBar
+            android:id="@+id/pbLoadingLocation"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="2dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/dusty_rose"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -76,7 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="10dp"
         android:fontFamily="@font/bright"
         android:text=""
@@ -104,25 +117,48 @@
     <Button
         android:id="@+id/btnViewBadges"
         android:layout_width="wrap_content"
-        android:layout_height="33dp"
+        android:layout_height="45dp"
         android:background="@drawable/slight_rounded_corners"
         android:text="VIEW MY BADGES!"
-        android:layout_marginTop="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvLevel" />
 
 
-
     <ImageView
         android:id="@+id/ivName"
         android:layout_width="300dp"
-        android:layout_height="110dp"
+        android:layout_height="80dp"
         android:layout_marginBottom="10dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/name_logo_pink_flowers_large" />
+
+    <ProgressBar
+        android:id="@+id/pbLoadingNumDays"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="30dp"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/dusty_rose"
+        app:layout_constraintBottom_toTopOf="@+id/btnViewBadges"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivProfileLevel"
+        android:layout_width="400px"
+        android:layout_height="400px"
+        android:layout_margin="100px"
+        android:background="@drawable/level_one"
+        app:layout_constraintBottom_toBottomOf="@+id/curvedTextBadge"
+        app:layout_constraintEnd_toEndOf="@+id/curvedTextBadge"
+        app:layout_constraintStart_toStartOf="@+id/curvedTextBadge"
+        app:layout_constraintTop_toTopOf="@+id/curvedTextBadge" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

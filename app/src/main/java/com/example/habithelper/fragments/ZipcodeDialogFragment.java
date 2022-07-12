@@ -1,5 +1,6 @@
 package com.example.habithelper.fragments;
 
+import static com.example.habithelper.activities.MainActivity.self;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,7 +75,9 @@ public class ZipcodeDialogFragment extends DialogFragment {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 currentUser.put("zipCode", zipString);
-                currentUser.add("badgesEarned", "badge_world_traveler");
+                if(!self.checkForBadge("badge_world_traveler")){
+                    currentUser.add("badgesEarned", "badge_you_did_it");
+                }
                 currentUser.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {

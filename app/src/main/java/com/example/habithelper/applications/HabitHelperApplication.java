@@ -3,6 +3,7 @@ package com.example.habithelper.applications;
 import android.app.Application;
 import com.example.habithelper.models.Habit;
 import com.example.habithelper.models.TrackDay;
+import com.onesignal.OneSignal;
 import com.parse.Parse;
 import com.parse.ParseObject;
 import okhttp3.OkHttpClient;
@@ -10,9 +11,16 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 public class HabitHelperApplication extends Application {
 
+    private static final String ONESIGNAL_APP_ID="6451dc13-b7e8-4f0e-aeda-69bfe181db94";
+
     @Override
     public void onCreate() {
         super.onCreate();
+
+        OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE);
+        OneSignal.initWithContext(this);
+        OneSignal.setAppId(ONESIGNAL_APP_ID);
+
 
         ParseObject.registerSubclass(TrackDay.class);
         ParseObject.registerSubclass(Habit.class);

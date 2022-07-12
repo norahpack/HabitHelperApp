@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "390584908469",
+    "project_id": "habithelper-df6c2",
+    "storage_bucket": "habithelper-df6c2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:390584908469:android:52a1ff7c5cb0b75a331cfc",
+        "android_client_info": {
+          "package_name": "com.example.habithelper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "390584908469-oe87k11f7nb9f7qa9avcq2dk4m4ic4si.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBv2GuT-1AkjKURhvCvL0uSKbWScsPsA70"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "390584908469-oe87k11f7nb9f7qa9avcq2dk4m4ic4si.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

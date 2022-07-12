@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cream"
+    android:background="@drawable/profile_background"
     tools:context=".activities.HabitDetailsActivity">
 
     <TextView
@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="45dp"
         android:layout_marginEnd="15dp"
         android:lineSpacingExtra="-50dp"
         android:textAlignment="center"
@@ -25,35 +25,33 @@
         tools:text="Text view that creates two lines" />
 
     <ImageView
+        android:id="@+id/ivIconBackground"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHabit"
+        app:srcCompat="@drawable/track_sienna" />
+
+    <ImageView
         android:id="@+id/ivHabit"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="15dp"
-        android:backgroundTint="@color/dusty_rose"
+        android:layout_marginTop="45dp"
+        android:backgroundTint="@color/peach"
         android:transitionName="habitImage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvHabit"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <Button
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/slight_rounded_corners"
-        android:backgroundTint="@color/sienna"
-        android:text="GO BACK"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clPercent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/slight_rounded_corners"
         android:backgroundTint="@color/dusty_rose"
@@ -88,7 +86,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/slight_rounded_corners"
         android:backgroundTint="@color/dusty_rose"
@@ -121,14 +119,14 @@
         android:id="@+id/tvStreak"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginStart="62dp"
+        android:layout_marginEnd="62dp"
+        android:layout_marginBottom="50dp"
         android:lineSpacingExtra="-35dp"
         android:textAlignment="center"
         android:textColor="@color/dusty_rose"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnBack"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="you have a 0-day streak for this habit" />
@@ -137,6 +135,7 @@
         android:id="@+id/ivLastTenHidden"
         android:layout_width="300dp"
         android:layout_height="200dp"
+        android:layout_marginBottom="10dp"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/tvStreak"
         app:layout_constraintEnd_toEndOf="parent"
@@ -145,17 +144,17 @@
 
     <TextView
         android:id="@+id/tvLastTen"
-        android:visibility="gone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="20dp"
         android:lineSpacingExtra="-20dp"
         android:text="Here's how you've done with this habit for the last ten days"
         android:textAlignment="center"
         android:textColor="@color/sienna"
         android:textSize="16sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/clPercent" />
@@ -164,12 +163,12 @@
         android:id="@+id/clLastTen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:visibility="gone"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/slight_rounded_corners"
         android:backgroundTint="@color/peach"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvLastTen">
@@ -289,7 +288,7 @@
             android:id="@+id/tvFirstDay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
+            android:layout_marginStart="22dp"
             android:layout_marginTop="5dp"
             android:text="1"
             android:textColor="@color/sienna"
@@ -301,7 +300,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="18dp"
+            android:layout_marginEnd="22dp"
             android:text="10"
             android:textColor="@color/sienna"
             app:layout_constraintEnd_toEndOf="parent"
@@ -321,6 +320,21 @@
             app:layout_constraintTop_toBottomOf="@+id/ivDayOne" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/pbLoadingDetailView"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="100dp"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/sienna"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivHabit" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

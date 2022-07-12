@@ -1,9 +1,7 @@
 package com.example.habithelper.fragments;
 
 import static com.example.habithelper.activities.MainActivity.self;
-
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -12,14 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
-import com.example.habithelper.activities.MainActivity;
 import com.example.habithelper.R;
 import com.example.habithelper.models.TrackDay;
 import com.parse.FindCallback;
@@ -377,7 +373,6 @@ public class TrackFragment extends Fragment {
                 }
             }
         } else {
-            System.out.println("here");
             // the user had a perfect day
             if(!todayHabits.contains(0)){
                 currentUser.add("badgesEarned", "badge_perfect_day");
@@ -545,7 +540,6 @@ public class TrackFragment extends Fragment {
         } else {
             rbToCheck = rbFive;
         }
-        rbThree.setChecked(false);
         rbToCheck.setChecked(true);
 
         perfectDayEarlier = firstTracked.getEarnedPerfectDay();
@@ -581,7 +575,6 @@ public class TrackFragment extends Fragment {
      * @param todayHabits an array of 1's and 0's representing whether the user completed each of their habits that day
      */
     private void saveTrack(int todayMood, List<Integer> todayHabits) {
-        System.out.println("saving");
         trackDay = new TrackDay();
         trackDay.setMood(todayMood);
         trackDay.setTrackArray(todayHabits);
@@ -700,12 +693,10 @@ public class TrackFragment extends Fragment {
                         if (day.getMood() == 1 || day.getMood() == 2){
                             noRed = false;
                         }
-                        System.out.println(day.getMood());
                         moodSum+=day.getMood();
                     }
 
                     int longestStreak = getLongestStreak();
-                    System.out.println(moodSum/7.0);
                     magnificentMoodBadge(moodSum/7.0);
                     sevenDaysOfSmilesBadge(moodSum/7.0);
                     noRedDaysBadge(noRed);

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -28,6 +29,7 @@ public class HabitListFragment extends Fragment {
     List<Habit> habitsList;
     List<String> habitsNameList;
     HabitAdapter adapter;
+    ProgressBar pbLoadingList;
 
     public HabitListFragment() {
         // Required empty public constructor to be able to initialize a fragment from MainActivity
@@ -50,6 +52,8 @@ public class HabitListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         rvHabits = view.findViewById(R.id.rvHabits);
+        pbLoadingList = view.findViewById(R.id.pbLoadingList);
+
         currentUser = ParseUser.getCurrentUser();
         habitsNameList = currentUser.getList("habitsList");
         final GridLayoutManager layout = new GridLayoutManager(getContext(), 2);
@@ -76,6 +80,7 @@ public class HabitListFragment extends Fragment {
                     return;
                 }
                 // save received Habits to list and notify adapter of new data
+                pbLoadingList.setVisibility(View.GONE);
                 adapter.addAll(list);
                 adapter.notifyDataSetChanged();
             }

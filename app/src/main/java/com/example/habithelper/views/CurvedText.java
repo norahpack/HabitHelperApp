@@ -17,61 +17,57 @@ public class CurvedText extends View {
     public String myString;
     public String levelString;
     public int nameOffset;
+    public int levelOffset;
 
-    private static final int CIRCLE_POSITION = 510;
-    private static final int UPPER_CIRCLE_RADIUS = 432;
-    private static final int LOWER_CIRCLE_RADIUS = 505;
-    public static final int UPPER_OFFSET = 1670;
-    public static final int LOWER_OFFSET = 2300;
+    private static final int UPPER_CIRCLE_RADIUS = 240;
+    private static final int LOWER_CIRCLE_RADIUS = 270;
+    public static final int UPPER_OFFSET = 1060;
+    public static final int LOWER_OFFSET = 950;
     public static final int VERTICAL_OFFSET = 0;
 
 
     public CurvedText(Context context, AttributeSet attrs) {
         super(context, attrs);
         myString = ParseUser.getCurrentUser().getString("name");
-        nameOffset = (myString.length()-5)*(-10);
+        nameOffset = (myString.length()-5)*(-12);
         int numDaysTracked = ParseUser.getCurrentUser().getInt("numDaysTracked");
 
         circle = new Path();
         circle2 = new Path();
-        circle.addCircle(CIRCLE_POSITION, CIRCLE_POSITION, UPPER_CIRCLE_RADIUS, Path.Direction.CW);
-        circle2.addCircle(CIRCLE_POSITION, CIRCLE_POSITION, LOWER_CIRCLE_RADIUS, Path.Direction.CCW);
+        circle.addCircle(300, 300, UPPER_CIRCLE_RADIUS, Path.Direction.CW);
+        circle2.addCircle(300, 300, LOWER_CIRCLE_RADIUS, Path.Direction.CCW);
 
-        setBackground(numDaysTracked);
+        setLevelText(numDaysTracked);
 
         tPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         tPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        tPaint.setColor(Color.parseColor("#EBE2D9"));
+        tPaint.setColor(Color.parseColor("#D09080"));
         tPaint.setTypeface(getResources().getFont(R.font.bright));
         tPaint.setTextSize(50);
     }
 
     /**
-     * Determines the level the user is at and sets the profile badge and level accordingly
+     * Determines the level the user is at and sets the profile level accordingly
      * @param numDaysTracked the number of days the user has tracked for
      */
-    private void setBackground(int numDaysTracked) {
+    private void setLevelText(int numDaysTracked) {
         if(numDaysTracked > 100){
-            setBackgroundResource(R.drawable.level_five);
             levelString = "level five - habit hero";
         } else if (numDaysTracked > 50){
-            setBackgroundResource(R.drawable.level_four);
             levelString = "level four - productivity pro";
         } else if (numDaysTracked > 25){
-            setBackgroundResource(R.drawable.level_three);
             levelString = "level three - mood master";
         } else if (numDaysTracked > 10){
-            setBackgroundResource(R.drawable.level_two);
             levelString = "level two - terrific tracker";
         } else {
-            setBackgroundResource(R.drawable.level_one);
             levelString = "level one - routine rookie";
         }
+        levelOffset = (levelString.length()-29)*(-12);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawTextOnPath(myString, circle, UPPER_OFFSET+nameOffset, VERTICAL_OFFSET, tPaint);
-        canvas.drawTextOnPath(levelString, circle2, LOWER_OFFSET, VERTICAL_OFFSET, tPaint);
+        canvas.drawTextOnPath(levelString, circle2, LOWER_OFFSET+levelOffset, VERTICAL_OFFSET, tPaint);
     }
 }

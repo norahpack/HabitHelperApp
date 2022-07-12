@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dusty_rose"
+    android:background="@drawable/track_background"
     android:orientation="horizontal"
     tools:context=".fragments.TrackFragment">
 
@@ -50,7 +50,6 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="-10dp"
-        android:checkedButton="@id/rbThree"
         android:contextClickable="true"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
