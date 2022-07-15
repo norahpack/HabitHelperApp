@@ -17,23 +17,26 @@
         <entry key="app/src/main/res/font/honey_florist_resource.xml" value="0.16944444444444445" />
         <entry key="app/src/main/res/font/southmore_resource.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_badges.xml" value="0.36119554204660587" />
+        <entry key="app/src/main/res/layout/activity_choose_first_icon.xml" value="0.31267217630853994" />
+        <entry key="app/src/main/res/layout/activity_choose_second_icon.xml" value="0.10280797101449275" />
         <entry key="app/src/main/res/layout/activity_habit_details.xml" value="0.2750642673521851" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.36501312255859375" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.36683756510416665" />
-        <entry key="app/src/main/res/layout/activity_setup_account.xml" value="0.33663024902343747" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.3434343434343434" />
+        <entry key="app/src/main/res/layout/activity_setup_account.xml" value="0.22139892578125" />
         <entry key="app/src/main/res/layout/activity_setup_account_custom_habits.xml" value="0.20878623188405798" />
-        <entry key="app/src/main/res/layout/activity_signup.xml" value="0.35853424072265627" />
+        <entry key="app/src/main/res/layout/activity_signup.xml" value="0.222259521484375" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.1" />
         <entry key="app/src/main/res/layout/card_front.xml" value="0.3786727456940223" />
         <entry key="app/src/main/res/layout/dialog_zipcode.xml" value="0.4732789855072464" />
-        <entry key="app/src/main/res/layout/fragment_dialog_zipcode.xml" value="0.240119823511096" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fragment_dialog_zipcode.xml" value="0.22076710134312727" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.28187837953920714" />
         <entry key="app/src/main/res/layout/fragment_list.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_mood.xml" value="0.34515686035156257" />
+        <entry key="app/src/main/res/layout/fragment_mood.xml" value="0.16885070800781254" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.3061797752808989" />
-        <entry key="app/src/main/res/layout/fragment_track.xml" value="0.3108974358974359" />
-        <entry key="app/src/main/res/layout/item_badge.xml" value="0.28337874659400547" />
-        <entry key="app/src/main/res/layout/item_habit.xml" value="0.5942708333333333" />
+        <entry key="app/src/main/res/layout/fragment_track.xml" value="0.10181818181818182" />
+        <entry key="app/src/main/res/layout/item_badge.xml" value="0.1625615763546798" />
+        <entry key="app/src/main/res/layout/item_habit.xml" value="0.21998952229817703" />
+        <entry key="app/src/main/res/layout/item_icon.xml" value="0.12512664640324214" />
         <entry key="app/src/main/res/menu/menu_bottom_navigation.xml" value="0.4375" />
       </map>
     </option>

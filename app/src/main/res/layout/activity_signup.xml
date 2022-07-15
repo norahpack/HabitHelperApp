@@ -13,12 +13,12 @@
         android:id="@+id/clFlowers"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/flower_background"
-        android:backgroundTint="@color/cream"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/flower_background"
+        android:backgroundTint="@color/cream">
 
         <EditText
             android:id="@+id/etUsername"
@@ -27,6 +27,10 @@
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/etPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
             android:background="@drawable/slight_rounded_corners"
             android:backgroundTint="@color/cream"
             android:ems="10"
@@ -35,20 +39,18 @@
             android:inputType="textPersonName"
             android:paddingLeft="13dp"
             android:textAlignment="textStart"
-            android:textColor="@color/sienna"
-            app:layout_constraintBottom_toTopOf="@+id/etPassword"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:textColor="@color/sienna" />
 
         <EditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
-
             android:layout_height="40dp"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="200dp"
+            app:layout_constraintBottom_toTopOf="@+id/btnCreate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             android:background="@drawable/slight_rounded_corners"
             android:backgroundTint="@color/cream"
             android:ems="10"
@@ -57,10 +59,7 @@
             android:inputType="textPassword"
             android:paddingLeft="13dp"
             android:textAlignment="textStart"
-            android:textColor="@color/sienna"
-            app:layout_constraintBottom_toTopOf="@+id/btnCreate"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:textColor="@color/sienna" />
 
         <Button
             android:id="@+id/btnCreate"
@@ -71,13 +70,13 @@
             android:layout_marginBottom="67dp"
             android:background="@drawable/slight_rounded_corners"
             android:backgroundTint="@color/cream"
-            android:text="Create Account"
             android:fontFamily="@font/bright"
-            android:textSize="20dp"
+            android:text="Create account"
+            android:textAllCaps="false"
+            android:textSize="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,6 +1,8 @@
 package com.example.habithelper.fragments;
 
 import static com.example.habithelper.activities.MainActivity.self;
+
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +19,8 @@ import android.widget.Toast;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.habithelper.R;
+import com.example.habithelper.activities.AccountSetupActivity;
+import com.example.habithelper.activities.LoginActivity;
 import com.example.habithelper.models.TrackDay;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -35,24 +39,25 @@ public class TrackFragment extends Fragment {
 
     public static final String GET_WEATHER_URL = "https://api.weatherapi.com/v1/current.json?key=e8d92dcba9404609b24175200221606&q=";
 
-    public TextView tvDate;
-    public CheckBox cbOne;
-    public CheckBox cbTwo;
-    public CheckBox cbThree;
-    public CheckBox cbFour;
-    public CheckBox cbFive;
-    public CheckBox cbSix;
-    public CheckBox cbSeven;
-    public CheckBox cbEight;
-    public CheckBox cbNine;
-    public CheckBox cbTen;
-    public Button btnTrack;
-    public RadioGroup radioGroup;
-    public RadioButton rbOne;
-    public RadioButton rbTwo;
-    public RadioButton rbThree;
-    public RadioButton rbFour;
-    public RadioButton rbFive;
+    private TextView tvDate;
+    private TextView tvCurrentLocation;
+    private CheckBox cbOne;
+    private CheckBox cbTwo;
+    private CheckBox cbThree;
+    private CheckBox cbFour;
+    private CheckBox cbFive;
+    private CheckBox cbSix;
+    private CheckBox cbSeven;
+    private CheckBox cbEight;
+    private CheckBox cbNine;
+    private CheckBox cbTen;
+    private Button btnTrack;
+    private RadioGroup radioGroup;
+    private RadioButton rbOne;
+    private RadioButton rbTwo;
+    private RadioButton rbThree;
+    private RadioButton rbFour;
+    private RadioButton rbFive;
 
     public List<Object> habitsList;
     public int numHabits;
@@ -104,21 +109,8 @@ public class TrackFragment extends Fragment {
         initializeUserVariables(view);
         checkBoxList = Arrays.asList(cbOne, cbTwo, cbThree, cbFour, cbFive, cbSix, cbSeven, cbEight, cbNine, cbTen);
         populateCheckboxes(numHabits);
-        AsyncHttpClient client = new AsyncHttpClient();
-        String api_request = GET_WEATHER_URL + currentUser.getString("zipCode");
-        client.get(api_request, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Headers headers, JSON json) {
-                JSONObject jsonObject = json.jsonObject;
-                getCurrentDate(jsonObject);
-                setOldHabits();
-            }
 
-            @Override
-            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                return;
-            }
-        });
+        zipCodeToDate();
 
         btnTrack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,6 +122,30 @@ public class TrackFragment extends Fragment {
                 populateTodayHabits(numHabits, todayMood, todayHabits);
             }
         });
+    }
+
+    /**
+     * Checks that the user has set a zip code and if so, uses that zipcode to make an api request
+     */
+    private void zipCodeToDate() {
+        AsyncHttpClient client = new AsyncHttpClient();
+        if (currentUser.getString("zipCode") != null){
+            String api_request = GET_WEATHER_URL + currentUser.getString("zipCode");
+            client.get(api_request, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Headers headers, JSON json) {
+                    JSONObject jsonObject = json.jsonObject;
+                    getCurrentDate(jsonObject);
+                    setOldHabits();
+                }
+                @Override
+                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                    return;
+                }
+            });
+        } else {
+            goToSetup();
+        }
     }
 
     /**
@@ -408,7 +424,8 @@ public class TrackFragment extends Fragment {
             String month = getMonth(dateParts[1]);
             String day = getDay(dateParts[2]);
             String year = dateParts[0];
-            tvDate.setText("Today is " + month + " " + day + ", " + year + " in " + locationName);
+            tvDate.setText("Today is " + month + " " + day + ", " + year);
+            tvCurrentLocation.setText("in " + locationName);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -458,7 +475,23 @@ public class TrackFragment extends Fragment {
         rbFive.setTag(5);
         currentUser = ParseUser.getCurrentUser();
         habitsList = currentUser.getList("habitsList");
-        numHabits = habitsList.size();
+        if (habitsList != null){
+            numHabits = habitsList.size();
+            if(numHabits < 4 || numHabits > 10){
+                goToSetup();
+            }
+        } else {
+            goToSetup();
+        }
+
+    }
+
+    /**
+     * Takes the user back to the account setup page because their account was not set up properly
+     */
+    private void goToSetup() {
+        startActivity(new Intent(getContext(), AccountSetupActivity.class));
+        getActivity().finish();
     }
 
     /**
@@ -468,6 +501,7 @@ public class TrackFragment extends Fragment {
      */
     private void initViews(View view) {
         tvDate = view.findViewById(R.id.tvDate);
+        tvCurrentLocation = view.findViewById(R.id.tvCurrentLocation);
         cbOne = view.findViewById(R.id.cbOne);
         cbTwo = view.findViewById(R.id.cbTwo);
         cbThree = view.findViewById(R.id.cbThree);
@@ -695,22 +729,7 @@ public class TrackFragment extends Fragment {
                         }
                         moodSum+=day.getMood();
                     }
-
-                    int longestStreak = getLongestStreak();
-                    magnificentMoodBadge(moodSum/7.0);
-                    sevenDaysOfSmilesBadge(moodSum/7.0);
-                    noRedDaysBadge(noRed);
-                    weeklongWarriorBadge(longestStreak);
-                    twoWeekTriumphBadge(longestStreak);
-                    monthLongMasterBadge(longestStreak);
-                    trackDay.setEarnedPerfectDay(earnedPerfectDayToday);
-                    trackDay.setEarnedMagnificentMood(earnedMagnificentMoodToday);
-                    trackDay.setEarnedSevenDaysOfSmiles(earnedSevenDaysOfSmilesToday);
-                    trackDay.setEarnedNoRedDays(earnedNoRedDaysToday);
-                    trackDay.setEarnedWeeklongWarrior(earnedWeeklongWarriorToday);
-                    trackDay.setEarnedTwoWeekTriumph(earnedTwoWeekTriumphToday);
-                    trackDay.setEarnedMonthLongMaster(earnedMonthLongMasterToday);
-                    trackDay.saveInBackground();
+                    getLongestStreak(moodSum, noRed);
                 }
             }
         });
@@ -718,9 +737,11 @@ public class TrackFragment extends Fragment {
 
     /**
      * Determines the User's current longest habit completion streak
+     * @param moodSum the sum of the user's mood for the last seven days
+     * @param noRed whether the user has had "no red days" the last seven days
      * @return the length, in days, of the user's longest streak
      */
-    private int getLongestStreak() {
+    private void getLongestStreak(int moodSum, boolean noRed) {
         ParseQuery<TrackDay> query = ParseQuery.getQuery(TrackDay.class);
         query.include(TrackDay.KEY_PARENT_USER);
         query.include(TrackDay.KEY_DATE_NUMBER);
@@ -740,9 +761,34 @@ public class TrackFragment extends Fragment {
                         longestStreak = singleHabitStreak;
                     }
                 }
+                setBadges(longestStreak, moodSum, noRed);
+                return;
             }
         });
-        return longestStreak;
+        return;
+    }
+
+    /**
+     * Runs the methods to determine if the user has earned each of the badges
+     * @param longestStreak the length, in days, of the user's current longest habit streak
+     * @param moodSum the sum of the user's mood for the last seven days
+     * @param noRed whether the user has had "no red days" the last seven days
+     */
+    private void setBadges(int longestStreak, int moodSum, boolean noRed) {
+        magnificentMoodBadge(moodSum/7.0);
+        sevenDaysOfSmilesBadge(moodSum/7.0);
+        noRedDaysBadge(noRed);
+        weeklongWarriorBadge(longestStreak);
+        twoWeekTriumphBadge(longestStreak);
+        monthLongMasterBadge(longestStreak);
+        trackDay.setEarnedPerfectDay(earnedPerfectDayToday);
+        trackDay.setEarnedMagnificentMood(earnedMagnificentMoodToday);
+        trackDay.setEarnedSevenDaysOfSmiles(earnedSevenDaysOfSmilesToday);
+        trackDay.setEarnedNoRedDays(earnedNoRedDaysToday);
+        trackDay.setEarnedWeeklongWarrior(earnedWeeklongWarriorToday);
+        trackDay.setEarnedTwoWeekTriumph(earnedTwoWeekTriumphToday);
+        trackDay.setEarnedMonthLongMaster(earnedMonthLongMasterToday);
+        trackDay.saveInBackground();
     }
 
     /**

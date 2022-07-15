@@ -15,15 +15,15 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="15dp"
-        android:lineSpacingExtra="-30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:text="TextView"
+        android:lineSpacingExtra="-30dp"
         android:textAlignment="center"
         android:textColor="@color/sienna"
         android:textSize="30dp"
-        android:transitionName="habitName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:transitionName="habitName" />
 
     <ImageView
         android:id="@+id/ivHabit"
@@ -35,6 +35,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:transitionName="habitImage"
         android:backgroundTint="@color/sienna"
-        tools:layout_editor_absoluteX="141dp"
         tools:srcCompat="@tools:sample/avatars" />
 </androidx.constraintlayout.widget.ConstraintLayout>

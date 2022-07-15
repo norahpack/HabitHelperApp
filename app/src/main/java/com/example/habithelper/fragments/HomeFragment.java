@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -20,7 +19,7 @@ import androidx.fragment.app.Fragment;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.habithelper.R;
-import com.example.habithelper.activities.LoginActivity;
+import com.example.habithelper.activities.AccountSetupActivity;
 import com.example.habithelper.models.TrackDay;
 import com.example.habithelper.utilities.LinearRegressionCalculator;
 import com.parse.FindCallback;
@@ -41,21 +40,21 @@ public class HomeFragment extends Fragment {
     public static final String ERROR_QUOTE = "Too many requests. Obtain an auth key for unlimited access.";
     public static final int CAMERA_DISTANCE = 8000;
 
-    Button btnLogout;
-    ConstraintLayout clThree;
-    ConstraintLayout clNotEnoughHabits;
-    ConstraintLayout clFront;
-    ConstraintLayout clBack;
-    TextView tvNumDaysTracked;
-    TextView tvHello;
-    TextView tvThreeOne;
-    TextView tvThreeTwo;
-    TextView tvThreeThree;
-    TextView tvCompletedPortion;
-    TextView tvQuote;
-    TextView tvQuoteAuthor;
-    ProgressBar pbCompletedPortion;
-    ProgressBar pbLoading;
+    private ConstraintLayout clThree;
+    private ConstraintLayout clEnoughHabits;
+    private ConstraintLayout clNotEnoughHabits;
+    private ConstraintLayout clFront;
+    private ConstraintLayout clBack;
+    private TextView tvNumDaysTracked;
+    private TextView tvHello;
+    private TextView tvThreeOne;
+    private TextView tvThreeTwo;
+    private TextView tvThreeThree;
+    private TextView tvCompletedPortion;
+    private TextView tvQuote;
+    private TextView tvQuoteAuthor;
+    private ProgressBar pbCompletedPortion;
+    private ProgressBar pbLoading;
 
     public int numDaysTracked;
     private int numChecked = 0;
@@ -115,14 +114,6 @@ public class HomeFragment extends Fragment {
                 return true;
             }
         });
-
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ParseUser.logOut();
-                startActivity(new Intent(getContext(), LoginActivity.class));
-            }
-        });
     }
 
     private void setQuote() {
@@ -135,8 +126,7 @@ public class HomeFragment extends Fragment {
                 try {
                     JSONObject quoteArrayJSONObject = (quoteArray.getJSONObject(0));
                     if(quoteArrayJSONObject.getString("q").equals(ERROR_QUOTE)){
-                        tvQuote.setText("\"For there is always light, if only we're brave enough to see it. If only we're brave enough to be it.\"");
-                        tvQuoteAuthor.setText("-Amanda Gorman");
+                        setDefaultQuoteOnError();
                     } else {
                         tvQuote.setText("\"" + quoteArrayJSONObject.getString("q") + "\"");
                         tvQuoteAuthor.setText("-" + quoteArrayJSONObject.getString("a")+" ");
@@ -148,11 +138,19 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                tvQuote.setText("\"For there is always light, if only we're brave enough to see it. If only we're brave enough to be it.\"");
-                tvQuoteAuthor.setText("-Amanda Gorman");
+                setDefaultQuoteOnError();
                 return;
             }
         });
+    }
+
+    /**
+     * Sets the inspirational quote on the home screen to a default quote
+     * Due to error fetching the daily quote from the API
+     */
+    private void setDefaultQuoteOnError() {
+        tvQuote.setText("\"For there is always light, if only we're brave enough to see it. If only we're brave enough to be it.\"");
+        tvQuoteAuthor.setText("-Amanda Gorman");
     }
 
     /**
@@ -228,6 +226,7 @@ public class HomeFragment extends Fragment {
             ex.printStackTrace();
         }
         pbLoading.setVisibility(view.GONE);
+        clEnoughHabits.setVisibility(view.VISIBLE);
         clThree.setVisibility(view.VISIBLE);
         tvQuote.setVisibility(view.VISIBLE);
         tvQuoteAuthor.setVisibility(view.VISIBLE);
@@ -241,12 +240,13 @@ public class HomeFragment extends Fragment {
      */
     private void notEnoughDays(View view) {
         if (numDaysTracked != 1) {
-            tvNumDaysTracked.setText("So far, you've been tracking for " + String.valueOf(numDaysTracked) + " days!");
+            tvNumDaysTracked.setText("So far, you've been tracking for " + String.valueOf(numDaysTracked) + " days");
         } else {
-            tvNumDaysTracked.setText("So far, you've been tracking for 1 day!");
+            tvNumDaysTracked.setText("So far, you've been tracking for 1 day");
         }
         pbLoading.setVisibility(view.GONE);
         clNotEnoughHabits.setVisibility(view.VISIBLE);
+        clThree.setVisibility(view.VISIBLE);
         tvQuote.setVisibility(view.VISIBLE);
         tvQuoteAuthor.setVisibility(view.VISIBLE);
     }
@@ -256,10 +256,19 @@ public class HomeFragment extends Fragment {
      */
     private void initializeUserVariables() {
         currentUser = ParseUser.getCurrentUser();
-        firstName = currentUser.getString("name");
+        if (currentUser.getString("name") != null){
+            firstName = currentUser.getString("name");
+        } else {
+            firstName = currentUser.getString("name");
+        }
         tvHello.setText("Nice to see you again, " + firstName);
         habitsList = currentUser.getList("habitsList");
-        numHabits = habitsList.size();
+        if (habitsList != null){
+            numHabits = habitsList.size();
+        } else {
+            startActivity(new Intent(getContext(), AccountSetupActivity.class));
+            getActivity().finish();
+        }
     }
 
     /**
@@ -276,12 +285,12 @@ public class HomeFragment extends Fragment {
      * links the HomeFragment instance variables with the ContentView elements
      */
     private void initViews(View view) {
-        btnLogout = view.findViewById(R.id.btnLogout);
         tvHello = view.findViewById(R.id.tvHello);
         tvThreeOne = view.findViewById(R.id.tvThreeOne);
         tvThreeTwo = view.findViewById(R.id.tvThreeTwo);
         tvThreeThree = view.findViewById(R.id.tvThreeThree);
         clThree = view.findViewById(R.id.clThree);
+        clEnoughHabits = view.findViewById(R.id.clEnoughHabits);
         clNotEnoughHabits = view.findViewById(R.id.clNotEnoughHabits);
         tvNumDaysTracked = view.findViewById(R.id.tvNumDaysTracked);
         clBack = view.findViewById(R.id.clBack);

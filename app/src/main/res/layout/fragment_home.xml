@@ -7,22 +7,24 @@
     android:background="@drawable/home_background"
     tools:context=".fragments.HomeFragment">
 
-
     <TextView
         android:id="@+id/tvHello"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="15dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:fontFamily="@font/brittany_signature"
         android:lineSpacingExtra="10dp"
-        android:text="Hello Blank Fragment"
+        android:text="hey"
         android:textAlignment="center"
         android:textColor="@color/sienna"
         android:textSize="45sp"
         android:textStyle="bold"
-        android:typeface="normal"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="16dp" />
+        android:typeface="normal" />
 
     <TextView
         android:id="@+id/tvQuote"
@@ -31,6 +33,10 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="170dp"
         android:layout_marginEnd="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHello"
         android:fontFamily="@font/bright"
         android:lineSpacingExtra="-20dp"
         android:textAlignment="center"
@@ -39,10 +45,6 @@
         android:textStyle="bold"
         android:typeface="normal"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/btnLogout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvHello"
         tools:text="&quot;It's very strange that the people you love are often the people you're most cruel to&quot;" />
 
     <TextView
@@ -50,6 +52,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvQuote"
         android:fontFamily="@font/bright"
         android:lineSpacingExtra="-20dp"
         android:textColor="@color/sienna"
@@ -57,77 +62,7 @@
         android:textStyle="bold"
         android:typeface="normal"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvQuote"
         tools:text="-Kenneth Branagh" />
-
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/slight_rounded_corners"
-        android:text="Log Out"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/tvQuoteAuthor"
-        app:layout_constraintStart_toStartOf="@+id/tvQuoteAuthor" />
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clNotEnoughHabits"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="15dp"
-        android:background="@drawable/slight_rounded_corners"
-        android:backgroundTint="@color/cream"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvHello">
-
-        <TextView
-            android:id="@+id/tvNotEnoughHabitsMain"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="30dp"
-            android:fontFamily="@font/bright"
-            android:lineSpacingExtra="-20dp"
-            android:minLines="2"
-            android:text="Keep tracking to unlock habit analysis features"
-            android:textAlignment="center"
-            android:textColor='@color/sienna'
-
-            android:textSize="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvNumDaysTracked"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/bright"
-            android:lineSpacingExtra="-20dp"
-            android:minLines="2"
-            android:text=""
-            android:textAlignment="center"
-            android:textColor="@color/dusty_rose"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvNotEnoughHabitsMain" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clThree"
@@ -136,7 +71,6 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="15dp"
-
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -189,71 +123,127 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/slight_rounded_corners"
-            android:backgroundTint="@color/cream">
+            android:backgroundTint="@color/cream"
+            android:visibility="visible">
 
-            <TextView
-                android:id="@+id/tvThreeMain"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clEnoughHabits"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tvThreeMain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/bright"
+                    android:lineSpacingExtra="-20dp"
+                    android:minLines="2"
+                    android:text="The three habits that improve your mood the most are: "
+                    android:textAlignment="center"
+                    android:textColor='@color/sienna'
+                    android:textSize="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvThreeOne"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/bright"
+                    android:text="TextView"
+                    android:textColor="@color/dusty_rose"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvThreeMain" />
+
+                <TextView
+                    android:id="@+id/tvThreeTwo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/bright"
+                    android:text="TextView"
+                    android:textColor="@color/dusty_rose"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvThreeOne" />
+
+                <TextView
+                    android:id="@+id/tvThreeThree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/bright"
+                    android:text="TextView"
+                    android:textColor="@color/dusty_rose"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvThreeTwo" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clNotEnoughHabits"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="30dp"
-                android:fontFamily="@font/bright"
-                android:lineSpacingExtra="-20dp"
-                android:minLines="2"
-                android:text="The three habits that improve your mood the most are: "
-                android:textAlignment="center"
-                android:textColor='@color/sienna'
-
-                android:textSize="20dp"
+                android:background="@drawable/slight_rounded_corners"
+                android:backgroundTint="@color/cream"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/tvThreeOne"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="5dp"
-                android:fontFamily="@font/bright"
-                android:text="TextView"
-                android:textColor="@color/dusty_rose"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvThreeMain" />
+                <TextView
+                    android:id="@+id/tvNotEnoughHabitsMain"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="30dp"
+                    android:fontFamily="@font/bright"
+                    android:lineSpacingExtra="-30dp"
+                    android:minLines="2"
+                    android:text="Keep tracking to unlock habit analysis features"
+                    android:textAlignment="center"
+                    android:textColor='@color/sienna'
+                    android:textSize="23dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tvThreeTwo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="5dp"
-                android:fontFamily="@font/bright"
-                android:text="TextView"
-                android:textColor="@color/dusty_rose"
+                <TextView
+                    android:id="@+id/tvNumDaysTracked"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/bright"
+                    android:lineSpacingExtra="-25dp"
+                    android:minLines="2"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textColor="@color/dusty_rose"
+                    android:textSize="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvNotEnoughHabitsMain"
+                    tools:text="So far, you've been tracking for 7 days" />
 
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvThreeOne" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/tvThreeThree"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="10dp"
-                android:fontFamily="@font/bright"
-                android:text="TextView"
-                android:textColor="@color/dusty_rose"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvThreeTwo" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ProgressBar
@@ -261,13 +251,12 @@
         style="@style/Widget.AppCompat.ProgressBar"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:indeterminate="true"
-        android:indeterminateTint="@color/sienna"
-        android:progressDrawable="@drawable/check"
-        app:layout_constraintBottom_toTopOf="@+id/btnLogout"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvHello" />
-
+        app:layout_constraintTop_toBottomOf="@+id/tvHello"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/sienna"
+        android:progressDrawable="@drawable/check" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

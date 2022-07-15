@@ -42,7 +42,6 @@ public class SignupActivity extends AppCompatActivity {
                 password = etPassword.getText().toString();
 
                 checkValid();
-                login();
             }
         });
     }
@@ -55,10 +54,10 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void done(ParseUser user, ParseException e) {
                 if (e != null) {
-                    Toast.makeText(SignupActivity.this, "Issue with login!", Toast.LENGTH_SHORT);
+                    Toast.makeText(SignupActivity.this, "Issue with login", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                startActivity(new Intent(SignupActivity.this, AccountCreationActivity.class));
+                startActivity(new Intent(SignupActivity.this, AccountSetupActivity.class));
                 finish();
             }
         });
@@ -80,7 +79,9 @@ public class SignupActivity extends AppCompatActivity {
         try {
             newUser();
         } catch (ParseException e) {
-            e.printStackTrace();
+            Toast.makeText(SignupActivity.this, "That username is already taken", Toast.LENGTH_SHORT).show();
+            etUsername.setText("");
+            etPassword.setText("");
         }
     }
 
@@ -99,11 +100,13 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void done(ParseException e) {
                 if (e != null) {
-                    Toast.makeText(SignupActivity.this, "Error creating account", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignupActivity.this, "Issue with signing up", Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 // clears the username and password fields as a visual indication of signup success
                 etUsername.setText("");
                 etPassword.setText("");
+                login();
             }
         });
     }

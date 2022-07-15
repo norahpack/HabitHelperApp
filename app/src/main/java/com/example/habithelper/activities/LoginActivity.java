@@ -65,11 +65,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void done(ParseUser user, ParseException e) {
                 if (e != null) {
-                    Toast.makeText(LoginActivity.this, "Issue with login!", Toast.LENGTH_SHORT);
+                    Toast.makeText(LoginActivity.this, "Invalid username/password", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 goMainActivity();
-                Toast.makeText(LoginActivity.this, "Logged in!", Toast.LENGTH_SHORT);
             }
         });
     }

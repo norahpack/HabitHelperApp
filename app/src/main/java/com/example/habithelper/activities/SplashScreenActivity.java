@@ -12,7 +12,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     public static final int MILLIS_TO_DELAY = 3600;
     Handler handler;
-    ImageView ivSplash;
+    private ImageView ivSplash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

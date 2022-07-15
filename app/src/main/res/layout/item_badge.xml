@@ -10,7 +10,7 @@
 
     <ImageView
         android:id="@+id/ivBadge"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="350dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="30dp"
@@ -26,23 +26,21 @@
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="8dp"
-        android:text="&quot;SAMPLE TEXT?&quot;"
-        android:textAlignment="center"
-        android:textColor="@color/sienna"
-        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/tvBadgeDescription"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivBadge" />
+        app:layout_constraintTop_toBottomOf="@+id/ivBadge"
+        tools:text="&quot;SAMPLE TEXT?&quot;"
+        android:textAlignment="center"
+        android:textColor="@color/sienna"
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/tvBadgeDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="15dp"
-        android:layout_marginBottom="10dp"
         android:lineSpacingExtra="-15dp"
         android:textAlignment="center"
         android:textColor="@color/dusty_rose"
@@ -52,4 +50,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvBadge"
         tools:text="text" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,7 +25,6 @@ public class CurvedText extends View {
     public static final int LOWER_OFFSET = 950;
     public static final int VERTICAL_OFFSET = 0;
 
-
     public CurvedText(Context context, AttributeSet attrs) {
         super(context, attrs);
         myString = ParseUser.getCurrentUser().getString("name");

@@ -12,35 +12,29 @@ public class HabitMultipleLinearRegression extends AbstractMultipleLinearRegress
     private QRDecomposition qrDecomposition = null;
 
     /**
-     * Creates an empty HabitMultipleLinearRegression instance
-     */
-    public HabitMultipleLinearRegression() {
-    }
-
-    /**
-     * Loads model habitHistoryList and moodList sample data into a RealMatrix and RealVector (respectively)
+     * Loads model habitHistoryArray and moodArray sample data into a RealMatrix and RealVector (respectively)
      * and checks that their dimensions are suitable to perform MultipleLinearRegression
      *
-     * @param moodList the numDaysTracked by 1 array representing the User's mood history
-     * @param habitHistoryList the numDaysTracked by numHabits array representing the User's habit history
+     * @param moodArray the numDaysTracked by 1 array representing the User's mood history
+     * @param habitHistoryArray the numDaysTracked by numHabits array representing the User's habit history
      * @throws MathIllegalArgumentException if the arrays are not the proper dimensions
      */
-    public void newSampleData(double[] moodList, double[][] habitHistoryList) throws MathIllegalArgumentException {
-        //checks the dimensions and contents of habitHistoryList and moodList
-        validateSampleData(habitHistoryList, moodList);
-        newYSampleData(moodList);
-        newXSampleData(habitHistoryList);
+    public void loadAndCheckData(double[] moodArray, double[][] habitHistoryArray) throws MathIllegalArgumentException {
+        //checks the dimensions and contents of habitHistoryArray and moodArray
+        validateSampleData(habitHistoryArray, moodArray);
+        newYSampleData(moodArray);
+        newXSampleData(habitHistoryArray);
     }
 
     /**
-     * Loads the contents of habitHistoryList into a RealMatrix (which QR decomposition can be performed on)
+     * Loads the contents of habitHistoryArray into a RealMatrix (which QR decomposition can be performed on)
      * Performs QR decomposition on the RealMatrix representing the User's habit history
      * Represents and stores the RealMatrix as a product QR of two RealMatrix Objects, an orthogonal matrix Q
      * and an upper triangular matrix R.
      */
     @Override
-    protected void newXSampleData(double[][] habitHistoryList) {
-        super.newXSampleData(habitHistoryList);
+    protected void newXSampleData(double[][] habitHistoryArray) {
+        super.newXSampleData(habitHistoryArray);
         qrDecomposition = new QRDecomposition(getX());
     }
 
@@ -71,7 +65,6 @@ public class HabitMultipleLinearRegression extends AbstractMultipleLinearRegress
      */
     @Override
     public RealMatrix calculateBetaVariance() {
-        // This method is never used, but implementation is required in order to extend AbstractMultipleLinearRegression
         int betaSize = getX().getColumnDimension();
         RealMatrix rAugmented = qrDecomposition.getR().getSubMatrix(0, betaSize - 1, 0, betaSize - 1);
         RealMatrix rInverse = new LUDecomposition(rAugmented).getSolver().getInverse();

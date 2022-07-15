@@ -20,6 +20,7 @@ import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.habithelper.R;
 import com.example.habithelper.activities.BadgesActivity;
+import com.example.habithelper.activities.LoginActivity;
 import com.example.habithelper.activities.MainActivity;
 import com.example.habithelper.models.TrackDay;
 import com.example.habithelper.views.CurvedText;
@@ -35,16 +36,17 @@ import okhttp3.Headers;
 
 public class ProfileFragment extends Fragment {
 
-    Button btnChangeZip;
-    Button btnViewBadges;
-    CurvedText curvedTextBadge;
-    ConstraintLayout clMain;
-    ImageView ivProfileLevel;
-    TextView tvLocation;
-    TextView tvDaysTracked;
-    TextView tvLevel;
-    ProgressBar pbLoadingNumDays;
-    ProgressBar pbLoadingLocation;
+    private Button btnChangeZip;
+    private Button btnViewBadges;
+    private Button btnLogout;
+    private CurvedText curvedTextBadge;
+    private ConstraintLayout clMain;
+    private ImageView ivProfileLevel;
+    private TextView tvLocation;
+    private TextView tvDaysTracked;
+    private TextView tvLevel;
+    private ProgressBar pbLoadingNumDays;
+    private ProgressBar pbLoadingLocation;
 
     private ParseUser currentUser;
     private int numDaysTracked = 0;
@@ -84,6 +86,13 @@ public class ProfileFragment extends Fragment {
 
         getDaysTracked();
 
+        setButtonOnClickListeners();
+    }
+
+    /**
+     * Sets new OnClickListeners on the changeZip, logout, and viewBadges buttons.
+     */
+    private void setButtonOnClickListeners() {
         btnChangeZip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,6 +100,14 @@ public class ProfileFragment extends Fragment {
                 ZipcodeDialogFragment zipcodeDialogFragment = ZipcodeDialogFragment.newInstance("Change Zipcode");
                 zipcodeDialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
                 zipcodeDialogFragment.show(fm, "fragment_dialog_zipcode");
+            }
+        });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseUser.logOut();
+                startActivity(new Intent(getContext(), LoginActivity.class));
             }
         });
 
@@ -110,6 +127,7 @@ public class ProfileFragment extends Fragment {
     private void initViews(View view) {
         btnChangeZip = view.findViewById(R.id.btnChangeZip);
         btnViewBadges = view.findViewById(R.id.btnViewBadges);
+        btnLogout = view.findViewById(R.id.btnLogout);
         curvedTextBadge = view.findViewById(R.id.curvedTextBadge);
         clMain = view.findViewById(R.id.clMain);
         ivProfileLevel = view.findViewById(R.id.ivProfileLevel);
@@ -152,7 +170,7 @@ public class ProfileFragment extends Fragment {
         String nextLevel;
         int daysLeft;
         if(numDaysTracked > 100){
-            tvLevel.setText("You have reached the maximum level!");
+            tvLevel.setText("You have reached the maximum level");
             return;
         } else if (numDaysTracked > 50){
             daysLeft = 100 - numDaysTracked;
@@ -194,16 +212,18 @@ public class ProfileFragment extends Fragment {
      * @param numDaysTracked the number of days the user has tracked for
      */
     private void setBackground(int numDaysTracked) {
-        if(numDaysTracked > 100){
-            ivProfileLevel.setBackground(AppCompatResources.getDrawable(getContext(),R.drawable.level_five));
-        } else if (numDaysTracked > 50){
-            ivProfileLevel.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.level_four));
-        } else if (numDaysTracked > 25){
-            ivProfileLevel.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.level_three));
-        } else if (numDaysTracked > 10){
-            ivProfileLevel.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.level_two));
-        } else {
-            ivProfileLevel.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.level_one));
+        if (getContext() != null){
+            if(numDaysTracked > 100){
+                ivProfileLevel.setBackground(AppCompatResources.getDrawable(getContext(),R.drawable.level_five));
+            } else if (numDaysTracked > 50){
+                ivProfileLevel.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.level_four));
+            } else if (numDaysTracked > 25){
+                ivProfileLevel.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.level_three));
+            } else if (numDaysTracked > 10){
+                ivProfileLevel.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.level_two));
+            } else {
+                ivProfileLevel.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.level_one));
+            }
         }
     }
 }

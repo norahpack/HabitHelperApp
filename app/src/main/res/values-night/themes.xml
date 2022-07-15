@@ -1,41 +1,45 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Theme.HabitHelper" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
         <item name="colorPrimary">@color/sienna</item>
         <item name="colorPrimaryVariant">@color/sienna</item>
         <item name="colorOnPrimary">@color/cream</item>
-        <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/peach</item>
         <item name="colorSecondaryVariant">@color/cream</item>
         <item name="colorOnSecondary">@color/sienna</item>
-        <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/bright</item>
+        <item name="android:windowContentTransitions">true</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/splash_background</item>
         <item name="colorPrimary">@color/peach</item>
         <item name="colorPrimaryDark">@color/peach</item>
         <item name="colorAccent">@color/peach</item>
-        <item name="android:statusBarColor">@color/sienna_dark</item>
+        <item name="android:statusBarColor">@color/sienna</item>
     </style>
 
-    <style name="Light" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
+    <style name="Light" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/cream</item>
         <item name="colorPrimaryVariant">@color/sienna</item>
         <item name="colorOnPrimary">@color/sienna</item>
-        <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/sienna</item>
-        <item name="colorSecondaryVariant">@color/cream</item>
-        <item name="colorOnSecondary">@color/sienna</item>
-        <!-- Status bar color. -->
+        <item name="colorSecondaryVariant">@color/sienna</item>
+        <item name="colorOnSecondary">@color/cream</item>
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
     </style>
 
+    <style name="BackButtonTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/sienna</item>
+        <item name="colorPrimaryVariant">@color/sienna</item>
+        <item name="colorOnPrimary">@color/cream</item>
+        <item name="colorSecondary">@color/peach</item>
+        <item name="colorSecondaryVariant">@color/cream</item>
+        <item name="colorOnSecondary">@color/sienna</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:fontFamily">@font/bright</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentTransitions">true</item>
+    </style>
 
     <style name="CustomDialog" parent="@style/Theme.Material3.Dark.Dialog">
         <item name="android:windowNoTitle">false</item>

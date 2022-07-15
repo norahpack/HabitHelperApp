@@ -5,47 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/sienna"
-    tools:context=".activities.AccountCreationActivity">
-
+    tools:context=".activities.AccountSetupActivity">
 
     <ImageView
         android:id="@+id/ivSetup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-10dp"
         android:background="@drawable/setup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvZip"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-
-        android:fontFamily="@font/bright"
-        android:text="ZIP CODE"
-        android:textAlignment="center"
-
-        android:textColor="@color/cream"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivSetup" />
 
     <EditText
         android:id="@+id/etZip"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="18dp"
         android:layout_marginEnd="15dp"
         android:background="@drawable/slight_rounded_corners"
         android:backgroundTint="@color/cream"
         android:ems="10"
         android:fontFamily="@font/bright"
-        android:hint="Enter Zip Code Here"
+        android:hint="Enter zip code here"
         android:inputType="textPersonName"
         android:paddingLeft="13dp"
         android:textAlignment="textStart"
@@ -53,35 +35,20 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvZip" />
-
-    <TextView
-        android:id="@+id/tvName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:fontFamily="@font/bright"
-        android:text="NAME"
-        android:textAlignment="center"
-        android:textColor="@color/cream"
-
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etZip" />
+        app:layout_constraintTop_toBottomOf="@+id/ivSetup" />
 
     <EditText
         android:id="@+id/etName"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="18dp"
         android:layout_marginEnd="15dp"
         android:background="@drawable/slight_rounded_corners"
         android:backgroundTint="@color/cream"
         android:ems="10"
         android:fontFamily="@font/bright"
-        android:hint="Enter First Name Here"
+        android:hint="Enter first name here"
         android:inputType="textPersonName"
         android:paddingLeft="13dp"
         android:textAlignment="textStart"
@@ -89,287 +56,336 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvName" />
+        app:layout_constraintTop_toBottomOf="@+id/etZip" />
 
     <TextView
         android:id="@+id/tvHabits"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/bright"
-        android:text="CHOOSE WHICH HABITS TO TRACK"
+        android:text="Choose which habits to track"
         android:textAlignment="center"
         android:textColor="@color/cream"
-        android:textSize="18sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etName" />
 
-    <CheckBox
-        android:id="@+id/checkBoxWater"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+    <ScrollView
+        android:id="@+id/scrollViewHabits"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="10dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/slight_rounded_corners"
-        android:backgroundTint="@color/cream"
-        android:buttonTint="@color/sienna"
-        android:drawableEnd="@drawable/watersmall"
-        android:fontFamily="@font/bright"
-        android:text="Drink 8 cups of water "
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvHabits" />
-
-    <CheckBox
-        android:id="@+id/checkBoxHealthy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="12dp"
-        android:background="@drawable/slight_rounded_corners"
-        android:backgroundTint="@color/cream"
-        android:buttonTint="@color/sienna"
-        android:drawableEnd="@drawable/healthysmall"
-        android:drawablePadding="5dp"
-        android:fontFamily="@font/bright"
-        android:paddingEnd="5dp"
-        android:text="Eat healthy"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvHabits" />
-
-    <CheckBox
-        android:id="@+id/checkBoxScreens"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="3dp"
-        android:background="@drawable/slight_rounded_corners"
-        android:backgroundTint="@color/cream"
-        android:buttonTint="@color/sienna"
-        android:drawableEnd="@drawable/phonesmall"
-        android:drawablePadding="5dp"
-        android:fontFamily="@font/bright"
-        android:paddingEnd="5dp"
-        android:text="Limit screen time"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxWater" />
-
-    <CheckBox
-        android:id="@+id/checkBoxMeditate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="12dp"
-        android:background="@drawable/slight_rounded_corners"
-        android:backgroundTint="@color/cream"
-        android:buttonTint="@color/sienna"
-        android:drawableEnd="@drawable/meditatesmall"
-        android:drawablePadding="5dp"
-        android:fontFamily="@font/bright"
-
-        android:paddingEnd="5dp"
-        android:text="Meditate"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxWater" />
-
-    <CheckBox
-        android:id="@+id/checkBoxSleep"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="3dp"
-        android:background="@drawable/slight_rounded_corners"
-        android:backgroundTint="@color/cream"
-        android:buttonTint="@color/sienna"
-        android:drawableEnd="@drawable/sleepsmall"
-        android:drawablePadding="5dp"
-        android:fontFamily="@font/bright"
-        android:paddingEnd="5dp"
-        android:text="Sleep 7 hours"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxMeditate" />
-
-    <CheckBox
-        android:id="@+id/checkBoxRead"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="12dp"
-        android:background="@drawable/slight_rounded_corners"
-        android:backgroundTint="@color/cream"
-        android:buttonTint="@color/sienna"
-        android:drawableEnd="@drawable/readsmall"
-        android:drawablePadding="5dp"
-        android:fontFamily="@font/bright"
-        android:paddingEnd="5dp"
-        android:text="Read a book"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxMeditate" />
-
-    <CheckBox
-        android:id="@+id/checkBoxOutside"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="3dp"
-        android:background="@drawable/slight_rounded_corners"
-        android:backgroundTint="@color/cream"
-        android:buttonTint="@color/sienna"
-        android:drawableEnd="@drawable/sunsmall"
-        android:drawablePadding="5dp"
-        android:fontFamily="@font/bright"
-        android:paddingEnd="5dp"
-        android:text="Spend time outside"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxSleep" />
-
-    <CheckBox
-        android:id="@+id/checkBoxWorkout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="12dp"
-        android:background="@drawable/slight_rounded_corners"
-        android:backgroundTint="@color/cream"
-        android:buttonTint="@color/sienna"
-        android:drawableEnd="@drawable/workoutsmall"
-        android:drawablePadding="5dp"
-        android:fontFamily="@font/bright"
-        android:paddingEnd="5dp"
-        android:text="Workout"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxSleep" />
-
-    <CheckBox
-        android:id="@+id/checkBoxSkincare"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="3dp"
-        android:background="@drawable/slight_rounded_corners"
-        android:backgroundTint="@color/cream"
-        android:buttonTint="@color/sienna"
-        android:drawableEnd="@drawable/skincaresmall"
-        android:drawablePadding="5dp"
-        android:fontFamily="@font/bright"
-        android:paddingEnd="5dp"
-        android:text="Skincare routine"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxOutside" />
-
-    <CheckBox
-        android:id="@+id/checkBoxTalk"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="12dp"
-        android:background="@drawable/slight_rounded_corners"
-        android:backgroundTint="@color/cream"
-        android:buttonTint="@color/sienna"
-        android:drawableEnd="@drawable/talksmall"
-        android:drawablePadding="5dp"
-        android:fontFamily="@font/bright"
-        android:paddingEnd="5dp"
-        android:text="Talk with loved ones"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxOutside" />
-
-    <CheckBox
-        android:id="@+id/checkBoxCustomOne"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="3dp"
-        android:background="@drawable/slight_rounded_corners"
-        android:backgroundTint="@color/cream"
-        android:buttonTint="@color/sienna"
-        android:drawableEnd="@drawable/starssmall"
-        android:drawablePadding="5dp"
-        android:fontFamily="@font/bright"
-        android:paddingEnd="5dp"
-        android:text="."
-        android:textSize="0sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxTalk"
-        tools:text="a." />
-
-    <CheckBox
-        android:id="@+id/checkBoxCustomTwo"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="12dp"
-        android:background="@drawable/slight_rounded_corners"
-        android:backgroundTint="@color/cream"
-        android:buttonTint="@color/sienna"
-        android:drawableEnd="@drawable/starssmall"
-        android:drawablePadding="5dp"
-        android:fontFamily="@font/bright"
-        android:paddingEnd="5dp"
-        android:text="."
-        android:textSize="0sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxTalk"
-        tools:text="." />
-
-    <ImageButton
-        android:id="@+id/ibUpdate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/update"
-        android:fontFamily="@font/bright"
-        android:src="@drawable/update"
-        android:textSize="12sp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.157"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxCustomTwo"
-        app:layout_constraintVertical_bias="0.526" />
+        app:layout_constraintTop_toBottomOf="@+id/tvHabits"
+        app:layout_constraintVertical_bias="1.0">
 
-    <EditText
-        android:id="@+id/etCustomOne"
-        android:layout_width="125dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:fontFamily="@font/bright"
-        android:hint="Custom Habit"
-        android:inputType="textPersonName"
-        android:paddingHorizontal="6dp"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/checkBoxCustomOne"
-        app:layout_constraintEnd_toEndOf="@+id/checkBoxCustomOne"
-        app:layout_constraintStart_toStartOf="@+id/checkBoxCustomOne"
-        app:layout_constraintTop_toTopOf="@+id/checkBoxCustomOne" />
+        <LinearLayout
+            android:id="@+id/clScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/etCustomTwo"
-        android:layout_width="125dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:fontFamily="@font/bright"
-        android:hint="Custom Habit"
-        android:inputType="textPersonName"
-        android:paddingHorizontal="6dp"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/checkBoxCustomTwo"
-        app:layout_constraintEnd_toEndOf="@+id/checkBoxCustomTwo"
-        app:layout_constraintStart_toStartOf="@+id/checkBoxCustomTwo"
-        app:layout_constraintTop_toTopOf="@+id/checkBoxCustomTwo" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clHabitChecklist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:background="@color/cream"
+                app:layout_constraintTop_toTopOf="parent">
 
+                <CheckBox
+                    android:id="@+id/checkBoxWater"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/slight_rounded_corners"
+                    android:backgroundTint="@color/cream"
+                    android:buttonTint="@color/sienna"
+                    android:drawableEnd="@drawable/watersmall"
+                    android:fontFamily="@font/bright"
+                    android:text="Drink 8 cups of water "
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxHealthy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/slight_rounded_corners"
+                    android:backgroundTint="@color/cream"
+                    android:buttonTint="@color/sienna"
+                    android:drawableEnd="@drawable/healthysmall"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/bright"
+                    android:paddingEnd="5dp"
+                    android:text="Eat healthy"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxScreens"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="3dp"
+                    android:background="@drawable/slight_rounded_corners"
+                    android:backgroundTint="@color/cream"
+                    android:buttonTint="@color/sienna"
+                    android:drawableEnd="@drawable/phonesmall"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/bright"
+                    android:paddingEnd="5dp"
+                    android:text="Limit screen time"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBoxWater" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxMeditate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/slight_rounded_corners"
+                    android:backgroundTint="@color/cream"
+                    android:buttonTint="@color/sienna"
+                    android:drawableEnd="@drawable/meditatesmall"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/bright"
+                    android:paddingEnd="5dp"
+                    android:text="Meditate"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBoxWater" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxSleep"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="3dp"
+                    android:background="@drawable/slight_rounded_corners"
+                    android:backgroundTint="@color/cream"
+                    android:buttonTint="@color/sienna"
+                    android:drawableEnd="@drawable/sleepsmall"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/bright"
+                    android:paddingEnd="5dp"
+                    android:text="Sleep 7 hours"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBoxMeditate" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxRead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/slight_rounded_corners"
+                    android:backgroundTint="@color/cream"
+                    android:buttonTint="@color/sienna"
+                    android:drawableEnd="@drawable/readsmall"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/bright"
+                    android:paddingEnd="5dp"
+                    android:text="Read a book"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBoxMeditate" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxOutside"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="3dp"
+                    android:background="@drawable/slight_rounded_corners"
+                    android:backgroundTint="@color/cream"
+                    android:buttonTint="@color/sienna"
+                    android:drawableEnd="@drawable/sunsmall"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/bright"
+                    android:paddingEnd="5dp"
+                    android:text="Spend time outside"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBoxSleep" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxWorkout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/slight_rounded_corners"
+                    android:backgroundTint="@color/cream"
+                    android:buttonTint="@color/sienna"
+                    android:drawableEnd="@drawable/workoutsmall"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/bright"
+                    android:paddingEnd="5dp"
+                    android:text="Workout"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBoxSleep" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxSkincare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="3dp"
+                    android:background="@drawable/slight_rounded_corners"
+                    android:backgroundTint="@color/cream"
+                    android:buttonTint="@color/sienna"
+                    android:drawableEnd="@drawable/skincaresmall"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/bright"
+                    android:paddingEnd="5dp"
+                    android:text="Skincare routine"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBoxOutside" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxTalk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/slight_rounded_corners"
+                    android:backgroundTint="@color/cream"
+                    android:buttonTint="@color/sienna"
+                    android:drawableEnd="@drawable/talksmall"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/bright"
+                    android:paddingEnd="5dp"
+                    android:text="Talk with loved ones"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBoxOutside" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxCustomOne"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="3dp"
+                    android:background="@drawable/slight_rounded_corners"
+                    android:backgroundTint="@color/cream"
+                    android:buttonTint="@color/sienna"
+                    android:drawableEnd="@drawable/starssmall"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/bright"
+                    android:paddingEnd="5dp"
+                    android:text="."
+                    android:textSize="0sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBoxTalk"
+                    tools:text="." />
+
+                <CheckBox
+                    android:id="@+id/checkBoxCustomTwo"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/slight_rounded_corners"
+                    android:backgroundTint="@color/cream"
+                    android:buttonTint="@color/sienna"
+                    android:drawableEnd="@drawable/starssmall"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/bright"
+                    android:paddingEnd="5dp"
+                    android:text="."
+                    android:textSize="0sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBoxTalk"
+                    tools:text="." />
+
+
+                <EditText
+                    android:id="@+id/etCustomOne"
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:ems="10"
+                    android:fontFamily="@font/bright"
+                    android:hint="Custom Habit"
+                    android:inputType="textPersonName"
+                    android:paddingHorizontal="6dp"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/checkBoxCustomOne"
+                    app:layout_constraintEnd_toEndOf="@+id/checkBoxCustomOne"
+                    app:layout_constraintStart_toStartOf="@+id/checkBoxCustomOne"
+                    app:layout_constraintTop_toTopOf="@+id/checkBoxCustomOne" />
+
+                <EditText
+                    android:id="@+id/etCustomTwo"
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:ems="10"
+                    android:fontFamily="@font/bright"
+                    android:hint="Custom Habit"
+                    android:inputType="textPersonName"
+                    android:paddingHorizontal="6dp"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/checkBoxCustomTwo"
+                    app:layout_constraintEnd_toEndOf="@+id/checkBoxCustomTwo"
+                    app:layout_constraintStart_toStartOf="@+id/checkBoxCustomTwo"
+                    app:layout_constraintTop_toTopOf="@+id/checkBoxCustomTwo" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/groupShowCollapseHabits"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:constraint_referenced_ids="checkBoxOutside, checkBoxWorkout, checkBoxSkincare, checkBoxTalk, checkBoxCustomOne, checkBoxCustomTwo, etCustomOne, etCustomTwo">
+
+
+                </androidx.constraintlayout.widget.Group>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/btnShowCollapseList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginVertical="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/slight_rounded_corners"
+                android:fontFamily="@font/bright"
+                android:text="Show full list of habits"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btnUpdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/slight_rounded_corners"
+                android:fontFamily="@font/bright"
+                android:text="Update my profile"
+                android:textAllCaps="false" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

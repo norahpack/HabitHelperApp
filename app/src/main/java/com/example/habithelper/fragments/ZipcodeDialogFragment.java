@@ -52,7 +52,7 @@ public class ZipcodeDialogFragment extends DialogFragment {
         currentUser = ParseUser.getCurrentUser();
 
         // Fetch arguments from bundle and set title
-        String title = getArguments().getString("title", "Enter New Zipcode");
+        String title = getArguments().getString("title", "Enter new zipcode");
         getDialog().setTitle(title);
 
         btnSetNewZip.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +66,7 @@ public class ZipcodeDialogFragment extends DialogFragment {
     private void checkZipcode() {
         zipString = etNewZip.getText().toString();
         if (zipString.isEmpty()) {
-            Toast.makeText(getContext(), "zipcode cannot be empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Zipcode cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
         AsyncHttpClient client = new AsyncHttpClient();
@@ -93,7 +93,7 @@ public class ZipcodeDialogFragment extends DialogFragment {
 
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                Toast.makeText(getContext(), "Not a valid zipcode!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Not a valid zipcode", Toast.LENGTH_SHORT).show();
                 return;
             }
         });

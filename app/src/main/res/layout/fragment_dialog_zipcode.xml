@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
     tools:context=".fragments.ZipcodeDialogFragment">
 
     <EditText
@@ -14,6 +13,9 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="35dp"
         android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:background="@drawable/slight_rounded_corners"
         android:backgroundTint="@color/cream"
         android:ems="10"
@@ -21,10 +23,7 @@
         android:inputType="textPersonName"
         android:paddingLeft="13dp"
         android:textColor="@color/sienna"
-        android:textColorHint="@color/sienna_light"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textColorHint="@color/sienna_light" />
 
     <Button
         android:id="@+id/btnSetNewZip"
@@ -32,12 +31,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="15dp"
-        android:background="@drawable/slight_rounded_corners"
-        android:backgroundTint="@color/cream"
-        android:text="SET MY NEW ZIPCODE"
-        android:textColor="@color/sienna"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etNewZip" />
+        app:layout_constraintTop_toBottomOf="@+id/etNewZip"
+        android:background="@drawable/slight_rounded_corners"
+        android:backgroundTint="@color/cream"
+        android:text="Set my new zipcode"
+        android:textColor="@color/sienna"
+        android:textAllCaps="false" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

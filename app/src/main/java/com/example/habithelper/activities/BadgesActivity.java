@@ -14,10 +14,10 @@ import java.util.List;
 
 public class BadgesActivity extends AppCompatActivity {
 
-    RecyclerView rvBadges;
-    ParseUser currentUser;
-    List<String> badgesList;
-    BadgesAdapter adapter;
+    private RecyclerView rvBadges;
+    private ParseUser currentUser;
+    private List<String> badgesList;
+    private BadgesAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

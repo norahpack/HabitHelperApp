@@ -24,12 +24,12 @@ import java.util.List;
 
 public class HabitListFragment extends Fragment {
 
-    RecyclerView rvHabits;
+    private RecyclerView rvHabits;
     ParseUser currentUser;
     List<Habit> habitsList;
     List<String> habitsNameList;
-    HabitAdapter adapter;
-    ProgressBar pbLoadingList;
+    private HabitAdapter adapter;
+    private ProgressBar pbLoadingList;
 
     public HabitListFragment() {
         // Required empty public constructor to be able to initialize a fragment from MainActivity
