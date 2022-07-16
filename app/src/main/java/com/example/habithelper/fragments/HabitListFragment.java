@@ -61,15 +61,39 @@ public class HabitListFragment extends Fragment {
         adapter = new HabitAdapter(MainActivity.self, getContext(), habitsList);
         rvHabits.setAdapter(adapter);
         rvHabits.setLayoutManager(layout);
-        queryHabitGrid();
+        queryCustomHabits();
     }
 
     /**
-     * Determines the Habit objects to pass to the HabitAdapter
+     * Determines the custom Habit objects to pass to the HabitAdapter
      */
-    private void queryHabitGrid() {
+    private void queryCustomHabits() {
         ParseQuery<Habit> query = ParseQuery.getQuery(Habit.class);
         query.include(Habit.KEY_HABIT_NAME);
+        query.include(Habit.KEY_HABIT_CREATOR);
+        query.whereEqualTo(Habit.KEY_HABIT_CREATOR, currentUser);
+        query.whereContainedIn("habitName", habitsNameList);
+
+        // start an asynchronous call for habits
+        query.findInBackground(new FindCallback<Habit>() {
+            @Override
+            public void done(List<Habit> list, ParseException e) {
+                if (e != null) {
+                    return;
+                }
+                queryGenericHabits(list);
+            }
+        });
+    }
+
+    /**
+     * Determines the generic Habit objects to pass to the HabitAdapter
+     */
+    private void queryGenericHabits(List<Habit> customHabits) {
+        ParseQuery<Habit> query = ParseQuery.getQuery(Habit.class);
+        query.include(Habit.KEY_HABIT_NAME);
+        query.include(Habit.KEY_HABIT_CREATOR);
+        query.whereEqualTo(Habit.KEY_HABIT_CREATOR, null);
         query.whereContainedIn("habitName", habitsNameList);
 
         // start an asynchronous call for habits
@@ -81,6 +105,7 @@ public class HabitListFragment extends Fragment {
                 }
                 // save received Habits to list and notify adapter of new data
                 pbLoadingList.setVisibility(View.GONE);
+                adapter.addAll(customHabits);
                 adapter.addAll(list);
                 adapter.notifyDataSetChanged();
             }

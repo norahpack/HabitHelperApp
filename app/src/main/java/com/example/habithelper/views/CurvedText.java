@@ -20,9 +20,9 @@ public class CurvedText extends View {
     public int levelOffset;
 
     private static final int UPPER_CIRCLE_RADIUS = 240;
-    private static final int LOWER_CIRCLE_RADIUS = 270;
-    public static final int UPPER_OFFSET = 1060;
-    public static final int LOWER_OFFSET = 950;
+    private static final int LOWER_CIRCLE_RADIUS = 260;
+    public static final int UPPER_OFFSET = 1080;
+    public static final int LOWER_OFFSET = 900;
     public static final int VERTICAL_OFFSET = 0;
 
     public CurvedText(Context context, AttributeSet attrs) {
@@ -33,7 +33,7 @@ public class CurvedText extends View {
 
         circle = new Path();
         circle2 = new Path();
-        circle.addCircle(300, 300, UPPER_CIRCLE_RADIUS, Path.Direction.CW);
+        circle.addCircle(300, 320, UPPER_CIRCLE_RADIUS, Path.Direction.CW);
         circle2.addCircle(300, 300, LOWER_CIRCLE_RADIUS, Path.Direction.CCW);
 
         setLevelText(numDaysTracked);

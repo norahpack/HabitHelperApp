@@ -12,12 +12,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.bumptech.glide.Glide;
 import com.example.habithelper.R;
 import com.example.habithelper.models.Habit;
 import com.example.habithelper.models.TrackDay;
 import com.example.habithelper.utilities.LinearRegressionCalculator;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import org.parceler.Parcels;
@@ -186,12 +189,21 @@ public class HabitDetailsActivity extends AppCompatActivity {
      * Loads the drawable corresponding to the habit into the ivHabit ImageView
      */
     private void setupIvHabit() {
-        if (habit.get("habitImageName") != null) {
-            Resources resources = getResources();
-            int resId = resources.getIdentifier(habit.getHabitImageKey(), "drawable", "com.example.habithelper");
-            ivHabit.setBackground(AppCompatResources.getDrawable(HabitDetailsActivity.this, resId));
+        ParseFile image = habit.getHabitCustomIcon();
+        if (image != null){
+            Glide.with(HabitDetailsActivity.this).load(image.getUrl()).into(ivHabit);
         } else {
-            ivHabit.setBackground(AppCompatResources.getDrawable(HabitDetailsActivity.this, R.drawable.starslarge));
+            Resources resources = getResources();
+            if (habit.get("habitImageName") != null) {
+                int resId = resources.getIdentifier(habit.getHabitImageKey(), "drawable", "com.example.habithelper");
+                //ivHabit.setBackground(AppCompatResources.getDrawable(context, resId));
+                Glide.with(HabitDetailsActivity.this).load(AppCompatResources.getDrawable(HabitDetailsActivity.this, resId)).into(ivHabit);
+            } else {
+                Glide.with(HabitDetailsActivity.this).load(R.drawable.starslarge).into(ivHabit);
+                //ivHabit.setBackground(AppCompatResources.getDrawable(context, R.drawable.starslarge));
+            }
+            ivHabit.setColorFilter(resources.getColor(R.color.sienna)); // Add tint color
+
         }
     }
 

@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="35dp"
         android:layout_marginEnd="15dp"
         android:lineSpacingExtra="-50dp"
         android:textAlignment="center"
@@ -25,20 +25,31 @@
         tools:text="Text view that creates two lines" />
 
     <ImageView
-        android:id="@+id/ivIconBackground"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:id="@+id/ivOuterBackground"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvHabit"
-        app:srcCompat="@drawable/track_sienna" />
+        app:srcCompat="@drawable/track_sienna"
+        tools:layout_editor_absoluteY="134dp" />
+
+    <ImageView
+        android:id="@+id/ivIconBackground"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHabit"
+        app:srcCompat="@drawable/track_cream" />
 
     <ImageView
         android:id="@+id/ivHabit"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="45dp"
         android:backgroundTint="@color/peach"
         android:transitionName="habitImage"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,14 +97,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivHabit"
         android:background="@drawable/slight_rounded_corners"
         android:backgroundTint="@color/dusty_rose"
-        android:visibility="gone">
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clPercent">
 
         <TextView
             android:id="@+id/tvPercentNotEnough"
@@ -103,16 +114,16 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="Keep tracking to unlock habit analysis features"
             android:fontFamily="@font/brittany_signature"
+            android:text="Keep tracking to unlock habit analysis features"
             android:textAlignment="center"
             android:textColor="@color/sienna"
             android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
@@ -147,17 +158,18 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="50dp"
         android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clPercent"
+        android:layout_marginBottom="68dp"
         android:lineSpacingExtra="-20dp"
         android:text="Here's how you've done with this habit for the last ten days"
         android:textAlignment="center"
         android:textColor="@color/sienna"
         android:textSize="16sp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/tvStreak"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clPercentNotEnough" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clLastTen"
@@ -166,12 +178,12 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvLastTen"
         android:background="@drawable/slight_rounded_corners"
         android:backgroundTint="@color/peach"
-        android:visibility="gone">
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLastTen">
 
         <ImageView
             android:id="@+id/ivDayOne"
@@ -179,10 +191,10 @@
             android:layout_height="30dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
+            android:background="@drawable/track_cream"
             app:layout_constraintEnd_toStartOf="@+id/ivDayTwo"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/track_cream" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/ivDayTwo"
@@ -190,10 +202,10 @@
             android:layout_height="30dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
+            android:background="@drawable/track_cream"
             app:layout_constraintEnd_toStartOf="@+id/ivDayThree"
             app:layout_constraintStart_toEndOf="@+id/ivDayOne"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/track_cream" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/ivDayThree"
@@ -201,10 +213,10 @@
             android:layout_height="30dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
+            android:background="@drawable/track_cream"
             app:layout_constraintEnd_toStartOf="@+id/ivDayFour"
             app:layout_constraintStart_toEndOf="@+id/ivDayTwo"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/track_cream" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/ivDayFour"
@@ -212,10 +224,10 @@
             android:layout_height="30dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
+            android:background="@drawable/track_cream"
             app:layout_constraintEnd_toStartOf="@+id/ivDayFive"
             app:layout_constraintStart_toEndOf="@+id/ivDayThree"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/track_cream" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/ivDayFive"
@@ -223,10 +235,10 @@
             android:layout_height="30dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
+            android:background="@drawable/track_cream"
             app:layout_constraintEnd_toStartOf="@+id/ivDaySix"
             app:layout_constraintStart_toEndOf="@+id/ivDayFour"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/track_cream" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/ivDaySix"
@@ -234,10 +246,10 @@
             android:layout_height="30dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
+            android:background="@drawable/track_cream"
             app:layout_constraintEnd_toStartOf="@+id/ivDaySeven"
             app:layout_constraintStart_toEndOf="@+id/ivDayFive"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/track_cream" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/ivDaySeven"
@@ -245,10 +257,10 @@
             android:layout_height="30dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
+            android:background="@drawable/track_cream"
             app:layout_constraintEnd_toStartOf="@+id/ivDayEight"
             app:layout_constraintStart_toEndOf="@+id/ivDaySix"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/track_cream" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/ivDayEight"
@@ -256,10 +268,10 @@
             android:layout_height="30dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
+            android:background="@drawable/track_cream"
             app:layout_constraintEnd_toStartOf="@+id/ivDayNine"
             app:layout_constraintStart_toEndOf="@+id/ivDaySeven"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/track_cream" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/ivDayNine"
@@ -267,10 +279,10 @@
             android:layout_height="30dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
+            android:background="@drawable/track_cream"
             app:layout_constraintEnd_toStartOf="@+id/ivDayTen"
             app:layout_constraintStart_toEndOf="@+id/ivDayEight"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/track_cream" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/ivDayTen"
@@ -279,10 +291,10 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="15dp"
+            android:background="@drawable/track_cream"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivDayNine"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/track_cream" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvFirstDay"
@@ -290,10 +302,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="22dp"
             android:layout_marginTop="5dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivDayOne"
             android:text="1"
-            android:textColor="@color/sienna" />
+            android:textColor="@color/sienna"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivDayOne" />
 
         <TextView
             android:id="@+id/tvLastDay"
@@ -301,10 +313,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="22dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivDayOne"
             android:text="10"
-            android:textColor="@color/sienna" />
+            android:textColor="@color/sienna"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivDayOne" />
 
         <TextView
             android:id="@+id/tvDayNum"
@@ -312,12 +324,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
+            android:text="Day number of tracking"
+            android:textColor="@color/sienna"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivDayOne"
-            android:text="Day number of tracking"
-            android:textColor="@color/sienna" />
+            app:layout_constraintTop_toBottomOf="@+id/ivDayOne" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -333,5 +345,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ivHabit"
         android:indeterminate="true"
         android:indeterminateTint="@color/sienna" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

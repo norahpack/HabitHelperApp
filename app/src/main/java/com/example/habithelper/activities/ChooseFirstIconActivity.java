@@ -1,12 +1,20 @@
 package com.example.habithelper.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import com.example.habithelper.R;
 import com.example.habithelper.adapters.IconAdapter;
+import com.example.habithelper.fragments.CreateIconFragment;
 import com.parse.ParseUser;
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +26,7 @@ public class ChooseFirstIconActivity extends AppCompatActivity {
     private ParseUser currentUser;
     private List<String> iconList;
     private IconAdapter adapter;
+    private Button btnDrawCustom;
     private String firstIconName = "First Custom Habit";
     private String secondIconName = "Second Custom Habit";
     private boolean hasSecondCustom = false;
@@ -28,8 +37,11 @@ public class ChooseFirstIconActivity extends AppCompatActivity {
         setContentView(R.layout.activity_choose_first_icon);
         rvIconList = findViewById(R.id.rvIconList);
         tvCustomHabit = findViewById(R.id.tvCustomHabit);
+        btnDrawCustom = findViewById(R.id.btnDrawCustom);
 
         getIntentExtras();
+
+        customButtonOnClick();
 
         currentUser = ParseUser.getCurrentUser();
         setupIconList();
@@ -37,6 +49,31 @@ public class ChooseFirstIconActivity extends AppCompatActivity {
         adapter = new IconAdapter(this, iconList, hasSecondCustom, firstIconName, secondIconName);
         rvIconList.setAdapter(adapter);
         rvIconList.setLayoutManager(layout);
+    }
+
+    /**
+     * Sets the onClickListener on the btnDrawCustom button
+     */
+    private void customButtonOnClick() {
+        btnDrawCustom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getSupportFragmentManager();
+                CreateIconFragment createIconFragment = CreateIconFragment.newInstance(firstIconName, secondIconName, hasSecondCustom);
+                createIconFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
+                createIconFragment.show(fm, "fragment_create_icon");
+                //FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                //fragmentTransaction.add(createIconFragment, "fragment_create_icon").commitAllowingStateLoss();
+
+            }
+        });
+    }
+
+    @SuppressLint("MissingSuperCall")
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString("WORKAROUND_FOR_BUG_19917_KEY", "WORKAROUND_FOR_BUG_19917_VALUE");
+        super.onSaveInstanceState(outState);
     }
 
     /**

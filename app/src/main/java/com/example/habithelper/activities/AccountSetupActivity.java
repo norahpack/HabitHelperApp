@@ -119,11 +119,11 @@ public class AccountSetupActivity extends AppCompatActivity {
      */
     private void checkUserInput() {
         habitsList.clear();
-        initializeHabitList();
         name = etName.getText().toString();
         zipString = etZip.getText().toString();
         customHabitOne = etCustomOne.getText().toString();
         customHabitTwo = etCustomTwo.getText().toString();
+        initializeHabitList();
 
         if (checkBoxCustomOne.isChecked()) {
             if (customHabitOne.isEmpty()) {

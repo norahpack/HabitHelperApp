@@ -4,19 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/sienna"
+    android:background="@color/dusty_rose"
     tools:context=".activities.ChooseFirstIconActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvIconList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
+        android:background="@color/cream"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCustomHabit" />
+        app:layout_constraintTop_toBottomOf="@+id/btnDrawCustom" />
 
     <TextView
         android:id="@+id/tvChoose"
@@ -45,5 +48,18 @@
         android:textAlignment="center"
         android:textColor="@color/cream"
         android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/btnDrawCustom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/slight_rounded_corners"
+        android:backgroundTint="@color/cream"
+        android:text="Draw a custom icon"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCustomHabit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
