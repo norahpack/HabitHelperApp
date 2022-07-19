@@ -14,22 +14,22 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/honey_florist"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:text="(profile)"
+        android:fontFamily="@font/honey_florist"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/sienna"
         android:textSize="60dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textStyle="bold" />
 
     <com.example.habithelper.views.CurvedText
         android:id="@+id/curvedTextBadge"
         android:layout_width="600px"
         android:layout_height="600px"
-        android:layout_marginTop="40px"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvProfile">
@@ -40,7 +40,7 @@
         android:id="@+id/clZipCode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,19 +53,22 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="10dp"
-            android:fontFamily="@font/bright"
-            android:textColor="@color/dusty_rose"
-            android:textSize="18dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:fontFamily="@font/bright"
+            android:textColor="@color/dusty_rose"
+            android:textSize="18dp" />
 
         <Button
             android:id="@+id/btnChangeZip"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
+            android:layout_marginTop="3dp"
             android:background="@drawable/slight_rounded_corners"
-            android:text="Change Zipcode"
+            android:text="Change zipcode"
+            android:textAllCaps="false"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvLocation" />
@@ -76,11 +79,11 @@
             android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_marginTop="2dp"
-            android:indeterminate="true"
-            android:indeterminateTint="@color/dusty_rose"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/dusty_rose" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -91,13 +94,14 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="10dp"
-        android:fontFamily="@font/bright"
-        android:text=""
-        android:textColor="@color/dusty_rose"
-        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clZipCode" />
+        app:layout_constraintTop_toBottomOf="@+id/clZipCode"
+        tools:text="You have been tracking for 8 days"
+        android:text=""
+        android:fontFamily="@font/bright"
+        android:textColor="@color/dusty_rose"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tvLevel"
@@ -106,24 +110,39 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
-        android:fontFamily="@font/bright"
-        android:text=""
-        android:textColor="@color/sienna"
-        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDaysTracked" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDaysTracked"
+        tools:text="2 more days until you reach level 2"
+        android:fontFamily="@font/bright"
+        android:textColor="@color/sienna"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/btnViewBadges"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:background="@drawable/slight_rounded_corners"
-        android:text="VIEW MY BADGES!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="View my badges"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvLevel" />
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/slight_rounded_corners"
+        android:text="Log out"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnViewBadges" />
 
 
     <ImageView
@@ -131,10 +150,10 @@
         android:layout_width="300dp"
         android:layout_height="80dp"
         android:layout_marginBottom="10dp"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
         app:srcCompat="@drawable/name_logo_pink_flowers_large" />
 
     <ProgressBar
@@ -142,23 +161,21 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="100dp"
         android:layout_height="30dp"
-        android:layout_marginBottom="30dp"
-        android:indeterminate="true"
-        android:indeterminateTint="@color/dusty_rose"
         app:layout_constraintBottom_toTopOf="@+id/btnViewBadges"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/dusty_rose" />
 
     <ImageView
         android:id="@+id/ivProfileLevel"
         android:layout_width="400px"
         android:layout_height="400px"
         android:layout_margin="100px"
-        android:background="@drawable/level_one"
         app:layout_constraintBottom_toBottomOf="@+id/curvedTextBadge"
         app:layout_constraintEnd_toEndOf="@+id/curvedTextBadge"
         app:layout_constraintStart_toStartOf="@+id/curvedTextBadge"
-        app:layout_constraintTop_toTopOf="@+id/curvedTextBadge" />
-
+        app:layout_constraintTop_toTopOf="@+id/curvedTextBadge"
+        android:background="@drawable/level_one" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

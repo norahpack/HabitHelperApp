@@ -39,15 +39,16 @@ public class MoodFragment extends Fragment {
 
     public double moodSum = 0;
     public double averageMood = 0;
-    ImageView ivAverageMood;
-    TextView tvNumDaysTracked;
-    TextView tvAverageMood;
-    TextView tvPercentChange;
-    GraphView graphViewMood;
-    ConstraintLayout clNotEnoughDays;
-    ConstraintLayout clMoodBarGraph;
-    ProgressBar pbLoadingAverageMood;
-    ProgressBar pbLoadingMoodGraph;
+    public double numMood = 0;
+    private ImageView ivAverageMood;
+    private TextView tvNumDaysTracked;
+    private TextView tvAverageMood;
+    private TextView tvPercentChange;
+    private GraphView graphViewMood;
+    private ConstraintLayout clNotEnoughDays;
+    private ConstraintLayout clMoodBarGraph;
+    private ProgressBar pbLoadingAverageMood;
+    private ProgressBar pbLoadingMoodGraph;
     ParseUser currentUser;
 
     public MoodFragment() {
@@ -102,7 +103,7 @@ public class MoodFragment extends Fragment {
                 if (daysTracked.size() >= 14) {
                     setPercentChange(daysTracked);
                 } else {
-                    tvPercentChange.setText("You're on your way to a happier and healthier future. Keep up the good work!");
+                    tvPercentChange.setText("You're on your way to a happier and healthier future. Keep up the good work.");
                 }
             }
         });
@@ -147,9 +148,9 @@ public class MoodFragment extends Fragment {
      */
     private void setNotEnoughDays(List<TrackDay> daysTracked, View view) {
         if (daysTracked.size() != 1) {
-            tvNumDaysTracked.setText("So far, you've been tracking for " + String.valueOf(daysTracked.size()) + " days!");
+            tvNumDaysTracked.setText("So far, you've been tracking for " + String.valueOf(daysTracked.size()) + " days");
         } else {
-            tvNumDaysTracked.setText("So far, you've been tracking for 1 day!");
+            tvNumDaysTracked.setText("So far, you've been tracking for 1 day");
         }
         pbLoadingMoodGraph.setVisibility(View.GONE);
         clNotEnoughDays.setVisibility(View.VISIBLE);
@@ -212,8 +213,9 @@ public class MoodFragment extends Fragment {
         if (daysTracked.size() > 0) {
             for (int i = 0; i < daysTracked.size(); i++) {
                 moodSum += daysTracked.get(i).getMood();
+                numMood += 1;
             }
-            averageMood = moodSum / (daysTracked.size());
+            averageMood = moodSum / numMood;
             pbLoadingAverageMood.setVisibility(View.GONE);
             tvAverageMood.setText(dfZero.format(averageMood) + "/5.00");
             setIvAverageMood();

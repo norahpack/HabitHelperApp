@@ -1,12 +1,13 @@
 package com.example.habithelper.utilities;
 
+import android.util.Log;
 import com.example.habithelper.models.TrackDay;
 import java.util.List;
 
 public class LinearRegressionCalculator {
 
-    double[] moodList;
-    double[][] habitHistoryList;
+    double[] moodArray;
+    double[][] habitHistoryArray;
     public double[] leastSquaresResult;
 
     public LinearRegressionCalculator() {
@@ -21,13 +22,18 @@ public class LinearRegressionCalculator {
      * @return an array of coefficients corresponding to the correlation of each habit to the user's mood
      */
     public void performLeastSquares(List<TrackDay> daysTracked, int numDaysTracked, int numHabits) {
-        moodList = new double[numDaysTracked];
-        habitHistoryList = new double[numDaysTracked][numHabits];
+        moodArray = new double[numDaysTracked];
+        habitHistoryArray = new double[numDaysTracked][numHabits];
 
         putParseDataIntoLists(daysTracked, numDaysTracked);
 
         HabitMultipleLinearRegression habitMLR = new HabitMultipleLinearRegression();
-        habitMLR.newSampleData(moodList, habitHistoryList);
+        try {
+            habitMLR.loadAndCheckData(moodArray, habitHistoryArray);
+        }
+        catch(Exception e) {
+            Log.e("LinearRegressionCalculator", "data does not fit parameters for MLR");
+        }
         double[] tempArray = habitMLR.calculateBeta().toArray();
 
         // removes the y-intercept value from the array of predictor coefficients
@@ -39,19 +45,19 @@ public class LinearRegressionCalculator {
     }
 
     /**
-     * Obtain the data from the Parse database and put it into lists that we can perform HabitMultipleLinearRegression on
+     * Obtain the data from the Parse database and put it into arrays that we can perform HabitMultipleLinearRegression on
      * @param daysTracked the list holding every TrackDay Parse object corresponding to the currentUser
      * @param numDaysTracked the number of days the user has tracked so far
      */
     private void putParseDataIntoLists(List<TrackDay> daysTracked, int numDaysTracked) {
         for (int i = 0; i < numDaysTracked; i++) {
             List<Integer> trackDayArray = daysTracked.get(i).getTrackArray();
-            moodList[i] = daysTracked.get(i).getMood();
+            moodArray[i] = daysTracked.get(i).getMood();
             double[] coefficientList = new double[trackDayArray.size()];
             for (int k = 0; k < trackDayArray.size(); k++) {
                 coefficientList[k] = (double) trackDayArray.get(k);
             }
-            habitHistoryList[i] = coefficientList;
+            habitHistoryArray[i] = coefficientList;
         }
     }
 

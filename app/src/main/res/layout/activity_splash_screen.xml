@@ -7,7 +7,6 @@
     android:background="@color/sienna"
     tools:context=".activities.SplashScreenActivity">
 
-
     <ImageView
         android:id="@+id/ivSplash"
         android:layout_width="match_parent"
@@ -18,4 +17,5 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,15 +18,18 @@
         android:theme="@style/Theme.HabitHelper"
         tools:targetApi="31">
         <activity
-            android:theme="@style/BackButtonTheme"
+            android:name=".activities.ChooseFirstIconActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.BadgesActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/BackButtonTheme" />
         <activity
-            android:theme="@style/BackButtonTheme"
             android:name=".activities.HabitDetailsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/BackButtonTheme" />
         <activity
-            android:name=".activities.AccountCreationActivity"
+            android:name=".activities.AccountSetupActivity"
             android:exported="false"
             android:theme="@style/Light" />
         <activity

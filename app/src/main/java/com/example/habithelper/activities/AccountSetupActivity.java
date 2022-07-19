@@ -1,12 +1,14 @@
 package com.example.habithelper.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.Group;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -18,37 +20,40 @@ import com.parse.SaveCallback;
 import java.util.ArrayList;
 import okhttp3.Headers;
 
-public class AccountCreationActivity extends AppCompatActivity {
+public class AccountSetupActivity extends AppCompatActivity {
 
     public static final String GET_WEATHER_URL = "https://api.weatherapi.com/v1/current.json?key=e8d92dcba9404609b24175200221606&q=";
     public static final int MIN_REQUIRED_HABITS_NUM = 4;
     public static final int MAX_ALLOWED_HABITS_NUM = 10;
 
-    CheckBox checkBoxWater;
-    CheckBox checkBoxHealthy;
-    CheckBox checkBoxScreens;
-    CheckBox checkBoxMeditate;
-    CheckBox checkBoxSleep;
-    CheckBox checkBoxRead;
-    CheckBox checkBoxOutside;
-    CheckBox checkBoxWorkout;
-    CheckBox checkBoxSkincare;
-    CheckBox checkBoxTalk;
-    CheckBox checkBoxCustomOne;
-    CheckBox checkBoxCustomTwo;
-    EditText etZip;
-    EditText etName;
-    EditText etCustomOne;
-    EditText etCustomTwo;
-    ImageButton ibUpdate;
+    private CheckBox checkBoxWater;
+    private CheckBox checkBoxHealthy;
+    private CheckBox checkBoxScreens;
+    private CheckBox checkBoxMeditate;
+    private CheckBox checkBoxSleep;
+    private CheckBox checkBoxRead;
+    private CheckBox checkBoxOutside;
+    private CheckBox checkBoxWorkout;
+    private CheckBox checkBoxSkincare;
+    private CheckBox checkBoxTalk;
+    private CheckBox checkBoxCustomOne;
+    private CheckBox checkBoxCustomTwo;
+    private EditText etZip;
+    private EditText etName;
+    private EditText etCustomOne;
+    private EditText etCustomTwo;
+    private Button btnUpdate;
+    private Button btnShowCollapseList;
+    private Group groupShowCollapseHabits;
 
     String name;
     String zipString;
     String customHabitOne;
     String customHabitTwo;
     ArrayList<String> habitsList = new ArrayList<String>();
-    Boolean existsCustomOne = false;
-    Boolean existsCustomTwo = false;
+    boolean existsCustomOne = false;
+    boolean existsCustomTwo = false;
+    boolean isFullListShown = false;
     ParseUser currentUser;
 
     @Override
@@ -58,13 +63,34 @@ public class AccountCreationActivity extends AppCompatActivity {
 
         initViews();
 
-        ibUpdate.setOnClickListener(new View.OnClickListener() {
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkUserInput();
-                checkZipCode();
             }
         });
+
+        btnShowCollapseList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCollapseList();
+            }
+        });
+    }
+
+    /**
+     * Expands or collapses the full list of habits.
+     */
+    private void showCollapseList() {
+        if (isFullListShown){
+            groupShowCollapseHabits.setVisibility(View.GONE);
+            btnShowCollapseList.setText("Show full list of habits");
+            isFullListShown = false;
+        } else {
+            groupShowCollapseHabits.setVisibility(View.VISIBLE);
+            btnShowCollapseList.setText("Collapse full list of habits");
+            isFullListShown = true;
+        }
     }
 
     /**
@@ -82,7 +108,7 @@ public class AccountCreationActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                Toast.makeText(AccountCreationActivity.this, "Not a valid zipcode!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AccountSetupActivity.this, "Not a valid zipcode", Toast.LENGTH_SHORT).show();
                 return;
             }
         });
@@ -92,46 +118,44 @@ public class AccountCreationActivity extends AppCompatActivity {
      * Checks whether the name, custom habits, zipcode, and number of habits the user selected are valid
      */
     private void checkUserInput() {
+        habitsList.clear();
         name = etName.getText().toString();
         zipString = etZip.getText().toString();
         customHabitOne = etCustomOne.getText().toString();
         customHabitTwo = etCustomTwo.getText().toString();
+        initializeHabitList();
 
         if (checkBoxCustomOne.isChecked()) {
             if (customHabitOne.isEmpty()) {
-                Toast.makeText(AccountCreationActivity.this, "habit cannot be empty", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AccountSetupActivity.this, "Habit cannot be empty", Toast.LENGTH_SHORT).show();
                 return;
             }
         }
 
         if (checkBoxCustomTwo.isChecked()) {
             if (customHabitTwo.isEmpty()) {
-                Toast.makeText(AccountCreationActivity.this, "habit cannot be empty", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AccountSetupActivity.this, "Habit cannot be empty", Toast.LENGTH_SHORT).show();
                 return;
             }
         }
 
         if (name.isEmpty()) {
-            Toast.makeText(AccountCreationActivity.this, "name cannot be empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AccountSetupActivity.this, "Name cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
         if (zipString.isEmpty()) {
-            Toast.makeText(AccountCreationActivity.this, "zipcode cannot be empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AccountSetupActivity.this, "Zipcode cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
-
-        initializeHabitList();
 
         if (habitsList.size() < MIN_REQUIRED_HABITS_NUM) {
-            Toast.makeText(AccountCreationActivity.this, "Add more habits", Toast.LENGTH_SHORT).show();
-            habitsList.clear();
+            Toast.makeText(AccountSetupActivity.this, "Add more habits", Toast.LENGTH_SHORT).show();
             return;
-        }
-
-        if (habitsList.size() > MAX_ALLOWED_HABITS_NUM) {
-            Toast.makeText(AccountCreationActivity.this, "Select fewer habits", Toast.LENGTH_SHORT).show();
-            habitsList.clear();
+        } else if (habitsList.size() > MAX_ALLOWED_HABITS_NUM) {
+            Toast.makeText(AccountSetupActivity.this, "Select fewer habits", Toast.LENGTH_SHORT).show();
             return;
+        } else {
+            checkZipCode();
         }
     }
 
@@ -151,11 +175,13 @@ public class AccountCreationActivity extends AppCompatActivity {
         checkBoxTalk = findViewById(R.id.checkBoxTalk);
         checkBoxCustomOne = findViewById(R.id.checkBoxCustomOne);
         checkBoxCustomTwo = findViewById(R.id.checkBoxCustomTwo);
-        ibUpdate = findViewById(R.id.ibUpdate);
         etZip = findViewById(R.id.etZip);
         etName = findViewById(R.id.etName);
         etCustomOne = findViewById(R.id.etCustomOne);
         etCustomTwo = findViewById(R.id.etCustomTwo);
+        btnUpdate = findViewById(R.id.btnUpdate);
+        btnShowCollapseList = findViewById(R.id.btnShowCollapseList);
+        groupShowCollapseHabits = findViewById(R.id.groupShowCollapseHabits);
     }
 
     /**
@@ -219,15 +245,41 @@ public class AccountCreationActivity extends AppCompatActivity {
                 }
                 if (existsCustomOne) {
                     initializeParseHabits(customHabitOne);
-                }
-                if (existsCustomTwo) {
+                } if (existsCustomTwo) {
                     initializeParseHabits(customHabitTwo);
                 }
-                //goes back to the MainActivity class with the user logged in
-                startActivity(new Intent(AccountCreationActivity.this, MainActivity.class));
-                finish();
+                goNextActivity();
             }
         });
+    }
+
+    /**
+     * Either takes the user to the ChooseFirstIconActivity, ChooseSecondIconActivity, or home fragment
+     * depending on whether or not they chose to create custom habits
+     */
+    private void goNextActivity() {
+        if (existsCustomOne ^ existsCustomTwo){
+            Intent i = new Intent(AccountSetupActivity.this, ChooseFirstIconActivity.class);
+            i.putExtra("hasSecondCustom", false);
+            if (existsCustomOne){
+                i.putExtra("firstIconName", customHabitOne);
+            } else {
+                i.putExtra("firstIconName", customHabitTwo);
+            }
+            startActivity(i);
+            finish();
+        } else if (existsCustomOne && existsCustomTwo){
+            Intent i = new Intent(AccountSetupActivity.this, ChooseFirstIconActivity.class);
+            i.putExtra("firstIconName", customHabitOne);
+            i.putExtra("hasSecondCustom", true);
+            i.putExtra("secondIconName", customHabitTwo);
+            startActivity(i);
+            finish();
+        } else {
+            //goes back to the MainActivity class with the user logged in
+            startActivity(new Intent(AccountSetupActivity.this, MainActivity.class));
+            finish();
+        }
     }
 
     /**
@@ -242,7 +294,7 @@ public class AccountCreationActivity extends AppCompatActivity {
             @Override
             public void done(ParseException e) {
                 if (e != null) {
-                    Toast.makeText(AccountCreationActivity.this, "Error while saving", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AccountSetupActivity.this, "Error while saving", Toast.LENGTH_SHORT).show();
                 }
             }
         });

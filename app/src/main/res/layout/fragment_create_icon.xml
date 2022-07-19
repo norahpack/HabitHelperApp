@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="400dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingBottom="30dp"
+    android:paddingLeft="10dp"
+    android:paddingTop="20dp"
+    android:background="@color/cream"
+    android:paddingRight="10dp"
+    tools:context=".fragments.CreateIconFragment">
+    <com.example.habithelper.views.MyDrawView
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingTop="10dp"
+        android:id ="@+id/myDrawView"
+        android:layout_width="250dp"
+        android:layout_height="250dp"></com.example.habithelper.views.MyDrawView>"
+    <Button
+        app:layout_constraintTop_toBottomOf="@+id/myDrawView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id ="@+id/btnSetIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Save this icon"
+        android:textColor = "@color/cream"
+        android:layout_alignParentBottom="true"
+        ></Button>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
