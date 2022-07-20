@@ -38,8 +38,11 @@ public class HomeFragment extends Fragment {
     public static final String GET_QUOTE_URL = "https://zenquotes.io/api";
     public static final String GET_WEATHER_URL = "https://api.weatherapi.com/v1/current.json?key=e8d92dcba9404609b24175200221606&q=";
     public static final String ERROR_QUOTE = "Too many requests. Obtain an auth key for unlimited access.";
+    public static final String DEFAULT_QUOTE = "\"For there is always light, if only we're brave enough to see it. If only we're brave enough to be it.\"";
+    public static final String DEFAULT_QUOTE_AUTHOR = "-Amanda Gorman";
     public static final int CAMERA_DISTANCE = 8000;
 
+    private View view;
     private ConstraintLayout clThree;
     private ConstraintLayout clEnoughHabits;
     private ConstraintLayout clNotEnoughHabits;
@@ -85,9 +88,9 @@ public class HomeFragment extends Fragment {
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View myView, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        this.view = myView;
         initViews(view);
         loadAnimations(view);
         initializeUserVariables();
@@ -96,7 +99,13 @@ public class HomeFragment extends Fragment {
 
         // uses linear regression to determine and display which of the user's habits have the biggest impact on their mood
         getMostImpactfulHabits(view);
+        clThreeOnTouch();
+    }
 
+    /**
+     * Sets an onTouchListener on the clThree card
+     */
+    private void clThreeOnTouch() {
         // implementing the double click to flip the card gesture
         clThree.setOnTouchListener(new View.OnTouchListener() {
             private GestureDetector gestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
@@ -149,8 +158,8 @@ public class HomeFragment extends Fragment {
      * Due to error fetching the daily quote from the API
      */
     private void setDefaultQuoteOnError() {
-        tvQuote.setText("\"For there is always light, if only we're brave enough to see it. If only we're brave enough to be it.\"");
-        tvQuoteAuthor.setText("-Amanda Gorman");
+        tvQuote.setText(DEFAULT_QUOTE);
+        tvQuoteAuthor.setText(DEFAULT_QUOTE_AUTHOR);
     }
 
     /**
@@ -205,28 +214,42 @@ public class HomeFragment extends Fragment {
      */
     private void setMostImpactfulText(double[] resultsArray, LinearRegressionCalculator lrc, View view) {
         try {
-            Object firstObject = currentUser.getJSONArray("habitsList").get(lrc.getIndexOfLargest(resultsArray));
-            String firstString = String.valueOf(firstObject);
-            tvThreeOne.setText("1. " + firstString);
+            if(lrc.getIndexOfLargest(resultsArray) != -1){
+                Object firstObject = currentUser.getJSONArray("habitsList").get(lrc.getIndexOfLargest(resultsArray));
+                String firstString = String.valueOf(firstObject);
+                tvThreeOne.setText("1. " + firstString);
+            }
         } catch (JSONException ex) {
             ex.printStackTrace();
         }
         try {
-            Object secondObject = currentUser.getJSONArray("habitsList").get(lrc.getIndexOfSecondLargest(resultsArray));
-            String secondString = String.valueOf(secondObject);
-            tvThreeTwo.setText("2. " + secondString);
+            if(lrc.getIndexOfSecondLargest(resultsArray) != -1){
+                Object secondObject = currentUser.getJSONArray("habitsList").get(lrc.getIndexOfSecondLargest(resultsArray));
+                String secondString = String.valueOf(secondObject);
+                tvThreeTwo.setText("2. " + secondString);
+            }
         } catch (JSONException ex) {
             ex.printStackTrace();
         }
         try {
-            Object thirdObject = currentUser.getJSONArray("habitsList").get(lrc.getIndexOfThirdLargest(resultsArray));
-            String thirdString = String.valueOf(thirdObject);
-            tvThreeThree.setText("3. " + thirdString);
+            if(lrc.getIndexOfThirdLargest(resultsArray) != -1){
+                Object thirdObject = currentUser.getJSONArray("habitsList").get(lrc.getIndexOfThirdLargest(resultsArray));
+                String thirdString = String.valueOf(thirdObject);
+                tvThreeThree.setText("3. " + thirdString);
+            }
         } catch (JSONException ex) {
             ex.printStackTrace();
         }
-        pbLoading.setVisibility(view.GONE);
         clEnoughHabits.setVisibility(view.VISIBLE);
+        quoteVisible(view);
+    }
+
+    /**
+     * sets the views corresponding to the quote visible,
+     * and sets the indeterminateProgressBar to be invisible
+     */
+    private void quoteVisible(View view) {
+        pbLoading.setVisibility(view.GONE);
         clThree.setVisibility(view.VISIBLE);
         tvQuote.setVisibility(view.VISIBLE);
         tvQuoteAuthor.setVisibility(view.VISIBLE);
@@ -240,15 +263,12 @@ public class HomeFragment extends Fragment {
      */
     private void notEnoughDays(View view) {
         if (numDaysTracked != 1) {
-            tvNumDaysTracked.setText("So far, you've been tracking for " + String.valueOf(numDaysTracked) + " days");
+            tvNumDaysTracked.setText("So far, you've been tracking for " + numDaysTracked + " days");
         } else {
             tvNumDaysTracked.setText("So far, you've been tracking for 1 day");
         }
-        pbLoading.setVisibility(view.GONE);
+        quoteVisible(view);
         clNotEnoughHabits.setVisibility(view.VISIBLE);
-        clThree.setVisibility(view.VISIBLE);
-        tvQuote.setVisibility(view.VISIBLE);
-        tvQuoteAuthor.setVisibility(view.VISIBLE);
     }
 
     /**
@@ -259,7 +279,7 @@ public class HomeFragment extends Fragment {
         if (currentUser.getString("name") != null){
             firstName = currentUser.getString("name");
         } else {
-            firstName = currentUser.getString("name");
+            firstName = "friend";
         }
         tvHello.setText("Nice to see you again, " + firstName);
         habitsList = currentUser.getList("habitsList");
@@ -345,6 +365,7 @@ public class HomeFragment extends Fragment {
         query.findInBackground(new FindCallback<TrackDay>() {
             @Override
             public void done(List<TrackDay> daysTracked, ParseException e) {
+                numChecked = 0;
                 if (e != null) {
                     return;
                 }

@@ -1,6 +1,8 @@
 package com.example.habithelper.fragments;
 
 import static com.example.habithelper.activities.MainActivity.self;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +49,7 @@ public class ZipcodeDialogFragment extends DialogFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        etNewZip = (EditText) view.findViewById(R.id.etNewZip);
+        etNewZip = view.findViewById(R.id.etNewZip);
         btnSetNewZip = view.findViewById(R.id.btnSetNewZip);
         currentUser = ParseUser.getCurrentUser();
 
@@ -58,6 +60,7 @@ public class ZipcodeDialogFragment extends DialogFragment {
         btnSetNewZip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnSetNewZip.setEnabled(false);
                 checkZipcode();
             }
         });
@@ -67,6 +70,7 @@ public class ZipcodeDialogFragment extends DialogFragment {
         zipString = etNewZip.getText().toString();
         if (zipString.isEmpty()) {
             Toast.makeText(getContext(), "Zipcode cannot be empty", Toast.LENGTH_SHORT).show();
+            btnSetNewZip.setEnabled(true);
             return;
         }
         AsyncHttpClient client = new AsyncHttpClient();
@@ -75,17 +79,20 @@ public class ZipcodeDialogFragment extends DialogFragment {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 currentUser.put("zipCode", zipString);
-                if(!self.checkForBadge("badge_world_traveler")){
-                    currentUser.add("badgesEarned", "badge_you_did_it");
-                }
                 currentUser.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
                         if (e != null) {
+                            btnSetNewZip.setEnabled(true);
                             return;
                         }
-                        //goes back to the profile tab and refreshes data
-                        MainActivity.self.setTab(new ProfileFragment(), R.id.itemProfile);
+                        // goes back to the profile tab and refreshes data
+                        if(!self.checkForBadge("badge_world_traveler")){
+                            currentUser.add("badgesEarned", "badge_world_traveler");
+                        }
+                        Intent i = new Intent(getContext(), MainActivity.class);
+                        i.putExtra("tab", "profile");
+                        startActivity(i);
                         dismiss();
                     }
                 });
@@ -94,6 +101,7 @@ public class ZipcodeDialogFragment extends DialogFragment {
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
                 Toast.makeText(getContext(), "Not a valid zipcode", Toast.LENGTH_SHORT).show();
+                btnSetNewZip.setEnabled(true);
                 return;
             }
         });

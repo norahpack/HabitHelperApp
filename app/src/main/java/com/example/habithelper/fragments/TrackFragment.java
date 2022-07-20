@@ -20,7 +20,7 @@ import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.habithelper.R;
 import com.example.habithelper.activities.AccountSetupActivity;
-import com.example.habithelper.activities.LoginActivity;
+import com.example.habithelper.activities.MainActivity;
 import com.example.habithelper.models.TrackDay;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -38,7 +38,15 @@ import okhttp3.Headers;
 public class TrackFragment extends Fragment {
 
     public static final String GET_WEATHER_URL = "https://api.weatherapi.com/v1/current.json?key=e8d92dcba9404609b24175200221606&q=";
+    public static final int MONTH_LONG_STREAK = 30;
+    public static final int TWO_WEEK_STREAK = 14;
+    public static final int ONE_WEEK_STREAK = 7;
+    public static final double MAGNIFICENT_MOOD_MIN_MOOD = 3.0;
+    public static final double SEVEN_DAYS_OF_SMILES_MIN_MOOD = 4.0;
+    public static final int NUM_DAYS_ONE_WEEK = 7;
+    public static final double NUM_DAYS_ONE_WEEK_DOUBLE = 7.0;
 
+    public View view;
     private TextView tvDate;
     private TextView tvCurrentLocation;
     private CheckBox cbOne;
@@ -58,7 +66,6 @@ public class TrackFragment extends Fragment {
     private RadioButton rbThree;
     private RadioButton rbFour;
     private RadioButton rbFive;
-
     public List<Object> habitsList;
     public int numHabits;
     public int longestStreak;
@@ -82,7 +89,6 @@ public class TrackFragment extends Fragment {
     public boolean earnedMonthLongMasterToday = false;
     public TrackDay trackDay;
 
-
     public TrackFragment() {
         // Required empty public constructor to initialize a fragment
     }
@@ -100,26 +106,39 @@ public class TrackFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
+    public void onViewCreated(@NonNull View myView, @Nullable Bundle savedInstanceState) {
+        this.view = myView;
         super.onViewCreated(view, savedInstanceState);
 
         // links the TrackFragment instance variables with the ContentView elements
         initViews(view);
-        initializeUserVariables(view);
+        initializeUserVariables();
         checkBoxList = Arrays.asList(cbOne, cbTwo, cbThree, cbFour, cbFive, cbSix, cbSeven, cbEight, cbNine, cbTen);
         populateCheckboxes(numHabits);
-
         zipCodeToDate();
+        trackOnClick(view);
+    }
 
+    /**
+     * Sets an onClickListener on the track button
+     */
+    private void trackOnClick(View view) {
         btnTrack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnTrack.setClickable(false);
                 int idChecked = radioGroup.getCheckedRadioButtonId();
-                RadioButton finalChoice = view.findViewById(idChecked);
-                int todayMood = (int) (finalChoice.getTag());
-                trackBadge();
-                populateTodayHabits(numHabits, todayMood, todayHabits);
+
+                // ensures the user has selected their mood
+                if(idChecked != -1){
+                    RadioButton finalChoice = view.findViewById(idChecked);
+                    int todayMood = (int) (finalChoice.getTag());
+                    trackBadge();
+                    populateTodayHabits(numHabits, todayMood, todayHabits);
+                } else {
+                    btnTrack.setClickable(true);
+                    Toast.makeText(getContext(), "Select a mood", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -140,6 +159,7 @@ public class TrackFragment extends Fragment {
                 }
                 @Override
                 public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                    btnTrack.setClickable(true);
                     return;
                 }
             });
@@ -160,7 +180,7 @@ public class TrackFragment extends Fragment {
             if (weeklongWarriorEarlier){
                 // the user earned the weeklong warrior badge earlier, but is rewriting that data
                 // remove their weeklong warrior badge
-                if(!(longestStreak >= 7)){
+                if(!(longestStreak >= ONE_WEEK_STREAK)){
                     List<String> badgesEarned = currentUser.getList("badgesEarned");
                     currentUser.remove("badgesEarned");
                     currentUser.saveInBackground();
@@ -176,7 +196,7 @@ public class TrackFragment extends Fragment {
             }
         } else {
             // the user has earned the weeklong warrior badge
-            if(longestStreak >= 7){
+            if(longestStreak >= ONE_WEEK_STREAK){
                 currentUser.add("badgesEarned", "badge_weeklong_warrior");
                 currentUser.saveInBackground();
                 earnedWeeklongWarriorToday = true;
@@ -196,7 +216,7 @@ public class TrackFragment extends Fragment {
             if (monthLongMasterEarlier){
                 // the user earned the month long master badge earlier, but is rewriting that data
                 // remove their month long master badge
-                if(!(longestStreak >= 30)){
+                if(!(longestStreak >= MONTH_LONG_STREAK)){
                     List<String> badgesEarned = currentUser.getList("badgesEarned");
                     currentUser.remove("badgesEarned");
                     currentUser.saveInBackground();
@@ -212,7 +232,7 @@ public class TrackFragment extends Fragment {
             }
         } else {
             // the user has earned the month long master badge
-            if(longestStreak >= 30){
+            if(longestStreak >= MONTH_LONG_STREAK){
                 currentUser.add("badgesEarned", "badge_month_long_master");
                 currentUser.saveInBackground();
                 earnedMonthLongMasterToday = true;
@@ -232,7 +252,7 @@ public class TrackFragment extends Fragment {
             if (twoWeekTriumphEarlier){
                 // the user earned the two week triumph badge earlier, but is rewriting that data
                 // remove their two week triumph badge
-                if(!(longestStreak >= 14)){
+                if(!(longestStreak >= TWO_WEEK_STREAK)){
                     List<String> badgesEarned = currentUser.getList("badgesEarned");
                     currentUser.remove("badgesEarned");
                     currentUser.saveInBackground();
@@ -248,7 +268,7 @@ public class TrackFragment extends Fragment {
             }
         } else {
             // the user has earned the two week triumph badge
-            if(longestStreak >= 14){
+            if(longestStreak >= TWO_WEEK_STREAK){
                 currentUser.add("badgesEarned", "badge_two_week_triumph");
                 currentUser.saveInBackground();
                 earnedTwoWeekTriumphToday = true;
@@ -268,7 +288,7 @@ public class TrackFragment extends Fragment {
             if (magnificentMoodEarlier){
                 // the user earned the magnificent mood badge earlier, but is rewriting that data
                 // remove their magnificent mood badge
-                if(!(weekAverage >= 3.0)){
+                if(!(weekAverage >= MAGNIFICENT_MOOD_MIN_MOOD)){
                     List<String> badgesEarned = currentUser.getList("badgesEarned");
                     currentUser.remove("badgesEarned");
                     currentUser.saveInBackground();
@@ -284,7 +304,7 @@ public class TrackFragment extends Fragment {
             }
         } else {
             // the user has earned the magnificent mood badge
-            if(weekAverage >= 3.0){
+            if(weekAverage >= MAGNIFICENT_MOOD_MIN_MOOD){
                 currentUser.add("badgesEarned", "badge_magnificent_mood");
                 currentUser.saveInBackground();
                 earnedMagnificentMoodToday = true;
@@ -304,7 +324,7 @@ public class TrackFragment extends Fragment {
             if (sevenDaysOfSmilesEarlier){
                 // the user earned the seven days of smiles badge earlier, but is rewriting that data
                 // remove their seven days of smiles badge
-                if(!(weekAverage >= 4.0)){
+                if(!(weekAverage >= SEVEN_DAYS_OF_SMILES_MIN_MOOD)){
                     List<String> badgesEarned = currentUser.getList("badgesEarned");
                     currentUser.remove("badgesEarned");
                     currentUser.saveInBackground();
@@ -320,7 +340,7 @@ public class TrackFragment extends Fragment {
             }
         } else {
             // the user has earned the seven days of smiles badge
-            if(weekAverage >= 4.0){
+            if(weekAverage >= SEVEN_DAYS_OF_SMILES_MIN_MOOD){
                 currentUser.add("badgesEarned", "badge_seven_days_of_smiles");
                 currentUser.saveInBackground();
                 earnedSevenDaysOfSmilesToday = true;
@@ -427,6 +447,7 @@ public class TrackFragment extends Fragment {
             tvDate.setText("Today is " + month + " " + day + ", " + year);
             tvCurrentLocation.setText("in " + locationName);
         } catch (JSONException e) {
+            btnTrack.setClickable(true);
             e.printStackTrace();
         }
     }
@@ -464,10 +485,8 @@ public class TrackFragment extends Fragment {
 
     /**
      * Initializes user variables using information from the currentUser Parse Object
-     *
-     * @param view
      */
-    private void initializeUserVariables(View view) {
+    private void initializeUserVariables() {
         rbOne.setTag(1);
         rbTwo.setTag(2);
         rbThree.setTag(3);
@@ -475,15 +494,11 @@ public class TrackFragment extends Fragment {
         rbFive.setTag(5);
         currentUser = ParseUser.getCurrentUser();
         habitsList = currentUser.getList("habitsList");
-        if (habitsList != null){
-            numHabits = habitsList.size();
-            if(numHabits < 4 || numHabits > 10){
-                goToSetup();
-            }
-        } else {
+        if (habitsList == null || habitsList.size() < 4 || habitsList.size() > 10){
             goToSetup();
+        } else {
+            numHabits = habitsList.size();
         }
-
     }
 
     /**
@@ -597,9 +612,11 @@ public class TrackFragment extends Fragment {
      * @param i the integer index of the checkbox to handle
      */
     private void setChecked(int i) {
-        //figures out which checkBox object we should be populating
-        CheckBox cbGoTo = checkBoxList.get(i);
-        cbGoTo.setChecked(true);
+        // figures out which checkBox object we should be populating
+        if(i >= 0 && i < checkBoxList.size()){
+            CheckBox cbGoTo = checkBoxList.get(i);
+            cbGoTo.setChecked(true);
+        }
     }
 
     /**
@@ -618,12 +635,14 @@ public class TrackFragment extends Fragment {
             int dateInt = Integer.parseInt(dateStringInt);
             trackDay.setDateNumber(dateInt);
         } catch (NumberFormatException ex) {
+            btnTrack.setClickable(true);
             ex.printStackTrace();
         }
         trackDay.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e != null) {
+                    btnTrack.setClickable(true);
                     Toast.makeText(getContext(), "Error while saving", Toast.LENGTH_SHORT).show();
                 }
                 try {
@@ -631,10 +650,9 @@ public class TrackFragment extends Fragment {
                     trackDay.setDateNumber(dateInt);
                     removeDuplicates(currentUser, dateInt, todayMood);
                 } catch (NumberFormatException ex) {
+                    btnTrack.setClickable(true);
                     ex.printStackTrace();
                 }
-                self.setTab(new HomeFragment(), R.id.itemHome);
-                // navigates to the home fragment on successful submission of trackDay
             }
         });
     }
@@ -659,7 +677,7 @@ public class TrackFragment extends Fragment {
                 if (e != null) {
                     return;
                 }
-                if(daysTracked.size() >= 1){
+                if(daysTracked.size() > 1){
                     for (int i = 1; i < daysTracked.size(); i++) {
                         TrackDay toRemove = daysTracked.get(i);
                         toRemove.deleteInBackground();
@@ -677,7 +695,7 @@ public class TrackFragment extends Fragment {
      */
     private void populateTodayHabits(int numHabits, int todayMood, List<Integer> todayHabits) {
         for (int i = 0; i < numHabits; i++) {
-            //figures out which checkBox object we should be populating
+            // figures out which checkBox object we should be populating
             CheckBox cbGoTo = checkBoxList.get(i);
             if (cbGoTo.isChecked()) {
                 todayHabits.add(1);
@@ -689,8 +707,6 @@ public class TrackFragment extends Fragment {
         saveTrack(todayMood, todayHabits);
     }
 
-
-
     /**
      * Populates the screen with the appropriate number of checkboxes and labels
      *
@@ -698,7 +714,7 @@ public class TrackFragment extends Fragment {
      */
     private void populateCheckboxes(int numHabits) {
         for (int i = 0; i < numHabits; i++) {
-            //figures out which checkBox object we should be populating
+            // figures out which checkBox object we should be populating
             CheckBox cbGoTo = checkBoxList.get(i);
             cbGoTo.setText(String.valueOf(habitsList.get(i)));
             cbGoTo.setVisibility(View.VISIBLE);
@@ -713,24 +729,25 @@ public class TrackFragment extends Fragment {
         query.include(TrackDay.KEY_PARENT_USER);
         query.whereEqualTo(TrackDay.KEY_PARENT_USER, currentUser);
         query.orderByDescending("dateNumber");
-        query.setLimit(7);
+        query.setLimit(NUM_DAYS_ONE_WEEK);
         query.findInBackground(new FindCallback<TrackDay>() {
             @Override
             public void done(List<TrackDay> daysTracked, ParseException e) {
                 if (e != null) {
                     return;
                 }
-                if (daysTracked.size() == 7) {
+                if (daysTracked.size() == NUM_DAYS_ONE_WEEK) {
                     int moodSum = 0;
                     boolean noRed = true;
                     for (TrackDay day : daysTracked){
                         if (day.getMood() == 1 || day.getMood() == 2){
                             noRed = false;
                         }
-                        moodSum+=day.getMood();
+                        moodSum += day.getMood();
                     }
                     getLongestStreak(moodSum, noRed);
                 }
+                startActivity(new Intent(getContext(), MainActivity.class));
             }
         });
     }
@@ -775,8 +792,8 @@ public class TrackFragment extends Fragment {
      * @param noRed whether the user has had "no red days" the last seven days
      */
     private void setBadges(int longestStreak, int moodSum, boolean noRed) {
-        magnificentMoodBadge(moodSum/7.0);
-        sevenDaysOfSmilesBadge(moodSum/7.0);
+        magnificentMoodBadge(moodSum/NUM_DAYS_ONE_WEEK_DOUBLE);
+        sevenDaysOfSmilesBadge(moodSum/NUM_DAYS_ONE_WEEK_DOUBLE);
         noRedDaysBadge(noRed);
         weeklongWarriorBadge(longestStreak);
         twoWeekTriumphBadge(longestStreak);

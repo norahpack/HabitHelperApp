@@ -11,6 +11,7 @@ import com.example.habithelper.R;
 public class SplashScreenActivity extends AppCompatActivity {
 
     public static final int MILLIS_TO_DELAY = 3600;
+
     Handler handler;
     private ImageView ivSplash;
 

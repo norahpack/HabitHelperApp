@@ -20,8 +20,6 @@ public class Habit extends ParseObject {
 
     public void setHabitImageKey(String imageKey){put(KEY_HABIT_IMAGE_NAME, imageKey);}
 
-    public ParseUser getCreator(){return getParseUser(KEY_HABIT_CREATOR);}
-
     public void setCreator(ParseUser creator){put(KEY_HABIT_CREATOR, creator);}
 
     public ParseFile getHabitCustomIcon(){

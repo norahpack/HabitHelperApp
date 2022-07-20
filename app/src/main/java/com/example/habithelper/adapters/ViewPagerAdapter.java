@@ -11,7 +11,9 @@ import com.example.habithelper.fragments.ProfileFragment;
 import com.example.habithelper.fragments.TrackFragment;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
-    public static final int numFragmentCount = 5;
+
+    public static final int NUM_FRAGMENT_COUNT = 5;
+
     public ViewPagerAdapter(FragmentManager fm)
     {
         super(fm);
@@ -40,6 +42,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return numFragmentCount;
+        return NUM_FRAGMENT_COUNT;
     }
 }

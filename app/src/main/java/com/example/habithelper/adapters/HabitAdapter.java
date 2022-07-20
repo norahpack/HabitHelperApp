@@ -4,30 +4,21 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.example.habithelper.R;
 import com.example.habithelper.activities.HabitDetailsActivity;
 import com.example.habithelper.models.Habit;
 import com.parse.ParseFile;
-
 import org.parceler.Parcels;
 import java.util.List;
 
@@ -78,6 +69,13 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         }
 
         public void bind(Habit habit) {
+            if(habit.getHabitName().length() >= 30){
+                tvHabit.setTextSize(23);
+            } else if (habit.getHabitName().length() >= 20){
+                tvHabit.setTextSize(26);
+            } else {
+                tvHabit.setTextSize(30);
+            }
             tvHabit.setText(habit.getHabitName());
             ParseFile image = habit.getHabitCustomIcon();
             if (image != null){
@@ -86,11 +84,9 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
                 Resources resources = context.getResources();
                 if (habit.get("habitImageName") != null) {
                     int resId = resources.getIdentifier(habit.getHabitImageKey(), "drawable", "com.example.habithelper");
-                    //ivHabit.setBackground(AppCompatResources.getDrawable(context, resId));
                     Glide.with(context).load(AppCompatResources.getDrawable(context, resId)).into(ivHabit);
                 } else {
                     Glide.with(context).load(R.drawable.starslarge).into(ivHabit);
-                    //ivHabit.setBackground(AppCompatResources.getDrawable(context, R.drawable.starslarge));
                 }
                 ivHabit.setColorFilter(resources.getColor(R.color.sienna)); // Add tint color
             }
@@ -103,8 +99,8 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
                 Habit habit = habitList.get(position);
                 Intent intent = new Intent(context, HabitDetailsActivity.class);
 
-                Pair<View, String> p1 = Pair.create((View) ivHabit, "habitImage");
-                Pair<View, String> p2 = Pair.create((View) tvHabit, "habitName");
+                Pair<View, String> p1 = Pair.create(ivHabit, "habitImage");
+                Pair<View, String> p2 = Pair.create(tvHabit, "habitName");
 
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(mActivity, p1, p2);
                 intent.putExtra(Habit.class.getSimpleName(), Parcels.wrap(habit));

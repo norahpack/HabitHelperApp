@@ -6,14 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -21,19 +15,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-
 import com.example.habithelper.R;
-
-
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
-
-import com.example.habithelper.activities.ChooseFirstIconActivity;
+import com.example.habithelper.activities.ChooseIconActivity;
 import com.example.habithelper.activities.MainActivity;
 import com.example.habithelper.models.Habit;
-import com.example.habithelper.views.MyDrawView;
+import com.example.habithelper.views.DrawIconView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -42,16 +30,17 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 
-public class CreateIconFragment extends DialogFragment
-{
-    MyDrawView myDrawView;
-    ParseUser currentUser;
-    Button btnSetIcon;
-    String firstIconName = "first custom habit";
-    String secondIconName = "second custom habit";
-    Boolean hasSecondCustom = false;
+public class CreateIconFragment extends DialogFragment {
 
     public static final String TAG = "MainActivity";
+    public static final int BITMAP_QUALITY = 40;
+
+    DrawIconView myDrawView;
+    ParseUser currentUser;
+    Button btnSetIcon;
+    String currentCustomIconName = "Custom Habit";
+    String secondIconName = "Custom Habit";
+    Boolean hasSecondCustom = false;
 
     public CreateIconFragment() {
         // Empty constructor is required for DialogFragment
@@ -76,16 +65,16 @@ public class CreateIconFragment extends DialogFragment
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        myDrawView = (MyDrawView)view.findViewById(R.id.myDrawView);
-        btnSetIcon = (Button)view.findViewById(R.id.btnSetIcon);
+        myDrawView = view.findViewById(R.id.myDrawView);
+        btnSetIcon = view.findViewById(R.id.btnSetIcon);
 
         currentUser = ParseUser.getCurrentUser();
 
         // Fetch arguments from bundle and set title
-        firstIconName = getArguments().getString("title", "first custom habit");
-        secondIconName = getArguments().getString("secondIconName", "second custom habit");
+        currentCustomIconName = getArguments().getString("title", "Custom Habit");
+        secondIconName = getArguments().getString("secondIconName", "Custom Habit");
         hasSecondCustom = getArguments().getBoolean("hasSecondCustom");
-        getDialog().setTitle(firstIconName);
+        getDialog().setTitle(currentCustomIconName);
 
         btnSetIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +90,7 @@ public class CreateIconFragment extends DialogFragment
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         // Compress the image further
         image.setHasAlpha(true);
-        image.compress(Bitmap.CompressFormat.PNG, 40, bytes);
+        image.compress(Bitmap.CompressFormat.PNG, BITMAP_QUALITY, bytes);
         // Create a new file for the resized bitmap (`getPhotoFileUri` defined above)
         File resizedFile = getPhotoFileUri("photo.png");
         putIconToParse(resizedFile);
@@ -136,7 +125,7 @@ public class CreateIconFragment extends DialogFragment
      * @return the file target for the photo
      */
     public File getPhotoFileUri(String fileName){
-        //get safe storage directory for photos
+        // get safe storage directory for photos
         File mediaStorageDir = new File(getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
         if(!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
             Log.d(TAG, "failed to create directory");
@@ -153,7 +142,7 @@ public class CreateIconFragment extends DialogFragment
         query.include(Habit.KEY_HABIT_NAME);
         query.include(Habit.KEY_HABIT_CREATOR);
         query.whereEqualTo(Habit.KEY_HABIT_CREATOR, currentUser);
-        query.whereEqualTo(Habit.KEY_HABIT_NAME, firstIconName);
+        query.whereEqualTo(Habit.KEY_HABIT_NAME, currentCustomIconName);
         query.setLimit(1);
         query.findInBackground(new FindCallback<Habit>() {
             @Override
@@ -184,14 +173,13 @@ public class CreateIconFragment extends DialogFragment
      */
     private void startNextActivity() {
         if (hasSecondCustom){
-            Intent i = new Intent (getContext(), ChooseFirstIconActivity.class);
-            i.putExtra("firstIconName", secondIconName);
+            Intent i = new Intent (getContext(), ChooseIconActivity.class);
+            i.putExtra("currentCustomIconName", secondIconName);
             i.putExtra("hasSecondCustom", false);
             getContext().startActivity(i);
         } else {
-            //goes back to the MainActivity class with the user logged in
+            // goes back to the MainActivity class with the user logged in
             getContext().startActivity(new Intent(getContext(), MainActivity.class));
         }
     }
-
 }

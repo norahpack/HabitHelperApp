@@ -3,11 +3,8 @@ package com.example.habithelper.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,7 +16,9 @@ import com.parse.ParseUser;
 import java.util.Arrays;
 import java.util.List;
 
-public class ChooseFirstIconActivity extends AppCompatActivity {
+public class ChooseIconActivity extends AppCompatActivity {
+
+    public static final int NUM_ICONS_IN_ROW = 3;
 
     private RecyclerView rvIconList;
     private TextView tvCustomHabit;
@@ -27,14 +26,15 @@ public class ChooseFirstIconActivity extends AppCompatActivity {
     private List<String> iconList;
     private IconAdapter adapter;
     private Button btnDrawCustom;
-    private String firstIconName = "First Custom Habit";
-    private String secondIconName = "Second Custom Habit";
+    private String currentCustomIconName = "Custom Habit";
+    private String secondIconName = "Custom Habit";
     private boolean hasSecondCustom = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_first_icon);
+        setContentView(R.layout.activity_choose_icon);
         rvIconList = findViewById(R.id.rvIconList);
         tvCustomHabit = findViewById(R.id.tvCustomHabit);
         btnDrawCustom = findViewById(R.id.btnDrawCustom);
@@ -45,8 +45,8 @@ public class ChooseFirstIconActivity extends AppCompatActivity {
 
         currentUser = ParseUser.getCurrentUser();
         setupIconList();
-        final GridLayoutManager layout = new GridLayoutManager(this, 3);
-        adapter = new IconAdapter(this, iconList, hasSecondCustom, firstIconName, secondIconName);
+        final GridLayoutManager layout = new GridLayoutManager(this, NUM_ICONS_IN_ROW);
+        adapter = new IconAdapter(this, iconList, hasSecondCustom, currentCustomIconName, secondIconName);
         rvIconList.setAdapter(adapter);
         rvIconList.setLayoutManager(layout);
     }
@@ -58,20 +58,19 @@ public class ChooseFirstIconActivity extends AppCompatActivity {
         btnDrawCustom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnDrawCustom.setClickable(false);
                 FragmentManager fm = getSupportFragmentManager();
-                CreateIconFragment createIconFragment = CreateIconFragment.newInstance(firstIconName, secondIconName, hasSecondCustom);
+                CreateIconFragment createIconFragment = CreateIconFragment.newInstance(currentCustomIconName, secondIconName, hasSecondCustom);
                 createIconFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
                 createIconFragment.show(fm, "fragment_create_icon");
-                //FragmentTransaction fragmentTransaction = fm.beginTransaction();
-                //fragmentTransaction.add(createIconFragment, "fragment_create_icon").commitAllowingStateLoss();
-
             }
         });
     }
 
-    @SuppressLint("MissingSuperCall")
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        // this addresses a known bug where fragments force close on API >11
+        // see https://issuetracker.google.com/issues/36932872
         outState.putString("WORKAROUND_FOR_BUG_19917_KEY", "WORKAROUND_FOR_BUG_19917_VALUE");
         super.onSaveInstanceState(outState);
     }
@@ -81,15 +80,15 @@ public class ChooseFirstIconActivity extends AppCompatActivity {
      */
     private void getIntentExtras() {
         Bundle bundle = getIntent().getExtras();
-        if (bundle.getString("firstIconName") != null) {
-            firstIconName = (String) bundle.getString("firstIconName");
-            tvCustomHabit.setText(firstIconName);
+        if (bundle.getString("currentCustomIconName") != null) {
+            currentCustomIconName = bundle.getString("currentCustomIconName");
+            tvCustomHabit.setText(currentCustomIconName);
         }
         if (bundle.getBoolean("hasSecondCustom")) {
-            hasSecondCustom = (boolean) bundle.getBoolean("hasSecondCustom");
+            hasSecondCustom = bundle.getBoolean("hasSecondCustom");
         }
         if (bundle.getString("secondIconName") != null) {
-            secondIconName = (String) bundle.getString("secondIconName");
+            secondIconName = bundle.getString("secondIconName");
         }
     }
 

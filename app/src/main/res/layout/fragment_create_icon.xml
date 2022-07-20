@@ -10,14 +10,14 @@
     android:background="@color/cream"
     android:paddingRight="10dp"
     tools:context=".fragments.CreateIconFragment">
-    <com.example.habithelper.views.MyDrawView
+    <com.example.habithelper.views.DrawIconView
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:paddingTop="10dp"
         android:id ="@+id/myDrawView"
         android:layout_width="250dp"
-        android:layout_height="250dp"></com.example.habithelper.views.MyDrawView>"
+        android:layout_height="250dp"></com.example.habithelper.views.DrawIconView>"
     <Button
         app:layout_constraintTop_toBottomOf="@+id/myDrawView"
         app:layout_constraintBottom_toBottomOf="parent"

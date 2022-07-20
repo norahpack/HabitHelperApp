@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
-
 import com.bumptech.glide.Glide;
 import com.example.habithelper.R;
 import com.example.habithelper.models.Habit;
@@ -28,6 +27,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class HabitDetailsActivity extends AppCompatActivity {
+
+    public static final int NUM_DAYS_FOR_FIGURE = 10;
+    public static final int DAY_NUM_TO_INDEX_OFFSET = 1;
 
     private ImageView ivHabit;
     private ImageView ivDayOne;
@@ -53,9 +55,8 @@ public class HabitDetailsActivity extends AppCompatActivity {
     private TextView tvPercent;
     private TextView tvStreak;
     private ProgressBar pbLoadingDetailView;
-
     public int numDaysTracked;
-    private int numHabits;
+    private int numHabits = 0;
     LinearRegressionCalculator lrc;
     public List<Object> habitsList;
     public double moodSum = 0;
@@ -68,6 +69,7 @@ public class HabitDetailsActivity extends AppCompatActivity {
     public boolean showPercentChange;
     public List<ImageView> lastTenButtons;
 
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_details);
@@ -75,11 +77,14 @@ public class HabitDetailsActivity extends AppCompatActivity {
         lastTenButtons = Arrays.asList(ivDayOne, ivDayTwo, ivDayThree, ivDayFour, ivDayFive, ivDaySix, ivDaySeven, ivDayEight, ivDayNine, ivDayTen);
 
         if (getIntent().getParcelableExtra(Habit.class.getSimpleName()) != null) {
-            habit = (Habit) Parcels.unwrap(getIntent().getParcelableExtra(Habit.class.getSimpleName()));
+            habit = Parcels.unwrap(getIntent().getParcelableExtra(Habit.class.getSimpleName()));
         }
         currentUser = ParseUser.getCurrentUser();
         habitsList = currentUser.getList("habitsList");
-        numHabits = habitsList.size();
+
+        if(habitsList != null){
+            numHabits = habitsList.size();
+        }
 
         getMostImpactfulHabits();
         tvHabit.setText(habit.getHabitName());
@@ -118,17 +123,17 @@ public class HabitDetailsActivity extends AppCompatActivity {
                 if (e != null) {
                     return;
                 }
-                if (daysTracked.size() >= 10) {
-                    int minDay = daysTracked.size() - 10;
-                    int maxDay = daysTracked.size() - 1;
+                if (daysTracked.size() >= NUM_DAYS_FOR_FIGURE) {
+                    int minDay = daysTracked.size() - NUM_DAYS_FOR_FIGURE;
+                    int maxDay = daysTracked.size() - DAY_NUM_TO_INDEX_OFFSET;
                     int habitIndex = findIndexOfHabit();
-                    for (int i = 0; i < 10; i++) {
+                    for (int i = 0; i < NUM_DAYS_FOR_FIGURE; i++) {
                         if (daysTracked.get(i + minDay).getTrackArray().get(habitIndex) == 1) {
                             setCompletedBubble(i);
                         }
                         pbLoadingDetailView.setVisibility(View.GONE);
-                        tvFirstDay.setText(String.valueOf(minDay + 1));
-                        tvLastDay.setText(String.valueOf(maxDay + 1));
+                        tvFirstDay.setText(String.valueOf(minDay + DAY_NUM_TO_INDEX_OFFSET));
+                        tvLastDay.setText(String.valueOf(maxDay + DAY_NUM_TO_INDEX_OFFSET));
                         tvLastTen.setVisibility(View.VISIBLE);
                         clLastTen.setVisibility(View.VISIBLE);
                     }
@@ -196,14 +201,11 @@ public class HabitDetailsActivity extends AppCompatActivity {
             Resources resources = getResources();
             if (habit.get("habitImageName") != null) {
                 int resId = resources.getIdentifier(habit.getHabitImageKey(), "drawable", "com.example.habithelper");
-                //ivHabit.setBackground(AppCompatResources.getDrawable(context, resId));
                 Glide.with(HabitDetailsActivity.this).load(AppCompatResources.getDrawable(HabitDetailsActivity.this, resId)).into(ivHabit);
             } else {
                 Glide.with(HabitDetailsActivity.this).load(R.drawable.starslarge).into(ivHabit);
-                //ivHabit.setBackground(AppCompatResources.getDrawable(context, R.drawable.starslarge));
             }
             ivHabit.setColorFilter(resources.getColor(R.color.sienna)); // Add tint color
-
         }
     }
 
@@ -236,7 +238,7 @@ public class HabitDetailsActivity extends AppCompatActivity {
                     lrc.performLeastSquares(daysTracked, numDaysTracked, numHabits);
                     double[] resultsArray = lrc.leastSquaresResult;
                     int habitIndex = findIndexOfHabit();
-                    if (habitIndex != -1) {
+                    if (habitIndex != -1 && resultsArray != null) {
                         displayPercentChange(resultsArray, habitIndex);
                     } else {
                         // error has occurred
@@ -267,7 +269,7 @@ public class HabitDetailsActivity extends AppCompatActivity {
      */
     private void displayPercentChange(double[] resultsArray, int habitIndex) {
         habitCoefficient = resultsArray[habitIndex];
-        percentChange = ((int) Math.round(100 * ((double) habitCoefficient / averageMood)));
+        percentChange = ((int) Math.round(100 * (habitCoefficient / averageMood)));
         if (percentChange >= 0) {
             increaseOrDecrease = "increases";
         } else {

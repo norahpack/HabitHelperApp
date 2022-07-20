@@ -23,7 +23,7 @@ import com.example.habithelper.activities.BadgesActivity;
 import com.example.habithelper.activities.LoginActivity;
 import com.example.habithelper.activities.MainActivity;
 import com.example.habithelper.models.TrackDay;
-import com.example.habithelper.views.CurvedText;
+import com.example.habithelper.views.CurvedTextView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -36,10 +36,15 @@ import okhttp3.Headers;
 
 public class ProfileFragment extends Fragment {
 
+    public static final int MIN_DAYS_LEVEL_FIVE = 100;
+    public static final int MIN_DAYS_LEVEL_FOUR = 50;
+    public static final int MIN_DAYS_LEVEL_THREE = 25;
+    public static final int MIN_DAYS_LEVEL_TWO = 10;
+
     private Button btnChangeZip;
     private Button btnViewBadges;
     private Button btnLogout;
-    private CurvedText curvedTextBadge;
+    private CurvedTextView curvedTextBadge;
     private ConstraintLayout clMain;
     private ImageView ivProfileLevel;
     private TextView tvLocation;
@@ -47,9 +52,9 @@ public class ProfileFragment extends Fragment {
     private TextView tvLevel;
     private ProgressBar pbLoadingNumDays;
     private ProgressBar pbLoadingLocation;
-
     private ParseUser currentUser;
     private int numDaysTracked = 0;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,6 +74,15 @@ public class ProfileFragment extends Fragment {
         initViews(view);
 
         currentUser = ParseUser.getCurrentUser();
+        apiRequest();
+        getDaysTracked();
+        setButtonOnClickListeners();
+    }
+
+    /**
+     * makes an API request to get the current date
+     */
+    private void apiRequest() {
         AsyncHttpClient client = new AsyncHttpClient();
         String api_request = TrackFragment.GET_WEATHER_URL + currentUser.getString("zipCode");
         client.get(api_request, new JsonHttpResponseHandler() {
@@ -84,9 +98,6 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        getDaysTracked();
-
-        setButtonOnClickListeners();
     }
 
     /**
@@ -156,6 +167,11 @@ public class ProfileFragment extends Fragment {
                 }
                 numDaysTracked = daysTracked.size();
                 tvDaysTracked.setVisibility(View.INVISIBLE);
+                if (numDaysTracked != 1) {
+                    tvDaysTracked.setText("You have been tracking for " + numDaysTracked + " days");
+                } else {
+                    tvDaysTracked.setText("You have been tracking for 1 day");
+                }
                 tvDaysTracked.setText("You have been tracking for " + numDaysTracked + " days");
                 setLevel();
                 return;
@@ -169,20 +185,20 @@ public class ProfileFragment extends Fragment {
     private void setLevel() {
         String nextLevel;
         int daysLeft;
-        if(numDaysTracked > 100){
+        if(numDaysTracked > MIN_DAYS_LEVEL_FIVE){
             tvLevel.setText("You have reached the maximum level");
             return;
-        } else if (numDaysTracked > 50){
-            daysLeft = 100 - numDaysTracked;
+        } else if (numDaysTracked > MIN_DAYS_LEVEL_FOUR){
+            daysLeft = MIN_DAYS_LEVEL_FIVE - numDaysTracked;
             nextLevel = "5";
-        } else if (numDaysTracked > 25){
-            daysLeft = 50 - numDaysTracked;
+        } else if (numDaysTracked > MIN_DAYS_LEVEL_THREE){
+            daysLeft = MIN_DAYS_LEVEL_FOUR - numDaysTracked;
             nextLevel = "4";
-        } else if (numDaysTracked > 10){
-            daysLeft = 25 - numDaysTracked;
+        } else if (numDaysTracked > MIN_DAYS_LEVEL_TWO){
+            daysLeft = MIN_DAYS_LEVEL_THREE - numDaysTracked;
             nextLevel = "3";
         } else {
-            daysLeft = 10 - numDaysTracked;
+            daysLeft = MIN_DAYS_LEVEL_TWO - numDaysTracked;
             nextLevel = "2";
         }
         setBackground(numDaysTracked);
@@ -213,13 +229,13 @@ public class ProfileFragment extends Fragment {
      */
     private void setBackground(int numDaysTracked) {
         if (getContext() != null){
-            if(numDaysTracked > 100){
+            if(numDaysTracked > MIN_DAYS_LEVEL_FIVE){
                 ivProfileLevel.setBackground(AppCompatResources.getDrawable(getContext(),R.drawable.level_five));
-            } else if (numDaysTracked > 50){
+            } else if (numDaysTracked > MIN_DAYS_LEVEL_FOUR){
                 ivProfileLevel.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.level_four));
-            } else if (numDaysTracked > 25){
+            } else if (numDaysTracked > MIN_DAYS_LEVEL_THREE){
                 ivProfileLevel.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.level_three));
-            } else if (numDaysTracked > 10){
+            } else if (numDaysTracked > MIN_DAYS_LEVEL_TWO){
                 ivProfileLevel.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.level_two));
             } else {
                 ivProfileLevel.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.level_one));
