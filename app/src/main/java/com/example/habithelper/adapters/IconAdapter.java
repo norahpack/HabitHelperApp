@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.habithelper.R;
-import com.example.habithelper.activities.ChooseFirstIconActivity;
+import com.example.habithelper.activities.ChooseIconActivity;
 import com.example.habithelper.activities.MainActivity;
 import com.example.habithelper.models.Habit;
 import com.parse.FindCallback;
@@ -21,19 +21,20 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import java.util.List;
 
-public class IconAdapter extends RecyclerView.Adapter<IconAdapter.ViewHolder>{
+public class IconAdapter extends RecyclerView.Adapter<IconAdapter.ViewHolder> {
+
     private ParseUser currentUser = ParseUser.getCurrentUser();
     private Context context;
     private List<String> iconList;
     private boolean hasSecondCustom;
-    private String firstIconName;
+    private String currentCustomIconName;
     private String secondIconName;
 
-    public IconAdapter(Context context, List<String> iconList, boolean hasSecondCustom, String firstIconName, String secondIconName) {
+    public IconAdapter(Context context, List<String> iconList, boolean hasSecondCustom, String currentCustomIconName, String secondIconName) {
         this.context = context;
         this.iconList = iconList;
         this.hasSecondCustom = hasSecondCustom;
-        this.firstIconName = firstIconName;
+        this.currentCustomIconName = currentCustomIconName;
         this.secondIconName = secondIconName;
     }
 
@@ -85,12 +86,12 @@ public class IconAdapter extends RecyclerView.Adapter<IconAdapter.ViewHolder>{
      */
     private void startNextActivity() {
         if (hasSecondCustom){
-            Intent i = new Intent (context, ChooseFirstIconActivity.class);
-            i.putExtra("firstIconName", secondIconName);
+            Intent i = new Intent (context, ChooseIconActivity.class);
+            i.putExtra("currentCustomIconName", secondIconName);
             i.putExtra("hasSecondCustom", false);
             context.startActivity(i);
         } else {
-            //goes back to the MainActivity class with the user logged in
+            // goes back to the MainActivity class with the user logged in
             context.startActivity(new Intent(context, MainActivity.class));
         }
     }
@@ -104,7 +105,7 @@ public class IconAdapter extends RecyclerView.Adapter<IconAdapter.ViewHolder>{
         query.include(Habit.KEY_HABIT_NAME);
         query.include(Habit.KEY_HABIT_CREATOR);
         query.whereEqualTo(Habit.KEY_HABIT_CREATOR, currentUser);
-        query.whereEqualTo(Habit.KEY_HABIT_NAME, firstIconName);
+        query.whereEqualTo(Habit.KEY_HABIT_NAME, currentCustomIconName);
         query.setLimit(1);
         query.findInBackground(new FindCallback<Habit>() {
             @Override

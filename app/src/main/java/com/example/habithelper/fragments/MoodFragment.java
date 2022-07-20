@@ -1,6 +1,5 @@
 package com.example.habithelper.fragments;
 
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -32,11 +31,22 @@ public class MoodFragment extends Fragment {
     private static final DecimalFormat dfZero = new DecimalFormat("0.00");
     public static final int MIN_Y = 1;
     public static final int MAX_Y = 5;
+    public static final int MIN_NUM_DAYS_FOR_GRAPH = 5;
+    public static final int MIN_NUM_DAYS_FOR_WEEK_CHANGE = 14;
     public static final int MIN_DAY = 1;
+    public static final int WEEK_LENGTH = 7;
+    public static final double DOUBLE_WEEK_LENGTH = 7.0;
     public static final int MAX_DAYS_ONE_SCREEN = 20;
     public static final int LABEL_PADDING = 29;
     public static final int LABEL_ANGLE = 30;
+    public static final double GREAT_MOOD = 4.5;
+    public static final double GOOD_MOOD = 3.5;
+    public static final double OKAY_MOOD = 2.5;
+    public static final double BAD_MOOD = 1.5;
+    public static final int DAY_NUM_TO_INDEX_OFFSET = 1;
+    public static final int NUM_DAYS_IN_WEEK = 7;
 
+    public View view;
     public double moodSum = 0;
     public double averageMood = 0;
     public double numMood = 0;
@@ -69,8 +79,9 @@ public class MoodFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View myView, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        this.view = myView;
         initViews(view);
         currentUser = ParseUser.getCurrentUser();
 
@@ -95,12 +106,12 @@ public class MoodFragment extends Fragment {
                 }
                 setAverageMood(daysTracked);
                 // sets the graph of moods for the user
-                if (daysTracked.size() >= 5) {
+                if (daysTracked.size() >= MIN_NUM_DAYS_FOR_GRAPH) {
                     setMoodGraph(daysTracked, view);
                 } else {
                     setNotEnoughDays(daysTracked, view);
                 }
-                if (daysTracked.size() >= 14) {
+                if (daysTracked.size() >= MIN_NUM_DAYS_FOR_WEEK_CHANGE) {
                     setPercentChange(daysTracked);
                 } else {
                     tvPercentChange.setText("You're on your way to a happier and healthier future. Keep up the good work.");
@@ -114,9 +125,9 @@ public class MoodFragment extends Fragment {
      * @param daysTracked the list of TrackDay objects corresponding to the user, ordered by date (ascending)
      */
     private void setPercentChange(List<TrackDay> daysTracked) {
-        double currentSevenAverage = getWeekAverage(daysTracked.size() - 1, daysTracked);
-        double lastSevenAverage = getWeekAverage(daysTracked.size() - 8, daysTracked);
-        double percentChange = 100.0*((currentSevenAverage - lastSevenAverage) / (lastSevenAverage));
+        double currentSevenAverage = getWeekAverage(daysTracked.size() - DAY_NUM_TO_INDEX_OFFSET, daysTracked);
+        double lastSevenAverage = getWeekAverage(daysTracked.size() - NUM_DAYS_IN_WEEK - DAY_NUM_TO_INDEX_OFFSET, daysTracked);
+        double percentChange = 100.0 * ((currentSevenAverage - lastSevenAverage) / (lastSevenAverage));
         String upOrDown = "down";
         if (percentChange >= 0){
             upOrDown = "up";
@@ -132,12 +143,12 @@ public class MoodFragment extends Fragment {
      */
     private double getWeekAverage(int startIndex, List<TrackDay> daysTracked) {
         double totalMood = 0;
-        for (int i = startIndex; i > startIndex - 7; i--){
+        for (int i = startIndex; i > startIndex - WEEK_LENGTH; i--){
             if(i >= 0 && i < daysTracked.size()){
-                totalMood+=daysTracked.get(i).getMood();
+                totalMood += daysTracked.get(i).getMood();
             }
         }
-        return totalMood/7.0;
+        return totalMood/DOUBLE_WEEK_LENGTH;
     }
 
     /**
@@ -166,10 +177,10 @@ public class MoodFragment extends Fragment {
         DataPoint[] moodDataPoints = new DataPoint[daysTracked.size()];
         for (int i = 0; i < daysTracked.size(); i++) {
             int dayMood = daysTracked.get(i).getMood();
-            moodDataPoints[i] = new DataPoint(i + 1, dayMood);
+            moodDataPoints[i] = new DataPoint(i + DAY_NUM_TO_INDEX_OFFSET, dayMood);
         }
         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(moodDataPoints);
-        series.setColor(Color.parseColor("#A44F30"));
+        series.setColor((getResources().getColor(R.color.sienna)));
         graphViewMood.addSeries(series);
         instantiateGraphSettings(daysTracked);
         pbLoadingMoodGraph.setVisibility(View.GONE);
@@ -191,7 +202,7 @@ public class MoodFragment extends Fragment {
         graphViewMood.getViewport().setMinX(MIN_DAY);
         graphViewMood.getViewport().setMaxX(daysTracked.size());
         if (daysTracked.size() >= MAX_DAYS_ONE_SCREEN) {
-            graphViewMood.getViewport().setMinX(daysTracked.size() - MAX_DAYS_ONE_SCREEN + 1);
+            graphViewMood.getViewport().setMinX(daysTracked.size() - MAX_DAYS_ONE_SCREEN + DAY_NUM_TO_INDEX_OFFSET);
         }
         graphViewMood.getViewport().setYAxisBoundsManual(true);
         graphViewMood.getViewport().setXAxisBoundsManual(true);
@@ -248,13 +259,13 @@ public class MoodFragment extends Fragment {
      */
     private void setIvAverageMood() {
         Drawable imageToLoad;
-        if (averageMood >= 4.5) {
+        if (averageMood >= GREAT_MOOD) {
             imageToLoad = AppCompatResources.getDrawable(getContext(), R.drawable.mood5);
-        } else if (averageMood >= 3.5) {
+        } else if (averageMood >= GOOD_MOOD) {
             imageToLoad = AppCompatResources.getDrawable(getContext(), R.drawable.mood4);
-        } else if (averageMood >= 2.5) {
+        } else if (averageMood >= OKAY_MOOD) {
             imageToLoad = AppCompatResources.getDrawable(getContext(), R.drawable.mood3);
-        } else if (averageMood >= 1.5) {
+        } else if (averageMood >= BAD_MOOD) {
             imageToLoad = AppCompatResources.getDrawable(getContext(), R.drawable.mood2);
         } else {
             imageToLoad = AppCompatResources.getDrawable(getContext(), R.drawable.mood1);

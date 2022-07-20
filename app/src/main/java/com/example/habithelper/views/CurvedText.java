@@ -2,7 +2,6 @@ package com.example.habithelper.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
@@ -20,29 +19,43 @@ public class CurvedText extends View {
     public int levelOffset;
 
     private static final int UPPER_CIRCLE_RADIUS = 240;
-    private static final int LOWER_CIRCLE_RADIUS = 260;
-    public static final int UPPER_OFFSET = 1080;
-    public static final int LOWER_OFFSET = 900;
+    private static final int LOWER_CIRCLE_RADIUS = 250;
+    public static final int UPPER_OFFSET = 1067;
+    public static final int LOWER_OFFSET = 890;
     public static final int VERTICAL_OFFSET = 0;
+    public static final int CENTER_COORDINATES = 300;
+    public static final int UPPER_VERTICAL_COORDINATES = 320;
+    public static final int DEFAULT_NAME_LENGTH = 5;
+    public static final int OFFSET_PER_NAME_LETTER = -14;
+    public static final int PAINT_TEXT_SIZE = 50;
+    public static final int MIN_DAYS_LEVEL_FIVE = 100;
+    public static final int MIN_DAYS_LEVEL_FOUR = 50;
+    public static final int MIN_DAYS_LEVEL_THREE = 25;
+    public static final int MIN_DAYS_LEVEL_TWO = 10;
+    public static final int OFFSET_LEVEL_ONE = -3;
+    public static final int OFFSET_LEVEL_TWO = -8;
+    public static final int OFFSET_LEVEL_THREE = -3;
+    public static final int OFFSET_LEVEL_FOUR = -38;
+    public static final int OFFSET_LEVEL_FIVE = 48;
 
     public CurvedText(Context context, AttributeSet attrs) {
         super(context, attrs);
         myString = ParseUser.getCurrentUser().getString("name");
-        nameOffset = (myString.length()-5)*(-12);
+        nameOffset = (myString.length() - DEFAULT_NAME_LENGTH) * (OFFSET_PER_NAME_LETTER);
         int numDaysTracked = ParseUser.getCurrentUser().getInt("numDaysTracked");
 
         circle = new Path();
         circle2 = new Path();
-        circle.addCircle(300, 320, UPPER_CIRCLE_RADIUS, Path.Direction.CW);
-        circle2.addCircle(300, 300, LOWER_CIRCLE_RADIUS, Path.Direction.CCW);
+        circle.addCircle(CENTER_COORDINATES, UPPER_VERTICAL_COORDINATES, UPPER_CIRCLE_RADIUS, Path.Direction.CW);
+        circle2.addCircle(CENTER_COORDINATES, CENTER_COORDINATES, LOWER_CIRCLE_RADIUS, Path.Direction.CCW);
 
         setLevelText(numDaysTracked);
 
         tPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         tPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        tPaint.setColor(Color.parseColor("#D09080"));
+        tPaint.setColor((getResources().getColor(R.color.dusty_rose)));
         tPaint.setTypeface(getResources().getFont(R.font.bright));
-        tPaint.setTextSize(50);
+        tPaint.setTextSize(PAINT_TEXT_SIZE);
     }
 
     /**
@@ -50,18 +63,22 @@ public class CurvedText extends View {
      * @param numDaysTracked the number of days the user has tracked for
      */
     private void setLevelText(int numDaysTracked) {
-        if(numDaysTracked > 100){
+        if(numDaysTracked > MIN_DAYS_LEVEL_FIVE){
             levelString = "level five - habit hero";
-        } else if (numDaysTracked > 50){
+            levelOffset = OFFSET_LEVEL_FIVE;
+        } else if (numDaysTracked > MIN_DAYS_LEVEL_FOUR){
             levelString = "level four - productivity pro";
-        } else if (numDaysTracked > 25){
+            levelOffset = OFFSET_LEVEL_FOUR;
+        } else if (numDaysTracked > MIN_DAYS_LEVEL_THREE){
             levelString = "level three - mood master";
-        } else if (numDaysTracked > 10){
+            levelOffset = OFFSET_LEVEL_THREE;
+        } else if (numDaysTracked > MIN_DAYS_LEVEL_TWO){
             levelString = "level two - terrific tracker";
+            levelOffset = OFFSET_LEVEL_TWO;
         } else {
             levelString = "level one - routine rookie";
+            levelOffset = OFFSET_LEVEL_ONE;
         }
-        levelOffset = (levelString.length()-29)*(-12);
     }
 
     @Override

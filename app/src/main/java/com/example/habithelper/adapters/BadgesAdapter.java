@@ -40,18 +40,6 @@ public class BadgesAdapter extends RecyclerView.Adapter<BadgesAdapter.ViewHolder
         return badgeList.size();
     }
 
-    public void clear(){
-        badgeList.clear();
-        notifyDataSetChanged();
-    }
-
-    public void addAll(List<String> stringList) {
-        for (String s : stringList){
-            badgeList.add(s);
-        }
-        notifyDataSetChanged();
-    }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tvBadge;
         private TextView tvBadgeDescription;

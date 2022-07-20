@@ -20,7 +20,7 @@ public class HabitMultipleLinearRegression extends AbstractMultipleLinearRegress
      * @throws MathIllegalArgumentException if the arrays are not the proper dimensions
      */
     public void loadAndCheckData(double[] moodArray, double[][] habitHistoryArray) throws MathIllegalArgumentException {
-        //checks the dimensions and contents of habitHistoryArray and moodArray
+        // checks the dimensions and contents of habitHistoryArray and moodArray
         validateSampleData(habitHistoryArray, moodArray);
         newYSampleData(moodArray);
         newXSampleData(habitHistoryArray);

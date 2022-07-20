@@ -2,7 +2,6 @@ package com.example.habithelper.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.Group;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -66,6 +65,7 @@ public class AccountSetupActivity extends AppCompatActivity {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnUpdate.setClickable(false);
                 checkUserInput();
             }
         });
@@ -108,6 +108,7 @@ public class AccountSetupActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                btnUpdate.setClickable(true);
                 Toast.makeText(AccountSetupActivity.this, "Not a valid zipcode", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -127,6 +128,7 @@ public class AccountSetupActivity extends AppCompatActivity {
 
         if (checkBoxCustomOne.isChecked()) {
             if (customHabitOne.isEmpty()) {
+                btnUpdate.setClickable(true);
                 Toast.makeText(AccountSetupActivity.this, "Habit cannot be empty", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -134,24 +136,29 @@ public class AccountSetupActivity extends AppCompatActivity {
 
         if (checkBoxCustomTwo.isChecked()) {
             if (customHabitTwo.isEmpty()) {
+                btnUpdate.setClickable(true);
                 Toast.makeText(AccountSetupActivity.this, "Habit cannot be empty", Toast.LENGTH_SHORT).show();
                 return;
             }
         }
 
         if (name.isEmpty()) {
+            btnUpdate.setClickable(true);
             Toast.makeText(AccountSetupActivity.this, "Name cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
         if (zipString.isEmpty()) {
+            btnUpdate.setClickable(true);
             Toast.makeText(AccountSetupActivity.this, "Zipcode cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (habitsList.size() < MIN_REQUIRED_HABITS_NUM) {
+            btnUpdate.setClickable(true);
             Toast.makeText(AccountSetupActivity.this, "Add more habits", Toast.LENGTH_SHORT).show();
             return;
         } else if (habitsList.size() > MAX_ALLOWED_HABITS_NUM) {
+            btnUpdate.setClickable(true);
             Toast.makeText(AccountSetupActivity.this, "Select fewer habits", Toast.LENGTH_SHORT).show();
             return;
         } else {
@@ -235,12 +242,15 @@ public class AccountSetupActivity extends AppCompatActivity {
         currentUser = ParseUser.getCurrentUser();
         currentUser.put("zipCode", zipString);
         currentUser.put("name", name);
-        currentUser.add("badgesEarned", "badge_warmest_welcomes");
+        if (! currentUser.getList("badgesEarned").contains("badge_warmest_welcome")){
+            currentUser.add("badgesEarned", "badge_warmest_welcomes");
+        }
         currentUser.put("habitsList", habitsList);
         currentUser.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e != null) {
+                    btnUpdate.setClickable(true);
                     return;
                 }
                 if (existsCustomOne) {
@@ -259,24 +269,24 @@ public class AccountSetupActivity extends AppCompatActivity {
      */
     private void goNextActivity() {
         if (existsCustomOne ^ existsCustomTwo){
-            Intent i = new Intent(AccountSetupActivity.this, ChooseFirstIconActivity.class);
+            Intent i = new Intent(AccountSetupActivity.this, ChooseIconActivity.class);
             i.putExtra("hasSecondCustom", false);
             if (existsCustomOne){
-                i.putExtra("firstIconName", customHabitOne);
+                i.putExtra("currentCustomIconName", customHabitOne);
             } else {
-                i.putExtra("firstIconName", customHabitTwo);
+                i.putExtra("currentCustomIconName", customHabitTwo);
             }
             startActivity(i);
             finish();
         } else if (existsCustomOne && existsCustomTwo){
-            Intent i = new Intent(AccountSetupActivity.this, ChooseFirstIconActivity.class);
-            i.putExtra("firstIconName", customHabitOne);
+            Intent i = new Intent(AccountSetupActivity.this, ChooseIconActivity.class);
+            i.putExtra("currentCustomIconName", customHabitOne);
             i.putExtra("hasSecondCustom", true);
             i.putExtra("secondIconName", customHabitTwo);
             startActivity(i);
             finish();
         } else {
-            //goes back to the MainActivity class with the user logged in
+            // goes back to the MainActivity class with the user logged in
             startActivity(new Intent(AccountSetupActivity.this, MainActivity.class));
             finish();
         }
@@ -294,6 +304,7 @@ public class AccountSetupActivity extends AppCompatActivity {
             @Override
             public void done(ParseException e) {
                 if (e != null) {
+                    btnUpdate.setClickable(true);
                     Toast.makeText(AccountSetupActivity.this, "Error while saving", Toast.LENGTH_SHORT).show();
                 }
             }

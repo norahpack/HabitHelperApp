@@ -2,13 +2,13 @@ package com.example.habithelper.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
 import com.example.habithelper.R;
 import com.example.habithelper.adapters.ViewPagerAdapter;
+import com.example.habithelper.utilities.FragmentEnum;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.ParseUser;
 import java.util.List;
@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected BottomNavigationView bottomNavigation;
     private ViewPager viewPager;
     public ParseUser currentUser;
+    public ViewPagerAdapter adapter;
     List<String> badges;
 
     @Override
@@ -29,37 +30,33 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         currentUser = ParseUser.getCurrentUser();
         bottomNavigation = findViewById(R.id.bottomNavigation);
         bottomNavigation.setOnNavigationItemSelectedListener(this);
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        viewPager = findViewById(R.id.viewPager);
         swipeBetweenViews(viewPager);
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         setUpBottomViewNavigation();
+        setViewPager();
+    }
 
+    /**
+     * Sets the viewPager's current item to the item stored in the bundle passed in.
+     */
+    private void setViewPager() {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String tabGoTo = (extras.getString("tab"));
             if (tabGoTo.equals("habits")) {
-                viewPager.setCurrentItem(4);
+                viewPager.setCurrentItem(FragmentEnum.HABIT_LIST_FRAGMENT.getIndex());
             } else if (tabGoTo.equals("profile")){
-                viewPager.setCurrentItem(0);
+                viewPager.setCurrentItem(FragmentEnum.PROFILE_FRAGMENT.getIndex());
             } else {
-                viewPager.setCurrentItem(2);
+                viewPager.setCurrentItem(FragmentEnum.HOME_FRAGMENT.getIndex());
             }
         } else {
             if (bottomNavigation.getSelectedItemId() != R.id.itemHome){
-                viewPager.setCurrentItem(2);
+                viewPager.setCurrentItem(FragmentEnum.HOME_FRAGMENT.getIndex());
             }
         }
-    }
-
-    /**
-     * Navigates to a new fragment
-     *
-     * @param fragment     the fragment to navigate to
-     * @param selectedItem the item in the toolbar to select (and change color of)
-     */
-    public void setTab(Fragment fragment, int selectedItem) {
-        bottomNavigation.setSelectedItemId(selectedItem);
     }
 
     /**
@@ -82,22 +79,19 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.itemProfile:
-                viewPager.setCurrentItem(0);
+                viewPager.setCurrentItem(FragmentEnum.PROFILE_FRAGMENT.getIndex());
                 break;
             case R.id.itemTrack:
-                viewPager.setCurrentItem(1);
-                break;
-            case R.id.itemHome:
-                viewPager.setCurrentItem(2);
+                viewPager.setCurrentItem(FragmentEnum.TRACK_FRAGMENT.getIndex());
                 break;
             case R.id.itemMood:
-                viewPager.setCurrentItem(3);
+                viewPager.setCurrentItem(FragmentEnum.MOOD_FRAGMENT.getIndex());
                 break;
             case R.id.itemList:
-                viewPager.setCurrentItem(4);
+                viewPager.setCurrentItem(FragmentEnum.HABIT_LIST_FRAGMENT.getIndex());
                 break;
             default:
-                viewPager.setCurrentItem(2);
+                viewPager.setCurrentItem(FragmentEnum.HOME_FRAGMENT.getIndex());
                 break;
         }
         return true;
@@ -121,9 +115,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     case 1:
                         bottomNavigation.getMenu().findItem(R.id.itemTrack).setChecked(true);
                         break;
-                    case 2:
-                        bottomNavigation.getMenu().findItem(R.id.itemHome).setChecked(true);
-                        break;
                     case 3:
                         bottomNavigation.getMenu().findItem(R.id.itemMood).setChecked(true);
                         break;
@@ -135,7 +126,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         break;
                 }
             }
-
             @Override
             public void onPageScrollStateChanged(int state) { }
         });
@@ -152,30 +142,25 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             int selection;
             switch (item.getItemId()) {
                 case R.id.itemProfile:
-                    selection = 0;
+                    selection = FragmentEnum.PROFILE_FRAGMENT.getIndex();
                     break;
                 case R.id.itemTrack:
-                    selection = 1;
-                    break;
-                case R.id.itemHome:
-                    selection = 2;
+                    selection = FragmentEnum.TRACK_FRAGMENT.getIndex();
                     break;
                 case R.id.itemMood:
-                    selection = 3;
+                    selection = FragmentEnum.MOOD_FRAGMENT.getIndex();
                     break;
                 case R.id.itemList:
-                    selection = 4;
+                    selection = FragmentEnum.HABIT_LIST_FRAGMENT.getIndex();
                     break;
                 default:
-                    selection = 2;
+                    selection = FragmentEnum.HOME_FRAGMENT.getIndex();
                     break;
             }
             viewPager.setCurrentItem(selection);
             return true;
         });
-
         // Defaults to the home fragment
         bottomNavigation.setSelectedItemId(R.id.itemHome);
     }
-
 }

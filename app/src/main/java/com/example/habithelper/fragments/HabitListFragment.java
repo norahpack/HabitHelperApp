@@ -24,6 +24,8 @@ import java.util.List;
 
 public class HabitListFragment extends Fragment {
 
+    public static final int NUM_HABITS_IN_ROW = 2;
+
     private RecyclerView rvHabits;
     ParseUser currentUser;
     List<Habit> habitsList;
@@ -53,10 +55,9 @@ public class HabitListFragment extends Fragment {
 
         rvHabits = view.findViewById(R.id.rvHabits);
         pbLoadingList = view.findViewById(R.id.pbLoadingList);
-
         currentUser = ParseUser.getCurrentUser();
         habitsNameList = currentUser.getList("habitsList");
-        final GridLayoutManager layout = new GridLayoutManager(getContext(), 2);
+        final GridLayoutManager layout = new GridLayoutManager(getContext(), NUM_HABITS_IN_ROW);
         habitsList = new ArrayList<>();
         adapter = new HabitAdapter(MainActivity.self, getContext(), habitsList);
         rvHabits.setAdapter(adapter);
@@ -71,10 +72,10 @@ public class HabitListFragment extends Fragment {
         ParseQuery<Habit> query = ParseQuery.getQuery(Habit.class);
         query.include(Habit.KEY_HABIT_NAME);
         query.include(Habit.KEY_HABIT_CREATOR);
+        query.setLimit(2);
         query.whereEqualTo(Habit.KEY_HABIT_CREATOR, currentUser);
         query.whereContainedIn("habitName", habitsNameList);
 
-        // start an asynchronous call for habits
         query.findInBackground(new FindCallback<Habit>() {
             @Override
             public void done(List<Habit> list, ParseException e) {
@@ -96,7 +97,6 @@ public class HabitListFragment extends Fragment {
         query.whereEqualTo(Habit.KEY_HABIT_CREATOR, null);
         query.whereContainedIn("habitName", habitsNameList);
 
-        // start an asynchronous call for habits
         query.findInBackground(new FindCallback<Habit>() {
             @Override
             public void done(List<Habit> list, ParseException e) {

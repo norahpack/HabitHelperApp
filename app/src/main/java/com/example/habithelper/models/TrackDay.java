@@ -7,27 +7,23 @@ import java.util.List;
 
 @ParseClassName("TrackDay")
 public class TrackDay extends ParseObject {
-    public static final String KEY_TRACK_ARRAY="trackArray";
-    public static final String KEY_PARENT_USER="parentUser";
-    public static final String KEY_MOOD="mood";
-    public static final String KEY_DATE_NUMBER="dateNumber";
-    public static final String KEY_EARNED_WEEKLONG_WARRIOR="earnedWeeklongWarrior";
-    public static final String KEY_EARNED_TWO_WEEK_TRIUMPH="earnedTwoWeekTriumph";
-    public static final String KEY_EARNED_MONTH_LONG_MASTER="earnedMonthLongMaster";
-    public static final String KEY_EARNED_PERFECT_DAY="earnedPerfectDay";
-    public static final String KEY_EARNED_MAGNIFICENT_MOOD="earnedMagnificentMood";
-    public static final String KEY_EARNED_SEVEN_DAYS_OF_SMILES="earnedSevenDaysOfSmiles";
-    public static final String KEY_EARNED_NO_RED_DAYS="earnedNoRedDays";
+    public static final String KEY_TRACK_ARRAY = "trackArray";
+    public static final String KEY_PARENT_USER = "parentUser";
+    public static final String KEY_MOOD = "mood";
+    public static final String KEY_DATE_NUMBER = "dateNumber";
+    public static final String KEY_EARNED_WEEKLONG_WARRIOR = "earnedWeeklongWarrior";
+    public static final String KEY_EARNED_TWO_WEEK_TRIUMPH = "earnedTwoWeekTriumph";
+    public static final String KEY_EARNED_MONTH_LONG_MASTER = "earnedMonthLongMaster";
+    public static final String KEY_EARNED_PERFECT_DAY = "earnedPerfectDay";
+    public static final String KEY_EARNED_MAGNIFICENT_MOOD = "earnedMagnificentMood";
+    public static final String KEY_EARNED_SEVEN_DAYS_OF_SMILES = "earnedSevenDaysOfSmiles";
+    public static final String KEY_EARNED_NO_RED_DAYS = "earnedNoRedDays";
 
     public int getMood(){return getInt(KEY_MOOD);}
 
     public void setMood(Integer mood){put(KEY_MOOD, mood);}
 
-    public int getDateNumber(){return getInt(KEY_DATE_NUMBER);}
-
     public void setDateNumber(int date){put(KEY_DATE_NUMBER, date);}
-
-    public ParseUser getParentUser(){return getParseUser(KEY_PARENT_USER);}
 
     public void setParentUser(ParseUser parent){put(KEY_PARENT_USER, parent);}
 

@@ -2,6 +2,7 @@ package com.example.habithelper.utilities;
 
 import android.util.Log;
 import com.example.habithelper.models.TrackDay;
+import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import java.util.List;
 
 public class LinearRegressionCalculator {
@@ -32,16 +33,23 @@ public class LinearRegressionCalculator {
             habitMLR.loadAndCheckData(moodArray, habitHistoryArray);
         }
         catch(Exception e) {
-            Log.e("LinearRegressionCalculator", "data does not fit parameters for MLR");
+            if (e instanceof MathIllegalArgumentException){
+                Log.e("LinearRegressionCalculator", "data does not fit parameters for MLR");
+            } else {
+                Log.e("LinearRegressionCalculator", "something went wrong");
+            }
         }
-        double[] tempArray = habitMLR.calculateBeta().toArray();
-
-        // removes the y-intercept value from the array of predictor coefficients
-        double[] resultsArray = new double[tempArray.length - 1];
-        for (int i = 1; i < tempArray.length; i++) {
-            resultsArray[i - 1] = tempArray[i];
+        try{
+            double[] tempArray = habitMLR.calculateBeta().toArray();
+            // removes the y-intercept value from the array of predictor coefficients
+            double[] resultsArray = new double[tempArray.length - 1];
+            for (int i = 1; i < tempArray.length; i++) {
+                resultsArray[i - 1] = tempArray[i];
+            }
+            leastSquaresResult = resultsArray;
+        } catch (Exception e) {
+            Log.e("LinearRegressionCalculator", "error with performing linear regression");
         }
-        leastSquaresResult = resultsArray;
     }
 
     /**
@@ -85,8 +93,8 @@ public class LinearRegressionCalculator {
      */
     public int getIndexOfSecondLargest(double[] array) {
         int secondLargest;
-        if (array == null || array.length == 0) {
-            return -1; // null or empty
+        if (array == null || array.length < 2) {
+            return -1; // null or array length less than 2
         }
         int largest = getIndexOfLargest(array);
         if (largest == 0) {
@@ -110,8 +118,8 @@ public class LinearRegressionCalculator {
      */
     public int getIndexOfThirdLargest(double[] array) {
         int thirdLargest;
-        if (array == null || array.length == 0) {
-            return -1; // null or empty
+        if (array == null || array.length < 3) {
+            return -1; // null or length less than 3
         }
         int largest = getIndexOfLargest(array);
         int secondLargest = getIndexOfSecondLargest(array);
