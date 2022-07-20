@@ -8,19 +8,24 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import com.example.habithelper.R;
 import com.example.habithelper.adapters.ViewPagerAdapter;
+import com.example.habithelper.utilities.CustomViewPager;
 import com.example.habithelper.utilities.FragmentEnum;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.ParseUser;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 
     public static MainActivity self;
     protected BottomNavigationView bottomNavigation;
-    private ViewPager viewPager;
+    public CustomViewPager viewPager;
     public ParseUser currentUser;
     public ViewPagerAdapter adapter;
+    public CustomViewPager.OnPageChangeListener onPageChangeListener;
     List<String> badges;
+    List<Integer> fragmentOrder = new ArrayList<Integer>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         setUpBottomViewNavigation();
+        fragmentOrder.clear();
         setViewPager();
     }
 
@@ -55,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         } else {
             if (bottomNavigation.getSelectedItemId() != R.id.itemHome){
                 viewPager.setCurrentItem(FragmentEnum.HOME_FRAGMENT.getIndex());
+            } else if (fragmentOrder.size() < 1){
+                fragmentOrder.add(2);
             }
         }
     }
@@ -70,6 +78,20 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     /**
+     * disables swiping between fragments
+     */
+    public void disableSwipe(){
+        viewPager.setPagingEnabled(false);
+    }
+
+    /**
+     * enables swiping between fragments
+     */
+    public void enableSwipe(){
+        viewPager.setPagingEnabled(true);
+    }
+
+    /**
      * When the user clicks on a navItem in the bottomNavigationBar,
      * Tells the ViewPager to swipe to that navItem's corresponding fragment
      * @param item the menu item that has been selected
@@ -79,18 +101,23 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.itemProfile:
+                fragmentOrder.add(FragmentEnum.PROFILE_FRAGMENT.getIndex());
                 viewPager.setCurrentItem(FragmentEnum.PROFILE_FRAGMENT.getIndex());
                 break;
             case R.id.itemTrack:
+                fragmentOrder.add(FragmentEnum.TRACK_FRAGMENT.getIndex());
                 viewPager.setCurrentItem(FragmentEnum.TRACK_FRAGMENT.getIndex());
                 break;
             case R.id.itemMood:
+                fragmentOrder.add(FragmentEnum.MOOD_FRAGMENT.getIndex());
                 viewPager.setCurrentItem(FragmentEnum.MOOD_FRAGMENT.getIndex());
                 break;
             case R.id.itemList:
+                fragmentOrder.add(FragmentEnum.HABIT_LIST_FRAGMENT.getIndex());
                 viewPager.setCurrentItem(FragmentEnum.HABIT_LIST_FRAGMENT.getIndex());
                 break;
             default:
+                fragmentOrder.add(FragmentEnum.HOME_FRAGMENT.getIndex());
                 viewPager.setCurrentItem(FragmentEnum.HOME_FRAGMENT.getIndex());
                 break;
         }
@@ -102,12 +129,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
      * @param viewPager the ViewPager we are using to swipe between fragments.
      */
     private void swipeBetweenViews(ViewPager viewPager) {
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        onPageChangeListener = new CustomViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
-
             @Override
             public void onPageSelected(int position) {
+                fragmentOrder.add(position);
                 switch (position) {
                     case 0:
                         bottomNavigation.getMenu().findItem(R.id.itemProfile).setChecked(true);
@@ -127,8 +154,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 }
             }
             @Override
-            public void onPageScrollStateChanged(int state) { }
-        });
+            public void onPageScrollStateChanged(int state) {}
+        };
+
+        viewPager.addOnPageChangeListener(onPageChangeListener);
     }
 
     /**
@@ -162,5 +191,28 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         });
         // Defaults to the home fragment
         bottomNavigation.setSelectedItemId(R.id.itemHome);
+    }
+
+    /**
+     * Handles the 'back button' events by navigating users to the fragment they were previously on
+     */
+    @Override
+    public void onBackPressed() {
+        if (fragmentOrder == null) {
+            super.onBackPressed();
+        } else if (fragmentOrder.size() == 1){
+            fragmentOrder.clear();
+            viewPager.setCurrentItem(2);
+        } else {
+            // handles users clicking on the same fragment multiple times
+            if(fragmentOrder.get(fragmentOrder.size() - 2) == fragmentOrder.get(fragmentOrder.size()-1)){
+                fragmentOrder.remove(fragmentOrder.size()-1);
+                onBackPressed();
+            } else {
+                viewPager.setCurrentItem(fragmentOrder.get(fragmentOrder.size()-2));
+                fragmentOrder.remove(fragmentOrder.size() - 2);
+                fragmentOrder.remove(fragmentOrder.size() - 1);
+            }
+        }
     }
 }

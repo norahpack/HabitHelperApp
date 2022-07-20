@@ -11,7 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import com.example.habithelper.R;
 
-public class MyDrawView extends View {
+public class DrawIconView extends View {
 
     public static final int STROKE_WIDTH = 25;
     private static final float TOUCH_TOLERANCE = 4;
@@ -26,7 +26,7 @@ public class MyDrawView extends View {
     /**
      * initializes the path and paint objects and supplies relevant parameters
      */
-    public MyDrawView(Context context, AttributeSet attrSet) {
+    public DrawIconView(Context context, AttributeSet attrSet) {
         super(context, attrSet);
         mPath = new Path();
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);

@@ -23,7 +23,7 @@ import com.example.habithelper.activities.BadgesActivity;
 import com.example.habithelper.activities.LoginActivity;
 import com.example.habithelper.activities.MainActivity;
 import com.example.habithelper.models.TrackDay;
-import com.example.habithelper.views.CurvedText;
+import com.example.habithelper.views.CurvedTextView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -44,7 +44,7 @@ public class ProfileFragment extends Fragment {
     private Button btnChangeZip;
     private Button btnViewBadges;
     private Button btnLogout;
-    private CurvedText curvedTextBadge;
+    private CurvedTextView curvedTextBadge;
     private ConstraintLayout clMain;
     private ImageView ivProfileLevel;
     private TextView tvLocation;

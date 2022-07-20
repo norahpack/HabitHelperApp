@@ -9,7 +9,7 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context=".activities.MainActivity">
 
-    <androidx.viewpager.widget.ViewPager
+    <com.example.habithelper.utilities.CustomViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"

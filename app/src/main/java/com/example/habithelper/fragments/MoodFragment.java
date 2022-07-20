@@ -1,5 +1,7 @@
 package com.example.habithelper.fragments;
 
+import static com.example.habithelper.activities.MainActivity.self;
+
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -8,6 +10,7 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -84,7 +87,6 @@ public class MoodFragment extends Fragment {
         this.view = myView;
         initViews(view);
         currentUser = ParseUser.getCurrentUser();
-
         // attempts to determine the user's average mood and display a graph of the user's mood over time
         queryUserData(view);
     }
@@ -195,7 +197,6 @@ public class MoodFragment extends Fragment {
     private void instantiateGraphSettings(List<TrackDay> daysTracked) {
         // makes sure the bounds of the graphs are accurate
         graphViewMood.getViewport().setScrollable(true);
-        graphViewMood.getViewport().isScrollable();
         graphViewMood.getViewport().scrollToEnd();
         graphViewMood.getViewport().setMinY(MIN_Y);
         graphViewMood.getViewport().setMaxY(MAX_Y);
@@ -208,9 +209,29 @@ public class MoodFragment extends Fragment {
         graphViewMood.getViewport().setXAxisBoundsManual(true);
         graphViewMood.getGridLabelRenderer().setPadding(LABEL_PADDING);
         graphViewMood.getGridLabelRenderer().setHorizontalLabelsAngle(LABEL_ANGLE);
-        graphViewMood.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+
+        disableSwipeOnGraph();
+    }
+
+    /**
+     * Makes sure that when the user swipes on the mood graph, the ViewPager does not
+     * intercept that action and start swiping between fragments
+     */
+    private void disableSwipeOnGraph() {
+        graphViewMood.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        self.disableSwipe();
+                        System.out.println("disabling swipe");
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        self.enableSwipe();
+                        System.out.println("enabling swipe");
+                        break;
+                }
+                return false;
             }
         });
     }

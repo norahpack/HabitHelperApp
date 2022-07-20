@@ -21,7 +21,7 @@ import androidx.fragment.app.DialogFragment;
 import com.example.habithelper.activities.ChooseIconActivity;
 import com.example.habithelper.activities.MainActivity;
 import com.example.habithelper.models.Habit;
-import com.example.habithelper.views.MyDrawView;
+import com.example.habithelper.views.DrawIconView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -35,7 +35,7 @@ public class CreateIconFragment extends DialogFragment {
     public static final String TAG = "MainActivity";
     public static final int BITMAP_QUALITY = 40;
 
-    MyDrawView myDrawView;
+    DrawIconView myDrawView;
     ParseUser currentUser;
     Button btnSetIcon;
     String currentCustomIconName = "Custom Habit";

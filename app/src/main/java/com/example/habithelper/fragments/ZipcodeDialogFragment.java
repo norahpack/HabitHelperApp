@@ -79,9 +79,6 @@ public class ZipcodeDialogFragment extends DialogFragment {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 currentUser.put("zipCode", zipString);
-                if(!self.checkForBadge("badge_world_traveler")){
-                    currentUser.add("badgesEarned", "badge_you_did_it");
-                }
                 currentUser.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -90,6 +87,9 @@ public class ZipcodeDialogFragment extends DialogFragment {
                             return;
                         }
                         // goes back to the profile tab and refreshes data
+                        if(!self.checkForBadge("badge_world_traveler")){
+                            currentUser.add("badgesEarned", "badge_world_traveler");
+                        }
                         Intent i = new Intent(getContext(), MainActivity.class);
                         i.putExtra("tab", "profile");
                         startActivity(i);

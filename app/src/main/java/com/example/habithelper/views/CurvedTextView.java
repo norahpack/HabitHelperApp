@@ -9,7 +9,7 @@ import android.view.View;
 import com.example.habithelper.R;
 import com.parse.ParseUser;
 
-public class CurvedText extends View {
+public class CurvedTextView extends View {
     private Path circle;
     private Path circle2;
     private Paint tPaint;
@@ -38,7 +38,7 @@ public class CurvedText extends View {
     public static final int OFFSET_LEVEL_FOUR = -38;
     public static final int OFFSET_LEVEL_FIVE = 48;
 
-    public CurvedText(Context context, AttributeSet attrs) {
+    public CurvedTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         myString = ParseUser.getCurrentUser().getString("name");
         nameOffset = (myString.length() - DEFAULT_NAME_LENGTH) * (OFFSET_PER_NAME_LETTER);
