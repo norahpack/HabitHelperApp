@@ -10,12 +10,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.habithelper.R;
+import com.example.habithelper.models.BadgeDetails;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BadgesAdapter extends RecyclerView.Adapter<BadgesAdapter.ViewHolder> {
 
     private Context context;
     private List<String> badgeList;
+    Map<String, BadgeDetails> badgeDetailsMap = new HashMap<String, BadgeDetails>();
 
     public BadgesAdapter(Context context, List<String> badgeList) {
         this.context = context;
@@ -53,46 +58,25 @@ public class BadgesAdapter extends RecyclerView.Adapter<BadgesAdapter.ViewHolder
         }
 
         public void bind(String badgeImage) {
-            setText(badgeImage);
+            initializeHashMap();
+            tvBadge.setText(badgeDetailsMap.get(badgeImage).text);
+            tvBadgeDescription.setText(badgeDetailsMap.get(badgeImage).description);
             Resources resources = context.getResources();
             int resId = resources.getIdentifier(badgeImage, "drawable", "com.example.habithelper");
             ivBadge.setBackgroundResource(resId);
         }
 
-        private void setText(String badgeImage) {
-            if (badgeImage.equals("badge_magnificent_mood")) {
-                tvBadge.setText("magnificent mood");
-                tvBadgeDescription.setText("track a week where your average mood is greater than 3");
-            } else if (badgeImage.equals("badge_month_long_master")){
-                tvBadge.setText("month long master");
-                tvBadgeDescription.setText("earn a streak of 30 days on a habit");
-            } else if (badgeImage.equals("badge_no_red_days")){
-                tvBadge.setText("no red days");
-                tvBadgeDescription.setText("track a mood of 3 or higher every day for a week straight");
-            } else if (badgeImage.equals("badge_perfect_day")){
-                tvBadge.setText("perfect day");
-                tvBadgeDescription.setText("complete every one of your habits on the same day");
-            } else if (badgeImage.equals("badge_seven_days_of_smiles")){
-                tvBadge.setText("seven days of smiles");
-                tvBadgeDescription.setText("track a week where your average mood is greater than 4");
-            } else if (badgeImage.equals("badge_two_week_triumph")){
-                tvBadge.setText("two week triumph");
-                tvBadgeDescription.setText("earn a streak of 14 days on a habit");
-            } else if (badgeImage.equals("badge_warmest_welcomes")){
-                tvBadge.setText("warmest welcomes");
-                tvBadgeDescription.setText("create an account and setup your profile");
-            } else if (badgeImage.equals("badge_weeklong_warrior")){
-                tvBadge.setText("weeklong warrior");
-                tvBadgeDescription.setText("earn a streak of 7 days on a habit");
-            } else if (badgeImage.equals("badge_world_traveler")){
-                tvBadge.setText("world traveler");
-                tvBadgeDescription.setText("update your zipcode to a new location");
-            } else if (badgeImage.equals("badge_you_did_it")){
-                tvBadge.setText("you did it");
-                tvBadgeDescription.setText("track your habits for the first time");
-            } else {
-                tvBadge.setText("hmm, there's been an issue");
-            }
+        private void initializeHashMap() {
+            badgeDetailsMap.put("badge_magnificent_mood", new BadgeDetails("magnificent mood", "track a week where your average mood is greater than 3"));
+            badgeDetailsMap.put("badge_month_long_master", new BadgeDetails("month long master", "earn a streak of 30 days on a habit"));
+            badgeDetailsMap.put("badge_no_red_days", new BadgeDetails("no red days", "track a mood of 3 or higher every day for a week straight"));
+            badgeDetailsMap.put("badge_perfect_day", new BadgeDetails("perfect day", "complete every one of your habits on the same day"));
+            badgeDetailsMap.put("badge_seven_days_of_smiles", new BadgeDetails("seven days of smiles", "track a week where your average mood is greater than 4"));
+            badgeDetailsMap.put("badge_two_week_triumph", new BadgeDetails("two week triumph", "earn a streak of 14 days on a habit"));
+            badgeDetailsMap.put("badge_warmest_welcomes", new BadgeDetails("warmest welcomes", "create an account and setup your profile"));
+            badgeDetailsMap.put("badge_weeklong_warrior", new BadgeDetails("weeklong warrior", "earn a streak of 7 days on a habit"));
+            badgeDetailsMap.put("badge_world_traveler", new BadgeDetails("world traveler", "update your zipcode to a new location"));
+            badgeDetailsMap.put("badge_you_did_it", new BadgeDetails("you did it", "track your habits for the first time"));
         }
     }
 }
